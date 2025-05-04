@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Ragini Kalvade</title>
+    <link rel="stylesheet" href="styles.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+</head>
+<body>
+
+<!-- Full-Screen Intro Card -->
+<div id="intro-card" >
+    <div class="card">
+        <div class="border"></div>
+        <div class="content">
+            <div class="logo">
+                <div class="logo1">
+                    <svg viewBox="0 0 29.667 31.69" xmlns="http://www.w3.org/2000/svg" id="logo-main">
+                        <path d="M14.834 0L0 10.931V20.76l14.834 10.929L29.667 20.76V10.931L14.834 0zm0 2.328l12.643 9.318v9.102l-12.643 9.318L2.19 20.748v-9.102L14.834 2.328z" fill="currentColor"/>
+                        <path d="M14.834 6.083l-8.457 6.231v3.017l8.457 6.231 8.457-6.231v-3.017l-8.457-6.231zm0 2.328l6.268 4.621v.987l-6.268 4.621-6.268-4.621v-.987l6.268-4.621z" fill="currentColor"/>
+                    </svg>
+                </div>
+                <span class="trail"></span>
+            </div>
+            <span class="logo-bottom-text">computer science engineer</span>
+        </div>
+
+        <div class="typing-hello">Hello World!</div>
+
+        <button id="view-profile-btn" class="view-profile-btn" >Ragini Kalvade's Portfolio</button>
+
+        <form id="message-form" class="message-form">
+            <input type="text" id="message-input" placeholder="Connect with me on Linkedin..." class="message-input">
+            <button type="submit" class="send-btn">
+                <i class="fas fa-paper-plane"></i>
+            </button>
+        </form>
+
+        <span class="bottom-text">where ideas become interfaces</span>
+    </div>
+</div>
+
+<!-- Main Portfolio -->
+<div id="portfolio" class="hidden">
+    <div class="mobile-nav">
+        <button id="menu-toggle" class="menu-toggle">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+    </div>
+
+    <aside class="sidebar">
+        <div class="sidebar-header">
+            <img src="profile.jpeg" alt="Your Name" class="sidebar-pic">
+            <h3>Ragini Kalvade</h3>
+        </div>
+        <nav>
+            <ul>
+                <li><a href="#landing"><i class="fas fa-home"></i> Home</a></li>
+                <li><a href="#education"><i class="fas fa-graduation-cap"></i> Education</a></li>
+                <li><a href="#experience"><i class="fas fa-briefcase"></i> Experience</a></li>
+                <li><a href="#skills"><i class="fas fa-code"></i> Skills</a></li>
+                <li><a href="#projects"><i class="fas fa-project-diagram"></i> Projects</a></li>
+                <li><a href="#contact"><i class="fas fa-envelope"></i> Contact Me</a></li>
+            </ul>
+        </nav>
+
+        <div class="social-links">
+            <a href="#" aria-label="GitHub"><i class="fab fa-github"></i></a>
+            <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
+            <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+        </div>
+    </aside>
+
+    <main class="main-content">
+        <!-- Landing -->
+        <section id="landing" class="landing">
+            <div class="landing-content">
+                <div class="landing-text">
+                    <h1>Ragini Kalvade</h1>
+                    <p class="title">Web Developer & UI Designer</p>
+                    <p class="summary">
+                        A passionate web developer and UI designer with a knack for creating beautiful,
+                        responsive, and user-friendly interfaces. Specializing in modern frontend technologies
+                        and creative design solutions.
+                    </p>
+                    <div class="cta-buttons">
+                        <a href="resume.pdf" download class="btn primary-btn">
+                            <i class="fas fa-download"></i> Download Resume
+                        </a>
+                        <a href="#contact" class="btn secondary-btn">
+                            <i class="fas fa-envelope"></i> Contact Me
+                        </a>
+                    </div>
+                </div>
+                <div class="landing-image">
+                    <img src="profile.jpeg" alt="Ragini Kalvade" class="profile-pic"/>
+                </div>
+            </div>
+        </section>
+
+        <!-- Projects Carousel + Modal -->
+        <section id="projects" class="projects">
+            <h2><i class="fas fa-project-diagram"></i> Projects</h2>
+            <div class="carousel-container">
+                <div class="carousel">
+                    <button class="carousel-btn prev" disabled>
+                        <i class="fas fa-chevron-left"></i>
+                    </button>
+                    <div class="carousel-track">
+                        <div class="carousel-item" data-title="Project One" data-desc="Detailed description of Project One. This project showcases my skills in responsive web design and modern UI patterns. Built with HTML, CSS, and JavaScript, it demonstrates clean code architecture and attention to detail.">
+                            <div class="project-card">
+                                <div class="project-image">
+                                    <img src="/api/placeholder/600/400" alt="Project One"/>
+                                </div>
+                                <div class="project-info">
+                                    <h3>Project One</h3>
+                                    <p>Web Application</p>
+                                    <div class="project-tech">
+                                        <span>HTML</span>
+                                        <span>CSS</span>
+                                        <span>JS</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="carousel-item" data-title="Project Two" data-desc="Detailed description of Project Two. An e-commerce platform with a focus on performance and accessibility. Implemented complex state management and responsive design for all device sizes.">
+                            <div class="project-card">
+                                <div class="project-image">
+                                    <img src="/api/placeholder/600/400" alt="Project Two"/>
+                                </div>
+                                <div class="project-info">
+                                    <h3>Project Two</h3>
+                                    <p>E-commerce Platform</p>
+                                    <div class="project-tech">
+                                        <span>React</span>
+                                        <span>Node.js</span>
+                                        <span>MongoDB</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="carousel-item" data-title="Project Three" data-desc="Detailed description of Project Three. A dashboard application with data visualization capabilities. Features include real-time updates, interactive charts, and a clean, intuitive interface.">
+                            <div class="project-card">
+                                <div class="project-image">
+                                    <img src="/api/placeholder/600/400" alt="Project Three"/>
+                                </div>
+                                <div class="project-info">
+                                    <h3>Project Three</h3>
+                                    <p>Dashboard UI</p>
+                                    <div class="project-tech">
+                                        <span>Vue.js</span>
+                                        <span>D3.js</span>
+                                        <span>Firebase</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <button class="carousel-btn next">
+                        <i class="fas fa-chevron-right"></i>
+                    </button>
+                </div>
+            </div>
+
+            <div id="project-modal" class="modal hidden">
+                <div class="modal-content">
+                    <span class="close">&times;</span>
+                    <h3 id="modal-title"></h3>
+                    <p id="modal-desc"></p>
+                    <div class="modal-buttons">
+                        <a href="#" class="btn primary-btn">
+                            <i class="fas fa-external-link-alt"></i> Live Demo
+                        </a>
+                        <a href="#" class="btn secondary-btn">
+                            <i class="fab fa-github"></i> Source Code
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Other Sections -->
+        <section id="education">
+            <h2><i class="fas fa-graduation-cap"></i> Education</h2>
+            <div class="timeline">
+                <div class="timeline-item">
+                    <div class="timeline-content">
+                        <h3>Master's in Computer Science</h3>
+                        <p class="timeline-date">2019 - 2021</p>
+                        <p>Stanford University</p>
+                        <p>Focused on Human-Computer Interaction and Web Technologies</p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-content">
+                        <h3>Bachelor's in Information Technology</h3>
+                        <p class="timeline-date">2015 - 2019</p>
+                        <p>MIT</p>
+                        <p>Graduated with honors, specializing in software development</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="experience">
+            <h2><i class="fas fa-briefcase"></i> Experience</h2>
+            <div class="timeline">
+                <div class="timeline-item">
+                    <div class="timeline-content">
+                        <h3>Senior Frontend Developer</h3>
+                        <p class="timeline-date">2022 - Present</p>
+                        <p>Tech Innovations Inc.</p>
+                        <p>Leading the frontend team in developing responsive web applications</p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-content">
+                        <h3>UI/UX Designer</h3>
+                        <p class="timeline-date">2021 - 2022</p>
+                        <p>Creative Solutions</p>
+                        <p>Designed user interfaces for various web and mobile applications</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="skills">
+            <h2><i class="fas fa-code"></i> Skills</h2>
+            <div class="skills-container">
+                <div class="skill-category">
+                    <h3>Frontend</h3>
+                    <div class="skill-list">
+                        <div class="skill">
+                            <span>HTML5/CSS3</span>
+                            <div class="skill-bar">
+                                <div class="skill-level" style="width: 95%"></div>
+                            </div>
+                        </div>
+                        <div class="skill">
+                            <span>JavaScript</span>
+                            <div class="skill-bar">
+                                <div class="skill-level" style="width: 90%"></div>
+                            </div>
+                        </div>
+                        <div class="skill">
+                            <span>React</span>
+                            <div class="skill-bar">
+                                <div class="skill-level" style="width: 85%"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="skill-category">
+                    <h3>Design</h3>
+                    <div class="skill-list">
+                        <div class="skill">
+                            <span>Figma</span>
+                            <div class="skill-bar">
+                                <div class="skill-level" style="width: 90%"></div>
+                            </div>
+                        </div>
+                        <div class="skill">
+                            <span>Adobe XD</span>
+                            <div class="skill-bar">
+                                <div class="skill-level" style="width: 80%"></div>
+                            </div>
+                        </div>
+                        <div class="skill">
+                            <span>UI/UX Principles</span>
+                            <div class="skill-bar">
+                                <div class="skill-level" style="width: 85%"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="contact">
+            <h2><i class="fas fa-envelope"></i> Contact Me</h2>
+            <div class="contact-container">
+                <div class="contact-info">
+                    <div class="contact-item">
+                        <i class="fas fa-envelope"></i>
+                        <span>email@example.com</span>
+                    </div>
+                    <div class="contact-item">
+                        <i class="fas fa-phone"></i>
+                        <span>+1 234 567 8900</span>
+                    </div>
+                    <div class="contact-item">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <span>San Francisco, CA</span>
+                    </div>
+                </div>
+
+                <form class="contact-form">
+                    <div class="form-group">
+                        <label for="name">Name</label>
+                        <input type="text" id="name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input type="email" id="email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="message">Message</label>
+                        <textarea id="message" rows="5" required></textarea>
+                    </div>
+                    <button type="submit" class="btn primary-btn">Send Message</button>
+                </form>
+            </div>
+        </section>
+
+        <footer>
+            <p>&copy; 2025 Ragini Kalvade. All rights reserved.</p>
+        </footer>
+    </main>
+</div>
+
+<script src="app.js"></script>
+</body>
+</html>
