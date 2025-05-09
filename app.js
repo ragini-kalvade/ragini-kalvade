@@ -6,7 +6,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const messageInput = document.getElementById('message-input');
     const messageForm = document.getElementById('message-form');
 
-    console.log("Hello, world! 1");
     // 1) Kick off the border (and trail) animation after typing finishes
     setTimeout(() => {
         introCard.classList.add('animate-init');
@@ -14,7 +13,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // 2) Reveal portfolio on button click
     viewBtn.addEventListener('click', () => {
-        console.log("Hello, world! 2");
         introCard.classList.add('hidden');
         introOverlay.classList.add('hidden');
         portfolio.classList.remove('hidden');
@@ -145,24 +143,53 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // 8) Mobile menu toggle
-    const menuToggle = document.getElementById('menu-toggle');
-    const sidebar = document.querySelector('.sidebar');
+    // 8) Add scroll event listener to highlight active menu item
+    const sections = document.querySelectorAll('section');
+    const navLinks = document.querySelectorAll('.sidebar a');
 
-    if (menuToggle) {
-        menuToggle.addEventListener('click', () => {
-            sidebar.classList.toggle('active');
-            menuToggle.classList.toggle('active');
+    window.addEventListener('scroll', () => {
+        let current = '';
+
+        sections.forEach((section) => {
+            const sectionTop = section.offsetTop;
+            const sectionHeight = section.clientHeight;
+            if (pageYOffset >= (sectionTop - 200)) {
+                current = section.getAttribute('id');
+            }
         });
 
-        // Close menu when clicking a link on mobile
-        document.querySelectorAll('.sidebar a').forEach(link => {
-            link.addEventListener('click', () => {
-                if (window.innerWidth <= 768) {
-                    sidebar.classList.remove('active');
-                    menuToggle.classList.remove('active');
-                }
-            });
+        navLinks.forEach((link) => {
+            link.classList.remove('active');
+            if (link.getAttribute('href') === `#${current}`) {
+                link.classList.add('active');
+            }
         });
-    }
+    });
 });
+
+function adjustMainContentPadding() {
+    const navHeight = document.querySelector('.sidebar').offsetHeight;
+    document.querySelector('.main-content').style.paddingTop = (navHeight + 10) + 'px';
+
+    // Also update section scroll margins
+    document.querySelectorAll('section').forEach(section => {
+        section.style.scrollMarginTop = (navHeight + 10) + 'px';
+    });
+}
+
+adjustMainContentPadding();
+
+// Run on window resize
+window.addEventListener('resize', adjustMainContentPadding);
+
+// Mobile navigation toggle (optional)
+const menuButton = document.getElementById('mobile-menu-button');
+if (menuButton) {
+    const navMenu = document.querySelector('.sidebar nav');
+    menuButton.addEventListener('click', () => {
+        navMenu.classList.toggle('show-mobile-menu');
+
+        // Update main content padding after toggle
+        setTimeout(adjustMainContentPadding, 300);
+    });
+}

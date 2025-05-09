@@ -7,10 +7,11 @@
     <link rel="stylesheet" href="styles.css"/>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css" rel="stylesheet">
+
 </head>
 <body>
 
-<!-- Full-Screen Intro Card -->
 <div id="intro-card" >
     <div class="card">
         <div class="border"></div>
@@ -44,51 +45,43 @@
 
 <!-- Main Portfolio -->
 <div id="portfolio" class="hidden">
-    <div class="mobile-nav">
-        <button id="menu-toggle" class="menu-toggle">
-            <span></span>
-            <span></span>
-            <span></span>
-        </button>
-    </div>
 
     <aside class="sidebar">
         <div class="sidebar-header">
-            <img src="profile.jpeg" alt="Your Name" class="sidebar-pic">
-            <h3>Ragini Kalvade</h3>
+            <img src="profile.jpeg" alt="Ragini Kalvade" class="sidebar-pic">
         </div>
         <nav>
             <ul>
-                <li><a href="#landing"><i class="fas fa-home"></i> Home</a></li>
-                <li><a href="#education"><i class="fas fa-graduation-cap"></i> Education</a></li>
-                <li><a href="#experience"><i class="fas fa-briefcase"></i> Experience</a></li>
-                <li><a href="#skills"><i class="fas fa-code"></i> Skills</a></li>
-                <li><a href="#projects"><i class="fas fa-project-diagram"></i> Projects</a></li>
-                <li><a href="#contact"><i class="fas fa-envelope"></i> Contact Me</a></li>
+                <li><a href="#landing"><i class="fas fa-home"></i>Home</a></li>
+                <li><a href="#education"><i class="fas fa-graduation-cap"></i>Education</a></li>
+                <li><a href="#experience"><i class="fas fa-briefcase"></i>Experience</a></li>
+                <li><a href="#skills"><i class="fas fa-code"></i>Skills</a></li>
+                <li><a href="#projects"><i class="fas fa-project-diagram"></i>Projects</a></li>
+                <li><a href="#contact"><i class="fas fa-envelope"></i>Contact Me</a></li>
             </ul>
         </nav>
 
         <div class="social-links">
-            <a href="#" aria-label="GitHub"><i class="fab fa-github"></i></a>
-            <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
-            <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+            <a href="https://github.com/ragini-kalvade" aria-label="GitHub"><i class="fab fa-github"></i></a>
+            <a href="https://www.linkedin.com/in/ragini-kalvade/" aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
+            <a href="https://www.cloudskillsboost.google/public_profiles/c1c247d4-5f4a-41ca-bc39-9ee681b16f94"
+               aria-label="GCP"><i class="fa fa-cloud fa-light"></i></a>
         </div>
     </aside>
 
     <main class="main-content">
-        <!-- Landing -->
         <section id="landing" class="landing">
             <div class="landing-content">
                 <div class="landing-text">
                     <h1>Ragini Kalvade</h1>
-                    <p class="title">Web Developer & UI Designer</p>
+                    <p class="title">Software Engineer. Programmer. Web Developer. AI/ML Engineer.</p>
                     <p class="summary">
-                        A passionate web developer and UI designer with a knack for creating beautiful,
-                        responsive, and user-friendly interfaces. Specializing in modern frontend technologies
-                        and creative design solutions.
+                        A passionate web developer with a knack for creating beautiful,
+                        responsive, and user-friendly interfaces. Specializing in modern backend technologies
+                        and creative system design solutions.
                     </p>
                     <div class="cta-buttons">
-                        <a href="resume.pdf" download class="btn primary-btn">
+                        <a href="Resume.pdf" download class="btn primary-btn">
                             <i class="fas fa-download"></i> Download Resume
                         </a>
                         <a href="#contact" class="btn secondary-btn">
@@ -102,7 +95,117 @@
             </div>
         </section>
 
-        <!-- Projects Carousel + Modal -->
+        <section id="education">
+            <h2><i class="fas fa-graduation-cap"></i> Education</h2>
+            <div class="edu-timeline">
+
+                <div class="edu-step" data-aos="fade-up">
+                    <div class="edu-icon"><i class="fas fa-brain"></i></div>
+                    <div class="edu-card-glass">
+                        <h3>University of Illinois Chicago</h3>
+                        <p class="edu-date">2024 – Present</p>
+                        <p><strong>M.S. in Computer Science</strong></p>
+                        <p>Focused on AI, secure systems, and LLM fault-tolerant training.</p>
+                        <div class="edu-tags">
+                            <span>#LLM</span><span>#Megatron</span><span>#AI</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="edu-step">
+                    <div class="edu-icon"><i class="fas fa-code-branch"></i></div>
+                    <div class="edu-card-glass">
+                        <h3>NIT Bhopal, India</h3>
+                        <p class="edu-date">2018 – 2022</p>
+                        <p><strong>B.Tech in Computer Science</strong></p>
+                        <p>Graduated with First Class Honors. Specialization in system design and web security.</p>
+                        <div class="edu-tags">
+                            <span>#Systems</span><span>#SecureWeb</span><span>#Fullstack</span>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+
+
+        <section id="experience">
+            <h2><i class="fas fa-briefcase"></i> Experience</h2>
+            <div class="timeline">
+                <div class="timeline-item">
+                    <div class="timeline-content">
+                        <h3>Senior Frontend Developer</h3>
+                        <p class="timeline-date">2022 - Present</p>
+                        <p>Tech Innovations Inc.</p>
+                        <p>Leading the frontend team in developing responsive web applications</p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-content">
+                        <h3>UI/UX Designer</h3>
+                        <p class="timeline-date">2021 - 2022</p>
+                        <p>Creative Solutions</p>
+                        <p>Designed user interfaces for various web and mobile applications</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="skills">
+            <h2><i class="fas fa-code"></i> Skills</h2>
+            <div class="skills-container">
+                <div class="skill-category">
+                    <h3>Frontend</h3>
+                    <div class="skill-list">
+                        <div class="skill">
+                            <span>HTML5/CSS3</span>
+                            <div class="skill-bar">
+                                <div class="skill-level" style="width: 95%"></div>
+                            </div>
+                        </div>
+                        <div class="skill">
+                            <span>JavaScript</span>
+                            <div class="skill-bar">
+                                <div class="skill-level" style="width: 90%"></div>
+                            </div>
+                        </div>
+                        <div class="skill">
+                            <span>React</span>
+                            <div class="skill-bar">
+                                <div class="skill-level" style="width: 85%"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="skill-category">
+                    <h3>Design</h3>
+                    <div class="skill-list">
+                        <div class="skill">
+                            <span>Figma</span>
+                            <div class="skill-bar">
+                                <div class="skill-level" style="width: 90%"></div>
+                            </div>
+                        </div>
+                        <div class="skill">
+                            <span>Adobe XD</span>
+                            <div class="skill-bar">
+                                <div class="skill-level" style="width: 80%"></div>
+                            </div>
+                        </div>
+                        <div class="skill">
+                            <span>UI/UX Principles</span>
+                            <div class="skill-bar">
+                                <div class="skill-level" style="width: 85%"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Projects-->
         <section id="projects" class="projects">
             <h2><i class="fas fa-project-diagram"></i> Projects</h2>
             <div class="carousel-container">
@@ -183,122 +286,19 @@
             </div>
         </section>
 
-        <!-- Other Sections -->
-        <section id="education">
-            <h2><i class="fas fa-graduation-cap"></i> Education</h2>
-            <div class="timeline">
-                <div class="timeline-item">
-                    <div class="timeline-content">
-                        <h3>Master's in Computer Science</h3>
-                        <p class="timeline-date">2019 - 2021</p>
-                        <p>Stanford University</p>
-                        <p>Focused on Human-Computer Interaction and Web Technologies</p>
-                    </div>
-                </div>
-                <div class="timeline-item">
-                    <div class="timeline-content">
-                        <h3>Bachelor's in Information Technology</h3>
-                        <p class="timeline-date">2015 - 2019</p>
-                        <p>MIT</p>
-                        <p>Graduated with honors, specializing in software development</p>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <section id="experience">
-            <h2><i class="fas fa-briefcase"></i> Experience</h2>
-            <div class="timeline">
-                <div class="timeline-item">
-                    <div class="timeline-content">
-                        <h3>Senior Frontend Developer</h3>
-                        <p class="timeline-date">2022 - Present</p>
-                        <p>Tech Innovations Inc.</p>
-                        <p>Leading the frontend team in developing responsive web applications</p>
-                    </div>
-                </div>
-                <div class="timeline-item">
-                    <div class="timeline-content">
-                        <h3>UI/UX Designer</h3>
-                        <p class="timeline-date">2021 - 2022</p>
-                        <p>Creative Solutions</p>
-                        <p>Designed user interfaces for various web and mobile applications</p>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <section id="skills">
-            <h2><i class="fas fa-code"></i> Skills</h2>
-            <div class="skills-container">
-                <div class="skill-category">
-                    <h3>Frontend</h3>
-                    <div class="skill-list">
-                        <div class="skill">
-                            <span>HTML5/CSS3</span>
-                            <div class="skill-bar">
-                                <div class="skill-level" style="width: 95%"></div>
-                            </div>
-                        </div>
-                        <div class="skill">
-                            <span>JavaScript</span>
-                            <div class="skill-bar">
-                                <div class="skill-level" style="width: 90%"></div>
-                            </div>
-                        </div>
-                        <div class="skill">
-                            <span>React</span>
-                            <div class="skill-bar">
-                                <div class="skill-level" style="width: 85%"></div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="skill-category">
-                    <h3>Design</h3>
-                    <div class="skill-list">
-                        <div class="skill">
-                            <span>Figma</span>
-                            <div class="skill-bar">
-                                <div class="skill-level" style="width: 90%"></div>
-                            </div>
-                        </div>
-                        <div class="skill">
-                            <span>Adobe XD</span>
-                            <div class="skill-bar">
-                                <div class="skill-level" style="width: 80%"></div>
-                            </div>
-                        </div>
-                        <div class="skill">
-                            <span>UI/UX Principles</span>
-                            <div class="skill-bar">
-                                <div class="skill-level" style="width: 85%"></div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
         <section id="contact">
             <h2><i class="fas fa-envelope"></i> Contact Me</h2>
             <div class="contact-container">
                 <div class="contact-info">
                     <div class="contact-item">
                         <i class="fas fa-envelope"></i>
-                        <span>email@example.com</span>
-                    </div>
-                    <div class="contact-item">
-                        <i class="fas fa-phone"></i>
-                        <span>+1 234 567 8900</span>
+                        <span>kalvaderagini@gmail.com</span>
                     </div>
                     <div class="contact-item">
                         <i class="fas fa-map-marker-alt"></i>
-                        <span>San Francisco, CA</span>
+                        <span>Chicago, IL</span>
                     </div>
                 </div>
-
                 <form class="contact-form">
                     <div class="form-group">
                         <label for="name">Name</label>
@@ -318,11 +318,20 @@
         </section>
 
         <footer>
-            <p>&copy; 2025 Ragini Kalvade. All rights reserved.</p>
+            <p>&copy; 2025 Ragini Kalvade.</p>
         </footer>
     </main>
 </div>
 
 <script src="app.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
+<script>
+    AOS.init({
+        once: true,
+        duration: 800,
+        offset: 150
+    });
+</script>
+
 </body>
 </html>
