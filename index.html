@@ -1,27 +1,34 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <title>Ragini Kalvade</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Ragini Kalvade | Portfolio </title>
     <link rel="stylesheet" href="styles.css"/>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css" rel="stylesheet">
-
+    <link rel="stylesheet" href="pre-landing.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+    <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
 </head>
-<body>
 
-<div id="intro-card" >
+<body>
+<!-- Intro Card with Background -->
+<div id="intro-card">
     <div class="card">
         <div class="border"></div>
         <div class="content">
             <div class="logo">
                 <div class="logo1">
-                    <svg viewBox="0 0 29.667 31.69" xmlns="http://www.w3.org/2000/svg" id="logo-main">
-                        <path d="M14.834 0L0 10.931V20.76l14.834 10.929L29.667 20.76V10.931L14.834 0zm0 2.328l12.643 9.318v9.102l-12.643 9.318L2.19 20.748v-9.102L14.834 2.328z" fill="currentColor"/>
-                        <path d="M14.834 6.083l-8.457 6.231v3.017l8.457 6.231 8.457-6.231v-3.017l-8.457-6.231zm0 2.328l6.268 4.621v.987l-6.268 4.621-6.268-4.621v-.987l6.268-4.621z" fill="currentColor"/>
-                    </svg>
+                    <canvas id="canvas" width="150" height="150"></canvas>
+                    <script type="module">
+                        import { DotLottie } from "https://cdn.jsdelivr.net/npm/@lottiefiles/dotlottie-web/+esm";
+                        new DotLottie({
+                            autoplay: true,
+                            loop: true,
+                            canvas: document.getElementById("canvas"),
+                            src: "https://lottie.host/0a8a57aa-2f4d-4cc8-ae71-8964a59c77fc/cRQlrf03if.lottie",
+                        });
+                    </script>
                 </div>
                 <span class="trail"></span>
             </div>
@@ -30,297 +37,244 @@
 
         <div class="typing-hello">Hello World!</div>
 
-        <button id="view-profile-btn" class="view-profile-btn" >Ragini Kalvade's Portfolio</button>
+        <button id="view-profile-btn" class="view-profile-btn">Ragini Kalvade's Portfolio</button>
 
-        <form id="message-form" class="message-form">
-            <input type="text" id="message-input" placeholder="Connect with me on Linkedin..." class="message-input">
-            <button type="submit" class="send-btn">
-                <i class="fas fa-paper-plane"></i>
-            </button>
-        </form>
-
-        <span class="bottom-text">where ideas become interfaces</span>
+        <span class="bottom-text">where code meets creativity</span>
     </div>
 </div>
 
 <!-- Main Portfolio -->
 <div id="portfolio" class="hidden">
+    <div class="container">
+        <header class="main-header">
+            <div class="name">RAGINI KALVADE</div>
+            <nav>
+                <a href="#projects">PROJECTS</a>
+                <a href="#about">ABOUT</a>
+                <a href="#contact">CONTACT</a>
+            </nav>
+        </header>
 
-    <aside class="sidebar">
-        <div class="sidebar-header">
-            <img src="profile.jpeg" alt="Ragini Kalvade" class="sidebar-pic">
+        <div class="grid">
+            <!-- Hero section -->
+            <div class="block hero" id="hero">
+                <h1>Software Engineer</h1>
+                <h2>Full Stack Development</h2>
+                <h3>with AI-Driven Design</h3>
+                <div class="decorative">
+                    <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M50,10 C70,10 90,30 90,50 C90,70 70,90 50,90 C30,90 10,70 10,50 C10,30 30,10 50,10 Z" fill="none" stroke="#38bdf8" stroke-width="1"/>
+                        <path d="M50,20 C65,20 80,35 80,50 C80,65 65,80 50,80 C35,80 20,65 20,50 C20,35 35,20 50,20 Z" fill="none" stroke="#38bdf8" stroke-width="1"/>
+                        <path d="M50,30 C60,30 70,40 70,50 C70,60 60,70 50,70 C40,70 30,60 30,50 C30,40 40,30 50,30 Z" fill="none" stroke="#38bdf8" stroke-width="1"/>
+                    </svg>
+                </div>
+            </div>
+
+            <!-- Portrait section -->
+            <div class="block portrait" id="portrait">
+                <img src="profile.jpeg" alt="Ragini Kalvade Portrait">
+            </div>
+
+            <div class="block skills" id="skills">
+                <div class="section-header">
+                    <h3>Skills</h3>
+                </div>
+
+                <div class="skills-carousel">
+                    <div class="skills-carousel-container">
+                        <!-- Languages Category -->
+                        <div class="skill-category">
+                            <div class="carousel-category-title">Languages</div>
+                            <div class="tech-skills-grid">
+                                <div class="tech-skill-item">
+                                    <div class="tech-icon js-icon">JS</div>
+                                    <div class="tech-name">JavaScript</div>
+                                </div>
+                                <div class="tech-skill-item">
+                                    <div class="tech-icon ts-icon">TS</div>
+                                    <div class="tech-name">TypeScript</div>
+                                </div>
+                                <div class="tech-skill-item">
+                                    <div class="tech-icon py-icon">PY</div>
+                                    <div class="tech-name">Python</div>
+                                </div>
+                                <div class="tech-skill-item">
+                                    <div class="tech-icon cpp-icon">C++</div>
+                                    <div class="tech-name">C++</div>
+                                </div>
+                                <div class="tech-skill-item">
+                                    <div class="tech-icon java-icon">
+                                        <i class="fab fa-java"></i>
+                                    </div>
+                                    <div class="tech-name">Java</div>
+                                </div>
+                                <div class="tech-skill-item">
+                                    <div class="tech-icon php-icon">PHP</div>
+                                    <div class="tech-name">PHP</div>
+                                </div>
+                                <div class="tech-skill-item">
+                                    <div class="tech-icon html-icon">
+                                        <i class="fab fa-html5"></i>
+                                    </div>
+                                    <div class="tech-name">HTML5</div>
+                                </div>
+                                <div class="tech-skill-item">
+                                    <div class="tech-icon css-icon">
+                                        <i class="fab fa-css3-alt"></i>
+                                    </div>
+                                    <div class="tech-name">CSS</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Frontend Category -->
+                        <div class="skill-category">
+                            <div class="carousel-category-title">Frontend</div>
+                            <div class="tech-skills-grid">
+                                <div class="tech-skill-item">
+                                    <div class="tech-icon react-icon">
+                                        <i class="fab fa-react"></i>
+                                    </div>
+                                    <div class="tech-name">React</div>
+                                </div>
+                                <div class="tech-skill-item">
+                                    <div class="tech-icon figma-icon">
+                                        <i class="fab fa-figma"></i>
+                                    </div>
+                                    <div class="tech-name">Figma</div>
+                                </div>
+                                <div class="tech-skill-item">
+                                    <div class="tech-icon js-icon">
+                                        <i class="fab fa-js"></i>
+                                    </div>
+                                    <div class="tech-name">Vue.js</div>
+                                </div>
+                                <div class="tech-skill-item">
+                                    <div class="tech-icon html-icon">
+                                        <i class="fab fa-bootstrap"></i>
+                                    </div>
+                                    <div class="tech-name">Bootstrap</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Backend & Database Category -->
+                        <div class="skill-category">
+                            <div class="carousel-category-title">Backend & Database</div>
+                            <div class="tech-skills-grid">
+                                <div class="tech-skill-item">
+                                    <div class="tech-icon node-icon">
+                                        <i class="fab fa-node-js"></i>
+                                    </div>
+                                    <div class="tech-name">Node.js</div>
+                                </div>
+                                <div class="tech-skill-item">
+                                    <div class="tech-icon spring-icon">
+                                        <i class="fas fa-leaf"></i>
+                                    </div>
+                                    <div class="tech-name">Spring Boot</div>
+                                </div>
+                                <div class="tech-skill-item">
+                                    <div class="tech-icon mongo-icon">
+                                        <i class="fas fa-database"></i>
+                                    </div>
+                                    <div class="tech-name">MongoDB</div>
+                                </div>
+                                <div class="tech-skill-item">
+                                    <div class="tech-icon sql-icon">SQL</div>
+                                    <div class="tech-name">PostgreSQL</div>
+                                </div>
+                                <div class="tech-skill-item">
+                                    <div class="tech-icon mysql-icon">
+                                        <i class="fas fa-database"></i>
+                                    </div>
+                                    <div class="tech-name">MySQL</div>
+                                </div>
+                                <div class="tech-skill-item">
+                                    <div class="tech-icon kafka-icon">
+                                        <i class="fas fa-stream"></i>
+                                    </div>
+                                    <div class="tech-name">Kafka</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- DevOps & Tools Category -->
+                        <div class="skill-category">
+                            <div class="carousel-category-title">DevOps & Tools</div>
+                            <div class="tech-skills-grid">
+                                <div class="tech-skill-item">
+                                    <div class="tech-icon git-icon">
+                                        <i class="fab fa-git-alt"></i>
+                                    </div>
+                                    <div class="tech-name">Git</div>
+                                </div>
+                                <div class="tech-skill-item">
+                                    <div class="tech-icon docker-icon">
+                                        <i class="fab fa-docker"></i>
+                                    </div>
+                                    <div class="tech-name">Docker</div>
+                                </div>
+                                <div class="tech-skill-item">
+                                    <div class="tech-icon cloud-icon">
+                                        <i class="fab fa-google"></i>
+                                    </div>
+                                    <div class="tech-name">Google Cloud</div>
+                                </div>
+                                <div class="tech-skill-item">
+                                    <div class="tech-icon jenkins-icon">
+                                        <i class="fab fa-jenkins"></i>
+                                    </div>
+                                    <div class="tech-name">Jenkins</div>
+                                </div>
+                                <div class="tech-skill-item">
+                                    <div class="tech-icon terraform-icon">
+                                        <i class="fas fa-network-wired"></i>
+                                    </div>
+                                    <div class="tech-name">Terraform</div>
+                                </div>
+                                <div class="tech-skill-item">
+                                    <div class="tech-icon android-icon">
+                                        <i class="fab fa-android"></i>
+                                    </div>
+                                    <div class="tech-name">Android</div>
+                                </div>
+                                <div class="tech-skill-item">
+                                    <div class="tech-icon elk-icon">
+                                        <i class="fas fa-chart-line"></i>
+                                    </div>
+                                    <div class="tech-name">ELK Stack</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="carousel-controls">
+                        <div class="carousel-indicators"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- About section -->
+            <div class="block about" id="about">
+                <p>Ragini Kalvade is an innovative software engineer specializing in creating scalable applications with an emphasis on intuitive user experiences. With expertise in full-stack development and AI integration, she builds technology solutions for real-world challenges.</p>
+            </div>
+
+            <!-- Contact section -->
+            <div class="block contact" id="contact">
+                <h2>Contact me</h2>
+                <p>Have a project in mind?</p>
+                <span class="arrow">↗</span>
+            </div>
+
+            <!-- Social Media Section -->
+            <div class="block social" id="social">
+                <a href="https://github.com/ragini-kalvade">GITHUB</a>
+                <a href="https://www.linkedin.com/in/ragini-kalvade/">LINKEDIN</a>
+                <a href="#">TWITTER</a>
+            </div>
         </div>
-        <nav>
-            <ul>
-                <li><a href="#landing"><i class="fas fa-home"></i>Home</a></li>
-                <li><a href="#education"><i class="fas fa-graduation-cap"></i>Education</a></li>
-                <li><a href="#experience"><i class="fas fa-briefcase"></i>Experience</a></li>
-                <li><a href="#skills"><i class="fas fa-code"></i>Skills</a></li>
-                <li><a href="#projects"><i class="fas fa-project-diagram"></i>Projects</a></li>
-                <li><a href="#contact"><i class="fas fa-envelope"></i>Contact Me</a></li>
-            </ul>
-        </nav>
-
-        <div class="social-links">
-            <a href="https://github.com/ragini-kalvade" aria-label="GitHub"><i class="fab fa-github"></i></a>
-            <a href="https://www.linkedin.com/in/ragini-kalvade/" aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
-            <a href="https://www.cloudskillsboost.google/public_profiles/c1c247d4-5f4a-41ca-bc39-9ee681b16f94"
-               aria-label="GCP"><i class="fa fa-cloud fa-light"></i></a>
-        </div>
-    </aside>
-
-    <main class="main-content">
-        <section id="landing" class="landing">
-            <div class="landing-content">
-                <div class="landing-text">
-                    <h1>Ragini Kalvade</h1>
-                    <p class="title">Software Engineer. Programmer. Web Developer. AI/ML Engineer.</p>
-                    <p class="summary">
-                        A passionate web developer with a knack for creating beautiful,
-                        responsive, and user-friendly interfaces. Specializing in modern backend technologies
-                        and creative system design solutions.
-                    </p>
-                    <div class="cta-buttons">
-                        <a href="Resume.pdf" download class="btn primary-btn">
-                            <i class="fas fa-download"></i> Download Resume
-                        </a>
-                        <a href="#contact" class="btn secondary-btn">
-                            <i class="fas fa-envelope"></i> Contact Me
-                        </a>
-                    </div>
-                </div>
-                <div class="landing-image">
-                    <img src="profile.jpeg" alt="Ragini Kalvade" class="profile-pic"/>
-                </div>
-            </div>
-        </section>
-
-        <section id="education">
-            <h2><i class="fas fa-graduation-cap"></i> Education</h2>
-            <div class="edu-timeline">
-
-                <div class="edu-step" data-aos="fade-up">
-                    <div class="edu-icon"><i class="fas fa-brain"></i></div>
-                    <div class="edu-card-glass">
-                        <h3>University of Illinois Chicago</h3>
-                        <p class="edu-date">2024 – Present</p>
-                        <p><strong>M.S. in Computer Science</strong></p>
-                        <p>Focused on AI, secure systems, and LLM fault-tolerant training.</p>
-                        <div class="edu-tags">
-                            <span>#LLM</span><span>#Megatron</span><span>#AI</span>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="edu-step">
-                    <div class="edu-icon"><i class="fas fa-code-branch"></i></div>
-                    <div class="edu-card-glass">
-                        <h3>NIT Bhopal, India</h3>
-                        <p class="edu-date">2018 – 2022</p>
-                        <p><strong>B.Tech in Computer Science</strong></p>
-                        <p>Graduated with First Class Honors. Specialization in system design and web security.</p>
-                        <div class="edu-tags">
-                            <span>#Systems</span><span>#SecureWeb</span><span>#Fullstack</span>
-                        </div>
-                    </div>
-                </div>
-
-            </div>
-        </section>
-
-
-
-        <section id="experience">
-            <h2><i class="fas fa-briefcase"></i> Experience</h2>
-            <div class="timeline">
-                <div class="timeline-item">
-                    <div class="timeline-content">
-                        <h3>Senior Frontend Developer</h3>
-                        <p class="timeline-date">2022 - Present</p>
-                        <p>Tech Innovations Inc.</p>
-                        <p>Leading the frontend team in developing responsive web applications</p>
-                    </div>
-                </div>
-                <div class="timeline-item">
-                    <div class="timeline-content">
-                        <h3>UI/UX Designer</h3>
-                        <p class="timeline-date">2021 - 2022</p>
-                        <p>Creative Solutions</p>
-                        <p>Designed user interfaces for various web and mobile applications</p>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <section id="skills">
-            <h2><i class="fas fa-code"></i> Skills</h2>
-            <div class="skills-container">
-                <div class="skill-category">
-                    <h3>Frontend</h3>
-                    <div class="skill-list">
-                        <div class="skill">
-                            <span>HTML5/CSS3</span>
-                            <div class="skill-bar">
-                                <div class="skill-level" style="width: 95%"></div>
-                            </div>
-                        </div>
-                        <div class="skill">
-                            <span>JavaScript</span>
-                            <div class="skill-bar">
-                                <div class="skill-level" style="width: 90%"></div>
-                            </div>
-                        </div>
-                        <div class="skill">
-                            <span>React</span>
-                            <div class="skill-bar">
-                                <div class="skill-level" style="width: 85%"></div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="skill-category">
-                    <h3>Design</h3>
-                    <div class="skill-list">
-                        <div class="skill">
-                            <span>Figma</span>
-                            <div class="skill-bar">
-                                <div class="skill-level" style="width: 90%"></div>
-                            </div>
-                        </div>
-                        <div class="skill">
-                            <span>Adobe XD</span>
-                            <div class="skill-bar">
-                                <div class="skill-level" style="width: 80%"></div>
-                            </div>
-                        </div>
-                        <div class="skill">
-                            <span>UI/UX Principles</span>
-                            <div class="skill-bar">
-                                <div class="skill-level" style="width: 85%"></div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Projects-->
-        <section id="projects" class="projects">
-            <h2><i class="fas fa-project-diagram"></i> Projects</h2>
-            <div class="carousel-container">
-                <div class="carousel">
-                    <button class="carousel-btn prev" disabled>
-                        <i class="fas fa-chevron-left"></i>
-                    </button>
-                    <div class="carousel-track">
-                        <div class="carousel-item" data-title="Project One" data-desc="Detailed description of Project One. This project showcases my skills in responsive web design and modern UI patterns. Built with HTML, CSS, and JavaScript, it demonstrates clean code architecture and attention to detail.">
-                            <div class="project-card">
-                                <div class="project-image">
-                                    <img src="/api/placeholder/600/400" alt="Project One"/>
-                                </div>
-                                <div class="project-info">
-                                    <h3>Project One</h3>
-                                    <p>Web Application</p>
-                                    <div class="project-tech">
-                                        <span>HTML</span>
-                                        <span>CSS</span>
-                                        <span>JS</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="carousel-item" data-title="Project Two" data-desc="Detailed description of Project Two. An e-commerce platform with a focus on performance and accessibility. Implemented complex state management and responsive design for all device sizes.">
-                            <div class="project-card">
-                                <div class="project-image">
-                                    <img src="/api/placeholder/600/400" alt="Project Two"/>
-                                </div>
-                                <div class="project-info">
-                                    <h3>Project Two</h3>
-                                    <p>E-commerce Platform</p>
-                                    <div class="project-tech">
-                                        <span>React</span>
-                                        <span>Node.js</span>
-                                        <span>MongoDB</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="carousel-item" data-title="Project Three" data-desc="Detailed description of Project Three. A dashboard application with data visualization capabilities. Features include real-time updates, interactive charts, and a clean, intuitive interface.">
-                            <div class="project-card">
-                                <div class="project-image">
-                                    <img src="/api/placeholder/600/400" alt="Project Three"/>
-                                </div>
-                                <div class="project-info">
-                                    <h3>Project Three</h3>
-                                    <p>Dashboard UI</p>
-                                    <div class="project-tech">
-                                        <span>Vue.js</span>
-                                        <span>D3.js</span>
-                                        <span>Firebase</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <button class="carousel-btn next">
-                        <i class="fas fa-chevron-right"></i>
-                    </button>
-                </div>
-            </div>
-
-            <div id="project-modal" class="modal hidden">
-                <div class="modal-content">
-                    <span class="close">&times;</span>
-                    <h3 id="modal-title"></h3>
-                    <p id="modal-desc"></p>
-                    <div class="modal-buttons">
-                        <a href="#" class="btn primary-btn">
-                            <i class="fas fa-external-link-alt"></i> Live Demo
-                        </a>
-                        <a href="#" class="btn secondary-btn">
-                            <i class="fab fa-github"></i> Source Code
-                        </a>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <section id="contact">
-            <h2><i class="fas fa-envelope"></i> Contact Me</h2>
-            <div class="contact-container">
-                <div class="contact-info">
-                    <div class="contact-item">
-                        <i class="fas fa-envelope"></i>
-                        <span>kalvaderagini@gmail.com</span>
-                    </div>
-                    <div class="contact-item">
-                        <i class="fas fa-map-marker-alt"></i>
-                        <span>Chicago, IL</span>
-                    </div>
-                </div>
-                <form class="contact-form">
-                    <div class="form-group">
-                        <label for="name">Name</label>
-                        <input type="text" id="name" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="email">Email</label>
-                        <input type="email" id="email" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="message">Message</label>
-                        <textarea id="message" rows="5" required></textarea>
-                    </div>
-                    <button type="submit" class="btn primary-btn">Send Message</button>
-                </form>
-            </div>
-        </section>
-
-        <footer>
-            <p>&copy; 2025 Ragini Kalvade.</p>
-        </footer>
-    </main>
+    </div>
 </div>
 
 <script src="app.js"></script>
