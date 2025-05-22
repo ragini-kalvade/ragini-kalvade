@@ -3,77 +3,68 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Ragini Kalvade | Portfolio </title>
-    <link rel="stylesheet" href="styles.css"/>
-    <link rel="stylesheet" href="pre-landing.css"/>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
-    <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
+    <title>Ragini Kalvade | Portfolio</title>
+    <link rel="stylesheet" href="styles.css" />
+    <link rel="stylesheet" href="pre-landing.css" />
+    <link
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap"
+            rel="stylesheet"
+    />
+    <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js" defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js" defer></script>
+    <script src="https://unpkg.com/typewriter-effect@latest/dist/core.js"></script>
+    <script src="app.js" defer></script>
 </head>
 
 <body>
-<!-- Intro Card with Background -->
-<div id="intro-card">
-    <div class="card">
-        <div class="border"></div>
-        <div class="content">
-            <div class="logo">
-                <div class="logo1">
-                    <canvas id="canvas" width="150" height="150"></canvas>
-                    <script type="module">
-                        import { DotLottie } from "https://cdn.jsdelivr.net/npm/@lottiefiles/dotlottie-web/+esm";
-                        new DotLottie({
-                            autoplay: true,
-                            loop: true,
-                            canvas: document.getElementById("canvas"),
-                            src: "https://lottie.host/0a8a57aa-2f4d-4cc8-ae71-8964a59c77fc/cRQlrf03if.lottie",
-                        });
-                    </script>
-                </div>
-                <span class="trail"></span>
-            </div>
-            <span class="logo-bottom-text">computer science engineer</span>
-        </div>
-
-        <div class="typing-hello">Hello World!</div>
-
-        <button id="view-profile-btn" class="view-profile-btn">Ragini Kalvade's Portfolio</button>
-
-        <span class="bottom-text">where code meets creativity</span>
-    </div>
-</div>
 
 <!-- Main Portfolio -->
-<div id="portfolio" class="hidden">
+<div id="portfolio">
     <div class="container">
         <header class="main-header">
-            <div class="name">RAGINI KALVADE</div>
-            <nav>
-                <a href="#projects">PROJECTS</a>
-                <a href="#about">ABOUT</a>
-                <a href="#contact">CONTACT</a>
-            </nav>
+            <div class="nav-container">
+                <div class="sidebar-header">
+                    <img src="media/photo.jpg" alt="Ragini Kalvade" class="sidebar-pic">
+                </div>
+
+                <div class="nav-center">
+                    <nav id="navbar">
+                        <a href="#hero"><i class="fas fa-home"></i> Home</a>
+                        <a href="#experience"><i class="fas fa-briefcase"></i> Experience</a>
+                        <a href="#projects"><i class="fas fa-lightbulb"></i> Projects</a>
+                        <a href="#contact"><i class="fas fa-user"></i> Contact Me</a>
+                    </nav>
+                </div>
+
+                <div class="nav-social">
+                    <a href="https://github.com/ragini-kalvade" target="_blank"><i class="fab fa-github"></i></a>
+                    <a href="https://linkedin.com/in/ragini-kalvade" target="_blank"><i class="fab fa-linkedin"></i></a>
+                    <a href="https://console.cloud.google.com/" target="_blank"><i class="fab fa-google"></i></a>
+                </div>
+            </div>
+
         </header>
 
         <div class="grid">
-            <!-- Hero section -->
-            <div class="block hero" id="hero">
-                <h1>Software Engineer</h1>
-                <h2>Full Stack Development</h2>
-                <h3>with AI-Driven Design</h3>
-                <div class="decorative">
-                    <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M50,10 C70,10 90,30 90,50 C90,70 70,90 50,90 C30,90 10,70 10,50 C10,30 30,10 50,10 Z" fill="none" stroke="#38bdf8" stroke-width="1"/>
-                        <path d="M50,20 C65,20 80,35 80,50 C80,65 65,80 50,80 C35,80 20,65 20,50 C20,35 35,20 50,20 Z" fill="none" stroke="#38bdf8" stroke-width="1"/>
-                        <path d="M50,30 C60,30 70,40 70,50 C70,60 60,70 50,70 C40,70 30,60 30,50 C30,40 40,30 50,30 Z" fill="none" stroke="#38bdf8" stroke-width="1"/>
-                    </svg>
+            <section class="block hero" id="hero">
+                <h1>Ragini Kalvade.</h1>
+                <h3 id="typewriter"></h3>
+                <div class="hero-buttons">
+                    <a href="media/resume.pdf" download class="btn primary-btn">Download Resume</a>
+                    <a href="#contact" class="btn secondary-btn">Contact Me</a>
                 </div>
-            </div>
+            </section>
 
-            <!-- Portrait section -->
-            <div class="block portrait" id="portrait">
-                <img src="profile.jpeg" alt="Ragini Kalvade Portrait">
-            </div>
+            <section class="block portrait" id="portrait">
+                <div class="glow-border">
+                <script src="https://unpkg.com/@dotlottie/player-component@2.7.12/dist/dotlottie-player.mjs" type="module"></script>
+                <dotlottie-player src="https://lottie.host/0a8a57aa-2f4d-4cc8-ae71-8964a59c77fc/cRQlrf03if.lottie" background="transparent" speed="1"
+                                  style="width: 400px; height: 400px" loop autoplay></dotlottie-player>
+                </div>
+            </section>
 
             <div class="block skills" id="skills">
                 <div class="section-header">
@@ -112,18 +103,6 @@
                                     <div class="tech-icon php-icon">PHP</div>
                                     <div class="tech-name">PHP</div>
                                 </div>
-                                <div class="tech-skill-item">
-                                    <div class="tech-icon html-icon">
-                                        <i class="fab fa-html5"></i>
-                                    </div>
-                                    <div class="tech-name">HTML5</div>
-                                </div>
-                                <div class="tech-skill-item">
-                                    <div class="tech-icon css-icon">
-                                        <i class="fab fa-css3-alt"></i>
-                                    </div>
-                                    <div class="tech-name">CSS</div>
-                                </div>
                             </div>
                         </div>
 
@@ -154,6 +133,18 @@
                                         <i class="fab fa-bootstrap"></i>
                                     </div>
                                     <div class="tech-name">Bootstrap</div>
+                                </div>
+                                <div class="tech-skill-item">
+                                    <div class="tech-icon html-icon">
+                                        <i class="fab fa-html5"></i>
+                                    </div>
+                                    <div class="tech-name">HTML5</div>
+                                </div>
+                                <div class="tech-skill-item">
+                                    <div class="tech-icon css-icon">
+                                        <i class="fab fa-css3-alt"></i>
+                                    </div>
+                                    <div class="tech-name">CSS</div>
                                 </div>
                             </div>
                         </div>
@@ -239,12 +230,12 @@
                                     </div>
                                     <div class="tech-name">Android</div>
                                 </div>
-                                <div class="tech-skill-item">
-                                    <div class="tech-icon elk-icon">
-                                        <i class="fas fa-chart-line"></i>
-                                    </div>
-                                    <div class="tech-name">ELK Stack</div>
-                                </div>
+<!--                                <div class="tech-skill-item">-->
+<!--                                    <div class="tech-icon elk-icon">-->
+<!--                                        <i class="fas fa-chart-line"></i>-->
+<!--                                    </div>-->
+<!--                                    <div class="tech-name">ELK Stack</div>-->
+<!--                                </div>-->
                             </div>
                         </div>
                     </div>
@@ -255,37 +246,132 @@
                 </div>
             </div>
 
-            <!-- About section -->
-            <div class="block about" id="about">
-                <p>Ragini Kalvade is an innovative software engineer specializing in creating scalable applications with an emphasis on intuitive user experiences. With expertise in full-stack development and AI integration, she builds technology solutions for real-world challenges.</p>
-            </div>
+            <section class="block education-section" id="about">
+                <div class="profile-summary">
+                    <h2>Profile Summary</h2>
+                    <p>
+                        Passionate Software Engineer with expertise in full-stack
+                        development, machine learning, and cloud computing. Graduate from
+                        the University of Illinois, Chicago with a Masters in Computer
+                        Science.
+                    </p>
+                </div>
+                <div class="education-cards">
+                    <div class="education-card" id="masters">
+                        <div class="border-animation"></div>
+                        <span class="degree-badge">MS</span>
+                        <h2>Master of Science</h2>
+                        <div class="university">University of Illinois, Chicago</div>
+                        <div class="year">2024 - 2026</div>
+                        <div class="description">Specialized in Machine Learning and Distributed Systems.</div>
+                    </div>
+                    <div class="education-card" id="bachelors">
+                        <div class="border-animation"></div>
+                        <span class="degree-badge">BTech</span>
+                        <h2>Bachelor of Technology</h2>
+                        <div class="university">National Institute of Technology, Bhopal</div>
+                        <div class="year">2018 - 2022</div>
+                        <div class="description">Computer Science major with First Class Honors.</div>
+                    </div>
+                </div>
+            </section>
 
-            <!-- Contact section -->
-            <div class="block contact" id="contact">
-                <h2>Contact me</h2>
-                <p>Have a project in mind?</p>
-                <span class="arrow">↗</span>
-            </div>
+            <section class="block experience-section" id="experience">
+                <div class="section-header">
+                    <h3>Experience</h3>
+                </div>
+                <div class="timeline">
+                    <div class="timeline-item">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-content">
+                            <h4>Research Assistant</h4>
+                            <p class="company">UIC Fall Prevention Lab, College of Applied Health Sciences | Jan 2025 - Current</p>
+                            <p class="desc">Developed an end-to-end web app for tracking cognitive progress in patients using Vue.js, Node.js, and MongoDB. Integrated analytics dashboards for therapists.</p>
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-content">
+                            <h4> Senior Analyst | Fullstack SDE</h4>
+                            <p class="company">Deutsche Bank | 2022 - 2024</p>
+                            <p class="desc">Developed an end-to-end web app for tracking cognitive progress in patients using Vue.js, Node.js, and MongoDB.
+                                Integrated analytics dashboards for therapists.</p>
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-content">
+                            <h4>Summer 2021 Intern</h4>
+                            <p class="company">Deutsche Bank | May 2021 – Jul 2021</p>
+                            <p class="desc">Worked on enhancing system performance and implementing CI/CD pipelines using Jenkins and Docker. Contributed to an internal React dashboard for performance monitoring.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
 
-            <!-- Social Media Section -->
-            <div class="block social" id="social">
-                <a href="https://github.com/ragini-kalvade">GITHUB</a>
-                <a href="https://www.linkedin.com/in/ragini-kalvade/">LINKEDIN</a>
-                <a href="#">TWITTER</a>
-            </div>
+            <section class="block projects-section" id="projects">
+                <div class="section-header">
+                    <h3>Projects</h3>
+                </div>
+                <div class="projects-carousel">
+                    <div class="project-card">
+                        <img src="media/project1.jpg" alt="Project 1" />
+                        <h4>Stroop Game</h4>
+                        <p>Web game using nose tracking to help in cognitive training for older adults.</p>
+                        <p class="tech">Tech: Vue.js, MediaPipe, Node.js</p>
+                        <a href="https://github.com/ragini-kalvade/stroop-game" target="_blank">View Code</a>
+                    </div>
+                    <div class="project-card">
+                        <img src="media/project2.jpg" alt="Project 2" />
+                        <h4>GPU Failure Recovery</h4>
+                        <p>Simulated GPU failure and automated checkpoint recovery during LLM training.</p>
+                        <p class="tech">Tech: Python, PyTorch, Megatron-LM</p>
+                        <a href="https://github.com/ragini-kalvade/gpu-recovery" target="_blank">View Code</a>
+                    </div>
+                    <div class="project-card">
+                        <img src="media/project3.jpg" alt="Project 3" />
+                        <h4>REDCap Integration</h4>
+                        <p>REDCap setup and CSV migration pipeline for Fall Prevention Lab study workflows.</p>
+                        <p class="tech">Tech: JavaScript, REDCap API, Node.js</p>
+                        <a href="#">View Code</a>
+                    </div>
+                </div>
+            </section>
+
+            <section class="block contact-section" id="contact">
+                <div class="section-header">
+                    <h3>Contact Me</h3>
+                </div>
+                <form class="contact-form" action="https://formspree.io/f/xqaqodjd" method="POST">
+                    <div class="form-group">
+                        <label for="name">Name</label>
+                        <input type="text" name="name" id="name" placeholder="Your name" required />
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input type="email" name="email" id="email" placeholder="Your email" required />
+                    </div>
+                    <div class="form-group">
+                        <label for="message">Message</label>
+                        <textarea name="message" id="message" placeholder="Your message" rows="5" required></textarea>
+                    </div>
+                    <button type="submit" class="btn primary-btn">Send Message</button>
+                </form>
+            </section>
+
+
+
+
+
+            <!--            &lt;!&ndash; Social Media Section &ndash;&gt;-->
+<!--            <div class="block social" id="social">-->
+<!--                <a href="https://github.com/ragini-kalvade">GITHUB</a>-->
+<!--                <a href="https://www.linkedin.com/in/ragini-kalvade/">LINKEDIN</a>-->
+<!--                <a href="#">TWITTER</a>-->
+<!--            </div>-->
         </div>
     </div>
 </div>
-
-<script src="app.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
-<script>
-    AOS.init({
-        once: true,
-        duration: 800,
-        offset: 150
-    });
-</script>
 
 </body>
 </html>
