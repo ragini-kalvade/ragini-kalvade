@@ -1,0 +1,43 @@
+
+.contact-section {
+    grid-column: 1 / span 12;
+    animation: slideInLeft 0.8s ease forwards;
+    padding: 20px;
+    background-color: var(--color-card-bg);
+}
+
+.contact-form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    max-width: 600px;
+    margin-top: 15px;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+}
+
+.form-group label {
+    font-weight: 500;
+    margin-bottom: 5px;
+    color: var(--color-primary);
+}
+
+.form-group input,
+.form-group textarea {
+    padding: 10px;
+    border: 1px solid var(--color-border);
+    border-radius: 6px;
+    font-size: 0.95rem;
+    background-color: white;
+    color: var(--color-text);
+    resize: vertical;
+}
+
+.contact-form button {
+    width: fit-content;
+    align-self: flex-start;
+}
+

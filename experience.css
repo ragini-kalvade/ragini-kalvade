@@ -1,0 +1,130 @@
+.experience-section {
+    grid-column: 1 / span 12;
+    animation: slideInLeft 0.8s ease forwards;
+    background: rgba(100, 153, 255, 0);
+    box-shadow: none;
+}
+
+.timeline {
+    position: relative;
+    margin-top: 30px;
+    padding-left: 30px;
+    border-left: 3px solid var(--color-accent);
+    overflow: hidden;
+}
+
+.timeline-item {
+    position: relative;
+    margin-bottom: 40px;
+    animation: fadeInUp 0.8s ease forwards;
+    opacity: 0;
+    transform: translateY(40px);
+    transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
+.timeline-item.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.timeline-dot {
+    position: absolute;
+    left: -11px;
+    top: 5px;
+    width: 20px;
+    height: 20px;
+    background: #0b2a71;
+    border-radius: 50%;
+    border: 3px solid white;
+    box-shadow: 0 0 10px var(--color-accent);
+    z-index: 1;
+}
+
+.timeline-content {
+    background-color: var(--color-card-bg);
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: var(--shadow);
+    position: relative;
+    transition: all 0.3s ease;
+    cursor: default;
+}
+
+.timeline-content:hover {
+    transform: scale(1.02);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+    background-color: rgba(240, 248, 255, 0.9);
+}
+
+.timeline-content h4 {
+    color: var(--color-primary);
+    margin-bottom: 6px;
+    font-size: 1.2rem;
+}
+
+.timeline-content .company {
+    font-weight: 500;
+    color: var(--color-text-light);
+    margin-bottom: 10px;
+    font-size: 0.95rem;
+}
+
+.timeline-content .desc {
+    color: var(--color-text);
+    font-size: 0.95rem;
+    line-height: 1.6;
+}
+
+.timeline-content .tech {
+    font-style: italic;
+    font-size: 0.85rem;
+    color: var(--color-text-light);
+    margin-top: 10px;
+    text-align: right;
+}
+
+.timeline-content a {
+    margin-top: 10px;
+    display: inline-block;
+    font-size: 0.9rem;
+    color: var(--color-primary);
+    text-decoration: underline;
+    transition: color 0.3s;
+}
+
+.timeline-content a:hover {
+    color: var(--color-accent);
+}
+.timeline::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -3px;
+    width: 3px;
+    height: 0;
+    background: var(--color-accent);
+    z-index: 0;
+    transition: height 0.5s ease-out;
+}
+
+.timeline.grow::before {
+    height: 100%;
+}
+.tech-stack {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 10px;
+}
+
+.badge {
+    background-color: #121212;
+    color: white;
+    padding: 4px 10px;
+    border-radius: 12px;
+    font-size: 0.75rem;
+    font-weight: 500;
+    display: inline-block;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+    font-family: 'JetBrains Mono', monospace;
+}

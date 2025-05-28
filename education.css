@@ -1,0 +1,158 @@
+.education-section {
+    grid-column: 1 / span 12;
+    grid-row: 2;
+    display: grid;
+    grid-template-columns: 5fr 7fr;
+    gap: 20px;
+    background-color: transparent;
+    padding: 0;
+    animation: none;
+    margin-top: 0;
+
+}
+
+.profile-summary {
+    background-color: var(--color-card-bg);
+    border-radius: 8px;
+    padding: 25px;
+    box-shadow: var(--shadow);
+    opacity: 0;
+    transform: translateX(-30px);
+    animation: slideInLeft 0.8s ease forwards;
+}
+
+.profile-summary h2 {
+    color: var(--color-primary);
+    margin-bottom: 15px;
+    position: relative;
+    display: inline-block;
+}
+
+.profile-summary h2::after {
+    content: '';
+    position: absolute;
+    bottom: -5px;
+    left: 0;
+    width: 60px;
+    height: 3px;
+    background-color: var(--color-secondary);
+}
+
+.profile-summary p {
+    line-height: 1.6;
+    margin-bottom: 12px;
+    color: var(--color-text);
+}
+
+.education-cards {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    box-shadow: var(--shadow);
+}
+
+.education-card {
+    position: relative;
+    padding: 30px 25px 40px;
+    background: linear-gradient(135deg, rgb(118, 158, 255), rgb(93, 139, 255));
+    color: white;
+    border-radius: 12px;
+    box-shadow: 0 8px 18px rgba(0, 0, 0, 0.2);
+    overflow: hidden;
+    transition: transform 0.3s ease;
+    z-index: 0;
+    border: 2px solid transparent;
+}
+
+.education-card:hover::before {
+    opacity: 1;
+}
+
+.education-card:hover {
+    transform: scale(1.015);
+}
+
+.education-card::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: 12px;
+    padding: 2px;
+    background: linear-gradient(135deg, white, transparent, white);
+    background-size: 300% 300%;
+    animation: pulseBorder 2s linear infinite;
+    z-index: -1;
+    opacity: 0;
+    mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    mask-composite: exclude;
+    -webkit-mask-composite: xor;
+}
+
+@keyframes pulseBorder {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+.icon-badge {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    background: white;
+    color: #002cdd;
+    padding: 10px;
+    border-radius: 50%;
+    font-size: 1rem;
+    box-shadow: 0 0 10px rgba(0,0,0,0.2);
+    z-index: 1;
+}
+
+.education-card .degree-badge {
+    margin-top: 10px;
+    background: rgba(255, 255, 255, 0.15);
+    padding: 6px 14px 6px 14%;
+    border-radius: 30px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    width: fit-content;
+}
+
+.education-card h2 {
+    font-size: 1.3rem;
+    font-weight: 600;
+    margin-top: 10px;
+}
+
+.education-card .university {
+    font-size: 1rem;
+    font-weight: 500;
+    color: #e5e9f1;
+}
+
+.education-card .year {
+    font-size: 0.9rem;
+    color: #cbd5e1;
+}
+
+.education-card .description {
+    font-size: 0.9rem;
+    line-height: 1.5;
+    color: #e2e8f0;
+    margin-top: 10px;
+}
+
+.education-card .card-footer {
+    border-top: 1px solid rgba(255,255,255,0.15);
+    margin-top: 15px;
+    padding-top: 10px;
+    font-size: 0.85rem;
+    color: #e0eaff;
+}
+
+@media (max-width: 768px) {
+    .education-cards {
+        grid-template-columns: 1fr;
+    }
+}

@@ -1,0 +1,575 @@
+.skills {
+    grid-column: 9 / span 4;
+    grid-row: 1;
+    animation: slideInRight 0.8s ease forwards 0.9s;
+    background-color: var(--color-card-bg);
+}
+
+.section-header {
+    margin-bottom: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.section-header h3 {
+    font-size: 1.2rem;
+    color: var(--color-primary);
+}
+
+/* Tech skills container styling */
+.tech-skills-container {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.tech-skills-row {
+    display: flex;
+    justify-content: space-between;
+    gap: 15px;
+}
+
+.tech-skill-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: transform 0.3s ease;
+}
+
+.tech-skill-item:hover {
+    transform: translateY(-3px);
+}
+
+.tech-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 6px;
+    background-color: #121212;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    font-weight: 600;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.25);
+}
+
+.tech-name {
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--color-text);
+}
+
+/* Specific styling for each tech icon */
+.js-icon {
+    background-color: #121212;
+    color: #f7df1e;
+    font-family: 'JetBrains Mono', monospace;
+}
+
+.ts-icon {
+    background-color: #121212;
+    color: #3178c6;
+    font-family: 'JetBrains Mono', monospace;
+}
+
+.node-icon {
+    background-color: #121212;
+    color: #68a063;
+}
+
+.express-icon {
+    background-color: #121212;
+    color: #white;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 16px;
+    letter-spacing: -1px;
+}
+
+.react-icon {
+    background-color: #121212;
+    color: #61dafb;
+}
+
+.redux-icon {
+    background-color: #121212;
+    color: #764abc;
+}
+
+.mongo-icon {
+    background-color: #121212;
+    color: #4db33d;
+}
+
+.sql-icon {
+    background-color: #121212;
+    color: #f29111;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 14px;
+}
+
+.skill-category {
+    margin-bottom: 20px;
+}
+
+.skill-category h4 {
+    font-size: 14px;
+    color: var(--color-secondary);
+    margin-bottom: 10px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    border-bottom: 1px solid var(--color-border);
+    padding-bottom: 5px;
+}
+
+.tech-skills-container {
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+}
+
+.tech-skills-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+    margin-bottom: 10px;
+}
+
+.tech-skill-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: transform 0.3s ease;
+    margin-right: 10px;
+    margin-bottom: 10px;
+}
+
+.tech-skill-item:hover {
+    transform: translateY(-3px);
+}
+
+.tech-icon {
+    width: 36px;
+    height: 36px;
+    border-radius: 6px;
+    background-color: #121212;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+    font-weight: 600;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.25);
+}
+
+.tech-name {
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--color-text);
+}
+
+/* Specific styling for each new tech icon */
+.py-icon {
+    background-color: #121212;
+    color: #3776ab;
+    font-family: 'JetBrains Mono', monospace;
+}
+
+.cpp-icon {
+    background-color: #121212;
+    color: #659ad2;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 14px;
+}
+
+.java-icon {
+    background-color: #121212;
+    color: #f89820;
+}
+
+.git-icon {
+    background-color: #121212;
+    color: #f05033;
+}
+
+.bash-icon {
+    background-color: #121212;
+    color: #4eaa25;
+}
+
+.html-icon {
+    background-color: #121212;
+    color: #e34c26;
+}
+
+.css-icon {
+    background-color: #121212;
+    color: #264de4;
+}
+
+.mysql-icon {
+    background-color: #121212;
+    color: #4479a1;
+}
+
+.php-icon {
+    background-color: #121212;
+    color: #777bb3;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 14px;
+}
+
+.docker-icon {
+    background-color: #121212;
+    color: #2496ed;
+}
+
+.jenkins-icon {
+    background-color: #121212;
+    color: #d33833;
+}
+
+.cloud-icon {
+    background-color: #121212;
+    color: #4285f4;
+}
+
+.terraform-icon {
+    background-color: #121212;
+    color: #7b42bc;
+}
+
+.android-icon {
+    background-color: #121212;
+    color: #a4c639;
+}
+
+.elk-icon {
+    background-color: #121212;
+    color: #00bfb3;
+}
+
+.kafka-icon {
+    background-color: #121212;
+    color: #000000;
+}
+
+.spring-icon {
+    background-color: #121212;
+    color: #6db33f;
+}
+
+.figma-icon {
+    background-color: #121212;
+    color: #f24e1e;
+}
+
+/* Responsive adjustments for skills section */
+@media (max-width: 992px) {
+    .skills {
+        grid-column: 1 / span 12;
+    }
+
+    .tech-skills-row {
+        justify-content: flex-start;
+    }
+}
+
+@media (max-width: 768px) {
+    .tech-skills-row {
+        justify-content: space-between;
+    }
+
+    .tech-skill-item {
+        margin-bottom: 15px;
+    }
+}
+
+@media (max-width: 576px) {
+    .tech-skills-row {
+        justify-content: flex-start;
+    }
+
+    .tech-skill-item {
+        width: calc(50% - 10px);
+        margin-right: 0;
+    }
+}
+
+@media (max-width: 992px) {
+    .skills {
+        grid-column: 1 / span 12;
+        grid-row: 3;
+    }
+
+    .tech-skills-container {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 15px;
+    }
+
+    .tech-skills-row {
+        flex-direction: column;
+        gap: 15px;
+    }
+}
+
+@media (max-width: 576px) {
+    .tech-skills-container {
+        grid-template-columns: 1fr;
+    }
+
+    .tech-skills-row {
+        flex-direction: row;
+        justify-content: flex-start;
+        gap: 20px;
+    }
+}
+
+@keyframes slideInLeft {
+    from {
+        opacity: 0;
+        transform: translateX(-30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@keyframes slideInRight {
+    from {
+        opacity: 0;
+        transform: translateX(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Responsive adjustments */
+@media (max-width: 992px) {
+    .grid {
+        grid-template-columns: repeat(12, 1fr);
+    }
+
+    .hero {
+        grid-column: 1 / span 12;
+        grid-row: 1;
+    }
+
+    .portrait {
+        grid-column: 1 / span 12;
+        grid-row: 2;
+        justify-content: center;
+    }
+
+    .portrait img {
+        width: 50%;
+    }
+
+    .projects {
+        grid-column: 1 / span 12;
+        grid-row: 3;
+    }
+
+    .about {
+        grid-column: 1 / span 12;
+        grid-row: 4;
+    }
+
+    .contact {
+        grid-column: 1 / span 12;
+        grid-row: 5;
+    }
+
+    .social {
+        grid-column: 1 / span 12;
+        grid-row: 6;
+        justify-content: center;
+    }
+}
+
+@media (max-width: 768px) {
+    .grid {
+        grid-template-columns: 1fr;
+    }
+
+    .hero, .portrait, .about, .contact, .projects, .social {
+        grid-column: 1 / -1;
+        grid-row: auto;
+    }
+
+    .portrait img {
+        width: 70%;
+    }
+}
+
+.skills-carousel {
+    position: relative;
+    overflow: hidden;
+    padding: 0 10px;
+    margin-bottom: 20px;
+}
+
+.skills-carousel-container {
+    position: relative;
+    min-height: 280px;
+}
+
+.skill-category {
+    transition: all 0.5s ease;
+    opacity: 0;
+    visibility: hidden;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    padding-top: 10px;
+    transform: translateX(30px);
+}
+
+.skill-category.active-category {
+    opacity: 1;
+    visibility: visible;
+    transform: translateX(0);
+    position: relative;
+}
+
+.skill-category.hidden-category {
+    opacity: 0;
+    visibility: hidden;
+    transform: translateX(-30px);
+    position: absolute;
+}
+
+.carousel-controls {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 15px;
+    gap: 15px;
+}
+
+.carousel-indicators {
+    display: flex;
+    gap: 8px;
+    justify-content: center;
+}
+
+.carousel-indicator {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background-color: var(--color-border);
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.carousel-indicator.active {
+    background-color: var(--color-secondary);
+    transform: scale(1.2);
+}
+
+.carousel-btn {
+    background-color: var(--color-secondary);
+    color: white;
+    border: none;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-size: 14px;
+}
+
+.carousel-btn:hover {
+    background-color: var(--color-accent);
+    transform: scale(1.1);
+}
+
+.carousel-btn:disabled {
+    background-color: var(--color-border);
+    cursor: not-allowed;
+    transform: none;
+}
+
+.carousel-category-title {
+    text-align: center;
+    font-size: 16px;
+    color: var(--color-primary);
+    margin-bottom: 20px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    position: relative;
+    display: inline-block;
+}
+
+.carousel-category-title::after {
+    content: '';
+    position: absolute;
+    bottom: -5px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 40px;
+    height: 2px;
+    background-color: var(--color-accent);
+}
+
+.tech-skills-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 15px;
+    margin-top: 20px;
+}
+
+@media (max-width: 768px) {
+    .tech-skills-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+@media (max-width: 576px) {
+    .tech-skills-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@keyframes fadeInRight {
+    from {
+        opacity: 0;
+        transform: translateX(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@keyframes fadeOutLeft {
+    from {
+        opacity: 1;
+        transform: translateX(0);
+    }
+    to {
+        opacity: 0;
+        transform: translateX(-30px);
+    }
+}

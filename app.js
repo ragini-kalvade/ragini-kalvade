@@ -291,3 +291,48 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     });
 });
+
+document.addEventListener("DOMContentLoaded", () => {
+    const items = document.querySelectorAll(".timeline-item");
+
+    const observer = new IntersectionObserver(entries => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add("visible");
+            }
+        });
+    }, {
+        threshold: 0.2
+    });
+
+    items.forEach(item => observer.observe(item));
+});
+
+document.addEventListener("DOMContentLoaded", () => {
+    const timeline = document.querySelector(".timeline");
+    const items = document.querySelectorAll(".timeline-item");
+
+    const timelineObserver = new IntersectionObserver(entries => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                timeline.classList.add("grow");
+            }
+        });
+    }, {
+        threshold: 0.1
+    });
+
+    timelineObserver.observe(timeline);
+
+    const itemObserver = new IntersectionObserver(entries => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add("visible");
+            }
+        });
+    }, {
+        threshold: 0.3
+    });
+
+    items.forEach(item => itemObserver.observe(item));
+});

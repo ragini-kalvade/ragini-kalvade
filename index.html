@@ -5,7 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Ragini Kalvade | Portfolio</title>
     <link rel="stylesheet" href="styles.css" />
-    <link rel="stylesheet" href="pre-landing.css" />
+    <link rel="stylesheet" href="skills.css" />
+    <link rel="stylesheet" href="education.css" />
+    <link rel="stylesheet" href="experience.css" />
+    <link rel="stylesheet" href="projects.css" />
+    <link rel="stylesheet" href="contactForm.css" />
     <link
             rel="stylesheet"
             href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
@@ -60,9 +64,9 @@
 
             <section class="block portrait" id="portrait">
                 <div class="glow-border">
-                <script src="https://unpkg.com/@dotlottie/player-component@2.7.12/dist/dotlottie-player.mjs" type="module"></script>
-                <dotlottie-player src="https://lottie.host/0a8a57aa-2f4d-4cc8-ae71-8964a59c77fc/cRQlrf03if.lottie" background="transparent" speed="1"
-                                  style="width: 400px; height: 400px" loop autoplay></dotlottie-player>
+                    <script src="https://unpkg.com/@dotlottie/player-component@2.7.12/dist/dotlottie-player.mjs" type="module"></script>
+                    <dotlottie-player src="https://lottie.host/57a76023-8767-4c50-b2e8-6e0212ee821b/ctQWfiPzA9.lottie" background="transparent"
+                                      speed="1" style="width: 400px; height: 400px" loop autoplay></dotlottie-player>
                 </div>
             </section>
 
@@ -257,21 +261,28 @@
                     </p>
                 </div>
                 <div class="education-cards">
-                    <div class="education-card" id="masters">
-                        <div class="border-animation"></div>
+                    <div class="education-card">
+                        <div class="icon-badge"><i class="fas fa-graduation-cap"></i></div>
                         <span class="degree-badge">MS</span>
                         <h2>Master of Science</h2>
                         <div class="university">University of Illinois, Chicago</div>
                         <div class="year">2024 - 2026</div>
-                        <div class="description">Specialized in Machine Learning and Distributed Systems.</div>
+                        <div class="description">
+                            Specialized in Machine Learning and Distributed Systems.
+                        </div>
+                        <div class="card-footer">GPA: 4.0 / 4.0</div>
                     </div>
-                    <div class="education-card" id="bachelors">
-                        <div class="border-animation"></div>
+
+                    <div class="education-card">
+                        <div class="icon-badge"><i class="fas fa-user-graduate"></i></div>
                         <span class="degree-badge">BTech</span>
                         <h2>Bachelor of Technology</h2>
-                        <div class="university">National Institute of Technology, Bhopal</div>
+                        <div class="university">NIT Bhopal</div>
                         <div class="year">2018 - 2022</div>
-                        <div class="description">Computer Science major with First Class Honors.</div>
+                        <div class="description">
+                            Computer Science major with First Class Honors.
+                        </div>
+                        <div class="card-footer">GPA: 8.4 / 10.0</div>
                     </div>
                 </div>
             </section>
@@ -281,33 +292,79 @@
                     <h3>Experience</h3>
                 </div>
                 <div class="timeline">
+
+                    <!-- UIC RA -->
                     <div class="timeline-item">
                         <div class="timeline-dot"></div>
                         <div class="timeline-content">
-                            <h4>Research Assistant</h4>
-                            <p class="company">UIC Fall Prevention Lab, College of Applied Health Sciences | Jan 2025 - Current</p>
-                            <p class="desc">Developed an end-to-end web app for tracking cognitive progress in patients using Vue.js, Node.js, and MongoDB. Integrated analytics dashboards for therapists.</p>
+                            <div style="display: flex; justify-content: space-between; align-items: flex-start;">
+                                <div style="flex: 1;">
+                                    <h4>Research Assistant</h4>
+                                    <p class="company">
+                                        <img src="media/uic logo.png" alt="UIC Logo" style="height: 20px; vertical-align: middle; margin-right: 6px;" />
+                                        UIC Fall Prevention Lab, College of Applied Health Sciences | Jan 2025 - Current
+                                    </p>
+                                    <p class="desc">
+                                        Developed a web app for tracking patient cognitive progress and integrated therapist-facing dashboards.
+                                    </p>
+                                </div>
+                                <p class="tech">
+                                    Tech: AWS, JS, HTML5, CSS
+                                </p>
+                            </div>
+                            <a href="https://github.com/ragini-kalvade/stroop-game" target="_blank">View Project</a>
                         </div>
                     </div>
+
+                    <!-- Deutsche Bank SDE -->
                     <div class="timeline-item">
                         <div class="timeline-dot"></div>
                         <div class="timeline-content">
-                            <h4> Senior Analyst | Fullstack SDE</h4>
-                            <p class="company">Deutsche Bank | 2022 - 2024</p>
-                            <p class="desc">Developed an end-to-end web app for tracking cognitive progress in patients using Vue.js, Node.js, and MongoDB.
-                                Integrated analytics dashboards for therapists.</p>
+                            <div style="display: flex; justify-content: space-between; align-items: flex-start;">
+                                <div style="flex: 1;">
+                                    <h4>Senior Analyst | Fullstack SDE</h4>
+                                    <p class="company">
+                                        <img src="media/db_logo.png" alt="Deutsche Bank Logo" style="height: 20px; vertical-align: middle; margin-right: 6px;" />
+                                        Deutsche Bank | 2022 - 2024
+                                    </p>
+                                    <p class="desc">
+                                        Built distributed systems for secure trade processing. Reduced latency from 4 days to 2 minutes using async pipelines.
+                                    </p>
+                                </div>
+                                <p class="tech">
+                                    Tech: Java, Spring Boot, React, Kafka, GCP
+                                </p>
+                            </div>
+                            <a href="https://github.com/ragini-kalvade/secure-trade-system" target="_blank">View Project</a>
                         </div>
                     </div>
+
+                    <!-- Deutsche Bank Intern -->
                     <div class="timeline-item">
                         <div class="timeline-dot"></div>
                         <div class="timeline-content">
-                            <h4>Summer 2021 Intern</h4>
-                            <p class="company">Deutsche Bank | May 2021 – Jul 2021</p>
-                            <p class="desc">Worked on enhancing system performance and implementing CI/CD pipelines using Jenkins and Docker. Contributed to an internal React dashboard for performance monitoring.</p>
+                            <div style="display: flex; justify-content: space-between; align-items: flex-start;">
+                                <div style="flex: 1;">
+                                    <h4>Summer Intern</h4>
+                                    <p class="company">
+                                        <img src="media/db_logo.png" alt="Deutsche Bank Logo" style="height: 20px; vertical-align: middle; margin-right: 6px;" />
+                                        Deutsche Bank | May 2021 – Jul 2021
+                                    </p>
+                                    <p class="desc">
+                                        Enhanced system performance, implemented CI/CD pipelines, and contributed to monitoring dashboards using React.
+                                    </p>
+                                </div>
+                                <p class="tech">
+                                    Tech: React, ELK Stack, Spring Boot, Spring Data JPA
+                                </p>
+                            </div>
+                            <a href="https://github.com/ragini-kalvade/devops-dashboard" target="_blank">View Project</a>
                         </div>
                     </div>
+
                 </div>
             </section>
+
 
             <section class="block projects-section" id="projects">
                 <div class="section-header">
@@ -316,11 +373,12 @@
                 <div class="projects-carousel">
                     <div class="project-card">
                         <img src="media/project1.jpg" alt="Project 1" />
-                        <h4>Stroop Game</h4>
-                        <p>Web game using nose tracking to help in cognitive training for older adults.</p>
+                        <h4>COG-Games</h4>
+                        <p>Web game using nose tracking to help in cognitive training for older adults.Web game using nose tracking to help in cognitive training for older adults.</p>
                         <p class="tech">Tech: Vue.js, MediaPipe, Node.js</p>
-                        <a href="https://github.com/ragini-kalvade/stroop-game" target="_blank">View Code</a>
+                        <a href="https://s3.us-east-2.amazonaws.com/www.fratsforfalls.com/menu.html" target="_blank">View Code</a>
                     </div>
+
                     <div class="project-card">
                         <img src="media/project2.jpg" alt="Project 2" />
                         <h4>GPU Failure Recovery</h4>
@@ -328,6 +386,7 @@
                         <p class="tech">Tech: Python, PyTorch, Megatron-LM</p>
                         <a href="https://github.com/ragini-kalvade/gpu-recovery" target="_blank">View Code</a>
                     </div>
+
                     <div class="project-card">
                         <img src="media/project3.jpg" alt="Project 3" />
                         <h4>REDCap Integration</h4>
@@ -336,6 +395,7 @@
                         <a href="#">View Code</a>
                     </div>
                 </div>
+
             </section>
 
             <section class="block contact-section" id="contact">
@@ -357,18 +417,13 @@
                     </div>
                     <button type="submit" class="btn primary-btn">Send Message</button>
                 </form>
+
+                <div class="block social" id ="social">
+                    <a href="https://github.com/ragini-kalvade" target="_blank"><i class="fab fa-github"></i></a>
+                    <a href="https://linkedin.com/in/ragini-kalvade" target="_blank"><i class="fab fa-linkedin"></i></a>
+                    <a href="https://console.cloud.google.com/" target="_blank"><i class="fab fa-google"></i></a>
+                </div>
             </section>
-
-
-
-
-
-            <!--            &lt;!&ndash; Social Media Section &ndash;&gt;-->
-<!--            <div class="block social" id="social">-->
-<!--                <a href="https://github.com/ragini-kalvade">GITHUB</a>-->
-<!--                <a href="https://www.linkedin.com/in/ragini-kalvade/">LINKEDIN</a>-->
-<!--                <a href="#">TWITTER</a>-->
-<!--            </div>-->
         </div>
     </div>
 </div>
