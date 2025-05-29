@@ -8,7 +8,7 @@
     padding: 0;
     animation: none;
     margin-top: 0;
-
+    min-height: 18rem;
 }
 
 .profile-summary {
@@ -54,7 +54,7 @@
 .education-card {
     position: relative;
     padding: 30px 25px 40px;
-    background: linear-gradient(135deg, rgb(118, 158, 255), rgb(93, 139, 255));
+    background: linear-gradient(135deg, rgba(118, 158, 255, 0.7), rgba(93, 139, 255, 0.82));
     color: white;
     border-radius: 12px;
     box-shadow: 0 8px 18px rgba(0, 0, 0, 0.2);

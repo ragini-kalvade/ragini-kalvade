@@ -5,7 +5,7 @@
     --color-background: #f4f9ff;  /* brighter background */
     --color-text: #111827;        /* deep grey-black */
     --color-text-light: #6b7280;  /* softer grey */
-    --color-card-bg: rgba(255, 255, 255, 0.92);
+    --color-card-bg: rgba(255, 255, 255, 0.76);
     --color-hover: #cbd5e1;
     --color-border: #dbeafe;
     --shadow: 0 4px 6px rgba(15, 23, 42, 0.1);
@@ -13,7 +13,6 @@
 
 /* Base Styles */
 * {
-
     margin: 0;
     padding: 0;
     box-sizing: border-box;
@@ -27,19 +26,19 @@ body {
 }
 
 .container {
-    max-width: 1250px;
+    max-width: 1650px;
     margin: 0 auto;
     padding: 0px;
     align-content: center;
 }
 
 .main-header {
-    padding: 10px 0;
+    padding: 15px 0;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background-color: rgb(118, 158, 255);
-    margin-bottom: 20px;
+    background-color: rgb(153, 182, 251);
+    margin-bottom: 35px;
     border-radius: 8px;
     opacity: 0;
     transform: translateY(-20px);
@@ -66,7 +65,7 @@ nav a {
     align-items: center;
     padding: 0.5rem 0.5rem;
     border-radius: 5px;
-    font-size: 0.9rem;
+    font-size: 1.1rem;
 }
 
 nav a.active {
@@ -94,8 +93,8 @@ nav a:hover {
 }
 
 .sidebar-pic {
-    width: 3.6rem;
-    height: 3.6rem;
+    width: 4rem;
+    height: 4rem;
     border-radius: 50%;
     object-fit: cover;
     border: 3px solid #eeffff;
@@ -119,13 +118,13 @@ nav a:hover {
 
 .nav-social {
     display: flex;
-    gap: 12px;
+    gap: 20px;
     padding-right: 1.5rem;
 }
 
 .nav-social a {
-    color: var(--color-primary);
-    font-size: 1.4rem;
+    color: #ffffff;
+    font-size: 1.8rem;
     transition: color 0.3s ease;
 }
 
@@ -137,14 +136,15 @@ nav a:hover {
 .grid {
     display: grid;
     grid-template-columns: repeat(12, 1fr);
-    grid-gap: 25px;
+    grid-gap: 30px;
     position: relative;
 }
 
 .block {
+    min-height: 90%;
     background-color: var(--color-card-bg);
     border-radius: 8px;
-    padding: 20px;
+    padding: 30px;
     overflow: hidden;
     opacity: 0;
     transform: translateX(30px);

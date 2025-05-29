@@ -458,196 +458,369 @@ function createClickRipple(event, element) {
     }, 600);
 }
 
-function animateTimelineSpine() {
-    const timelineContainer = document.querySelector('.timeline-container');
-    if (!timelineContainer) return;
+// Fixed Experience Section JavaScript - Replace the experience-related code in app.js
 
-    const spine = timelineContainer.querySelector('::before');
+document.addEventListener("DOMContentLoaded", function() {
+    // Initialize all functions
+    initializeAnimations();
+    initializeNavigation();
+    initializeTypewriter();
+    initializeSkillsCarousel();
+    initializeInteractions();
+    initializeAOS();
+    initializeExperience(); // Add this line
 
-    // Create animated gradient effect for the spine
-    let gradientPosition = 0;
-    const animateGradient = () => {
-        gradientPosition += 2;
-        if (gradientPosition > 200) gradientPosition = -100;
+    window.addEventListener('resize', adjustMainContentPadding);
+});
 
-        timelineContainer.style.setProperty('--gradient-position', `${gradientPosition}%`);
-        requestAnimationFrame(animateGradient);
-    };
+function initializeExperience() {
+    const container = document.getElementById('experience-timeline');
+    if (!container) return;
 
-    animateGradient();
-}
+    const items = Array.from(container.querySelectorAll('.timeline-item'));
+    const chevron = document.getElementById('scroll-chevron');
 
-function initializeTimelineControls() {
-    // Auto-scroll functionality for timeline
-    let isAutoScrolling = false;
-    const timelineItems = document.querySelectorAll('.timeline-item');
+    if (!items.length) return;
 
-    // Optional: Add auto-scroll through timeline items
-    function autoScrollTimeline() {
-        if (isAutoScrolling || timelineItems.length === 0) return;
+    let currentIndex = 0;
 
-        isAutoScrolling = true;
-        let currentIndex = 0;
+    // Create and setup timeline vertical line
+    function setupTimelineLine() {
+        let line = container.querySelector('.timeline-vertical-line');
+        if (!line) {
+            line = document.createElement('div');
+            line.className = 'timeline-vertical-line';
+            container.insertBefore(line, container.firstChild);
+        }
 
-        const scrollToItem = () => {
-            if (currentIndex < timelineItems.length) {
-                timelineItems[currentIndex].scrollIntoView({
-                    behavior: 'smooth',
-                    block: 'center'
-                });
-                currentIndex++;
-                setTimeout(scrollToItem, 3000); // 3 second intervals
-            } else {
-                isAutoScrolling = false;
-            }
-        };
+        // Calculate total height needed for the line
+        const totalHeight = items.reduce((height, item) => {
+            return height + item.offsetHeight + 20; // 20px for margin-bottom
+        }, 0);
 
-        setTimeout(scrollToItem, 1000); // Start after 1 second
+        line.style.height = Math.max(totalHeight, container.scrollHeight) + "px";
     }
 
-    // Add progress indicator
-    createTimelineProgress();
+    // Initialize timeline items visibility
+    function initializeItems() {
+        items.forEach((item, index) => {
+            item.classList.remove('active', 'next-glimpse', 'visible');
+            if (index === 0) {
+                item.classList.add('active', 'visible');
+            } else if (index === 1) {
+                item.classList.add('next-glimpse');
+            }
+        });
+    }
+
+    // Update active timeline item based on scroll position
+    function updateActiveItem() {
+        const containerRect = container.getBoundingClientRect();
+        const containerCenter = containerRect.top + containerRect.height / 2;
+
+        let closestIndex = 0;
+        let minDistance = Infinity;
+
+        items.forEach((item, index) => {
+            const itemRect = item.getBoundingClientRect();
+            const itemCenter = itemRect.top + itemRect.height / 2;
+            const distance = Math.abs(itemCenter - containerCenter);
+
+            if (distance < minDistance) {
+                minDistance = distance;
+                closestIndex = index;
+            }
+        });
+
+        // Only update if the active item has changed
+        if (closestIndex !== currentIndex) {
+            setActiveItem(closestIndex);
+        }
+    }
+
+    // Set specific item as active
+    function setActiveItem(index) {
+        if (index < 0 || index >= items.length) return;
+
+        // Clear all states
+        items.forEach(item => {
+            item.classList.remove('active', 'next-glimpse', 'visible');
+        });
+
+        // Set active item
+        currentIndex = index;
+        items[currentIndex].classList.add('active', 'visible');
+
+        // Set visible items (current and adjacent)
+        if (currentIndex > 0) {
+            items[currentIndex - 1].classList.add('visible');
+        }
+        if (currentIndex < items.length - 1) {
+            items[currentIndex + 1].classList.add('visible', 'next-glimpse');
+        }
+    }
+
+    // Smooth scroll to specific item
+    function scrollToItem(index) {
+        if (index < 0 || index >= items.length) return;
+
+        const item = items[index];
+        const containerRect = container.getBoundingClientRect();
+        const itemRect = item.getBoundingClientRect();
+
+        // Calculate scroll position to center the item
+        const scrollTop = container.scrollTop +
+            (itemRect.top - containerRect.top) -
+            (containerRect.height / 2) +
+            (itemRect.height / 2);
+
+        container.scrollTo({
+            top: scrollTop,
+            behavior: 'smooth'
+        });
+    }
+
+    // Update chevron visibility
+    function updateChevron() {
+        if (!chevron) return;
+
+        const isAtBottom = Math.abs(
+            container.scrollTop + container.clientHeight - container.scrollHeight
+        ) < 10;
+
+        const hasOverflow = container.scrollHeight > container.clientHeight + 5;
+
+        if (isAtBottom || !hasOverflow) {
+            chevron.style.display = "none";
+        } else {
+            chevron.style.display = "block";
+        }
+    }
+
+    // Handle wheel events for smooth navigation
+    function handleWheel(e) {
+        if (container.scrollHeight <= container.clientHeight + 5) return;
+
+        e.preventDefault();
+
+        const delta = Math.sign(e.deltaY);
+        let nextIndex = Math.max(0, Math.min(items.length - 1, currentIndex + delta));
+
+        if (nextIndex !== currentIndex) {
+            scrollToItem(nextIndex);
+        }
+    }
+
+    // Handle keyboard navigation
+    function handleKeydown(e) {
+        if (!['ArrowDown', 'ArrowUp', 'Space'].includes(e.key)) return;
+
+        e.preventDefault();
+
+        let nextIndex = currentIndex;
+        if (e.key === 'ArrowDown' || e.key === 'Space') {
+            nextIndex = Math.min(items.length - 1, currentIndex + 1);
+        } else if (e.key === 'ArrowUp') {
+            nextIndex = Math.max(0, currentIndex - 1);
+        }
+
+        if (nextIndex !== currentIndex) {
+            scrollToItem(nextIndex);
+        }
+    }
+
+    // Add hover effects to timeline items
+    function addHoverEffects() {
+        items.forEach(item => {
+            const leftPanel = item.querySelector('.left-panel');
+            const rightPanel = item.querySelector('.right-panel');
+            const dot = item.querySelector('.timeline-dot');
+
+            item.addEventListener('mouseenter', () => {
+                if (leftPanel) {
+                    leftPanel.style.transform = 'translateY(-5px) scale(1.02)';
+                    leftPanel.style.transition = 'transform 0.3s ease';
+                }
+                if (rightPanel) {
+                    rightPanel.style.transform = 'translateY(-5px) scale(1.02)';
+                    rightPanel.style.transition = 'transform 0.3s ease';
+                }
+                if (dot) {
+                    dot.style.transform = 'scale(1.3)';
+                    dot.style.transition = 'transform 0.3s ease';
+                }
+            });
+
+            item.addEventListener('mouseleave', () => {
+                if (leftPanel) {
+                    leftPanel.style.transform = '';
+                }
+                if (rightPanel) {
+                    rightPanel.style.transform = '';
+                }
+                if (dot) {
+                    dot.style.transform = '';
+                }
+            });
+
+            // Add click handler for project links
+            const projectLink = item.querySelector('.right-panel a');
+            if (projectLink) {
+                projectLink.addEventListener('click', (e) => {
+                    // Add visual feedback
+                    projectLink.style.transform = 'scale(0.95)';
+                    setTimeout(() => {
+                        projectLink.style.transform = '';
+                    }, 150);
+                });
+            }
+        });
+    }
+
+    // Initialize everything
+    function initialize() {
+        setupTimelineLine();
+        initializeItems();
+        addHoverEffects();
+        updateChevron();
+
+        // Scroll to first item after a brief delay
+        setTimeout(() => {
+            scrollToItem(0);
+        }, 100);
+    }
+
+    // Event listeners
+    container.addEventListener('wheel', handleWheel, { passive: false });
+    container.addEventListener('keydown', handleKeydown);
+    container.addEventListener('scroll', () => {
+        updateActiveItem();
+        updateChevron();
+    });
+
+    // Handle window resize
+    const resizeObserver = new ResizeObserver(() => {
+        setupTimelineLine();
+        updateChevron();
+    });
+    resizeObserver.observe(container);
+
+    // Make container focusable for keyboard navigation
+    container.setAttribute('tabindex', '0');
+
+    // Initialize on load
+    initialize();
+
+    // Re-initialize after fonts and images load
+    window.addEventListener('load', () => {
+        setTimeout(initialize, 200);
+    });
 }
 
-document.addEventListener('DOMContentLoaded', () => {
-    const container = document.querySelector('#experience-timeline');
-    const items = container.querySelectorAll('.timeline-item');
+// Enhanced intersection observer for better performance
+function initializeTimelineObserver() {
+    const timelineItems = document.querySelectorAll('.timeline-item');
+
+    if (!timelineItems.length) return;
+
     const observerOptions = {
-        root: container,
-        threshold: 0.5
+        threshold: [0.1, 0.5, 0.9],
+        rootMargin: '-20% 0px -20% 0px'
     };
 
     const observer = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                items.forEach(item => item.classList.remove('visible'));
-                entry.target.classList.add('visible');
+            if (entry.isIntersecting && entry.intersectionRatio > 0.5) {
+                entry.target.classList.add('in-view');
+
+                // Add staggered animation to panels
+                const leftPanel = entry.target.querySelector('.left-panel');
+                const rightPanel = entry.target.querySelector('.right-panel');
+
+                if (leftPanel) {
+                    setTimeout(() => {
+                        leftPanel.style.opacity = '1';
+                        leftPanel.style.transform = 'translateY(0)';
+                    }, 100);
+                }
+
+                if (rightPanel) {
+                    setTimeout(() => {
+                        rightPanel.style.opacity = '1';
+                        rightPanel.style.transform = 'translateY(0)';
+                    }, 100);
+                }
             }
         });
     }, observerOptions);
 
-    items.forEach(item => observer.observe(item));
-});
+    timelineItems.forEach(item => observer.observe(item));
+}
 
-function createTimelineProgress() {
-    const experienceSection = document.querySelector('.experience-section');
-    if (!experienceSection) return;
+// Call this function as well
+document.addEventListener('DOMContentLoaded', initializeTimelineObserver);
 
-    const progressContainer = document.createElement('div');
-    progressContainer.className = 'timeline-progress';
-    progressContainer.style.cssText = `
-        position: absolute;
-        top: 20px;
-        right: 20px;
-        display: flex;
-        gap: 8px;
-        z-index: 10;
-    `;
+document.addEventListener("DOMContentLoaded", () => {
+    const container = document.getElementById("experience-timeline");
+    const items = Array.from(container.querySelectorAll(".timeline-item"));
 
-    const timelineItems = document.querySelectorAll('.timeline-item');
+    // Intersection Observer for scroll-based animations
+    const observer = new IntersectionObserver(
+        (entries) => {
+            entries.forEach((entry) => {
+                const item = entry.target;
+                item.classList.toggle("active", entry.isIntersecting);
+                item.classList.toggle("in-view", entry.isIntersecting);
 
-    timelineItems.forEach((item, index) => {
-        const progressDot = document.createElement('div');
-        progressDot.className = 'progress-dot';
-        progressDot.style.cssText = `
-            width: 12px;
-            height: 12px;
-            border-radius: 50%;
-            background: rgba(132, 232, 255, 0.3);
-            border: 2px solid rgba(0, 44, 221, 0.5);
-            transition: all 0.3s ease;
-            cursor: pointer;
-        `;
+                const next = item.nextElementSibling;
+                if (next && next.classList.contains("timeline-item")) {
+                    next.classList.add("next-glimpse");
+                }
 
-        progressDot.addEventListener('click', () => {
-            item.scrollIntoView({
-                behavior: 'smooth',
-                block: 'center'
-            });
-        });
-
-        // Update progress dot when item becomes visible
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    progressDot.style.background = 'var(--color-accent)';
-                    progressDot.style.borderColor = 'var(--color-primary)';
-                    progressDot.style.transform = 'scale(1.2)';
-                } else {
-                    progressDot.style.background = 'rgba(132, 232, 255, 0.3)';
-                    progressDot.style.borderColor = 'rgba(0, 44, 221, 0.5)';
-                    progressDot.style.transform = 'scale(1)';
+                if (!entry.isIntersecting) {
+                    item.classList.remove("active", "in-view", "next-glimpse");
                 }
             });
-        }, { threshold: 0.5 });
+        },
+        {
+            root: container,
+            threshold: 0.6,
+        }
+    );
 
-        observer.observe(item);
-        progressContainer.appendChild(progressDot);
+    items.forEach((item) => observer.observe(item));
+
+    // Chevron scroll logic
+    const chevron = document.getElementById("scroll-chevron");
+    chevron.addEventListener("click", () => {
+        const current = items.find((item) => item.classList.contains("active"));
+        const index = items.indexOf(current);
+        const nextItem = items[index + 1];
+        if (nextItem) {
+            nextItem.scrollIntoView({ behavior: "smooth", block: "center" });
+        }
     });
 
-    experienceSection.appendChild(progressContainer);
-}
-
-// Add required CSS animations
-function addEnhancedAnimations() {
-    const style = document.createElement('style');
-    style.textContent = `
-        @keyframes ripple {
-            to {
-                transform: scale(2);
-                opacity: 0;
-            }
-        }
-        
-        @keyframes clickRipple {
-            to {
-                transform: scale(1);
-                opacity: 0;
-            }
-        }
-        
-        .timeline-item-hover {
-            animation: gentle-float 2s ease-in-out infinite;
-        }
-        
-        @keyframes gentle-float {
-            0%, 100% { transform: translateY(0px); }
-            50% { transform: translateY(-3px); }
-        }
-        
-        .section-visible {
-            animation: section-fade-in 1s ease-out forwards;
-        }
-        
-        @keyframes section-fade-in {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-        
-        .timeline-progress:hover .progress-dot {
-            transform: scale(1.1);
-        }
-    `;
-
-    document.head.appendChild(style);
-}
-
-// Initialize everything when DOM is loaded
-document.addEventListener('DOMContentLoaded', () => {
-    addEnhancedAnimations();
-    initializeEnhancedExperience();
+    // Lazy load logos
+    const lazyImages = document.querySelectorAll(".company-logo");
+    lazyImages.forEach((img) => {
+        img.setAttribute("loading", "lazy");
+    });
 });
 
-// Export functions for use in main app.js
-window.enhancedExperience = {
-    initializeEnhancedExperience,
-    addTimelineItemHoverEffects,
-    createRippleEffect,
-    animateTimelineSpine
-};
+document.addEventListener("DOMContentLoaded", () => {
+    const tabs = document.querySelectorAll(".tab");
+    const contents = document.querySelectorAll(".tab-content");
+
+    tabs.forEach(tab => {
+        tab.addEventListener("click", () => {
+            // Remove active class from all
+            tabs.forEach(t => t.classList.remove("active"));
+            contents.forEach(c => c.classList.remove("active"));
+
+            // Add active to selected
+            tab.classList.add("active");
+            document.getElementById(tab.dataset.tab).classList.add("active");
+        });
+    });
+});
