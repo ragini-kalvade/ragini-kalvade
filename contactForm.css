@@ -1,43 +1,151 @@
-
 .contact-section {
-    grid-column: 1 / span 12;
-    animation: slideInLeft 0.8s ease forwards;
-    padding: 20px;
     background-color: var(--color-card-bg);
+    border-radius: 12px;
+    padding: 40px;
+    box-shadow: var(--shadow);
+    /*max-width: 800px;*/
+    margin: 0;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+    grid-column: 1/span 12;
 }
 
-.contact-form {
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
+.contact-section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, var(--color-primary), var(--color-accent));
+}
+
+.contact-intro {
+    font-size: 1.2rem;
+    color: var(--color-text-light);
+    margin-bottom: 40px;
+    line-height: 1.6;
     max-width: 600px;
-    margin-top: 15px;
+    margin-left: auto;
+    margin-right: auto;
 }
 
-.form-group {
+.contact-options {
     display: flex;
-    flex-direction: column;
+    gap: 30px;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    margin-bottom: 30px;
 }
 
-.form-group label {
+.contact-option {
+    background: linear-gradient(135deg, var(--color-primary), #4169E1);
+    color: white;
+    padding: 20px 30px;
+    border-radius: 12px;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    font-size: 1.1rem;
     font-weight: 500;
-    margin-bottom: 5px;
-    color: var(--color-primary);
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(0, 44, 221, 0.2);
+    min-width: 200px;
+    justify-content: center;
 }
 
-.form-group input,
-.form-group textarea {
-    padding: 10px;
-    border: 1px solid var(--color-border);
-    border-radius: 6px;
+.contact-option:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 25px rgba(0, 44, 221, 0.3);
+    text-decoration: none;
+    color: white;
+}
+
+.contact-option i {
+    font-size: 1.3rem;
+}
+
+.linkedin-option {
+    background: linear-gradient(135deg, #0077B5, #00A0DC);
+    box-shadow: 0 4px 15px rgba(0, 119, 181, 0.2);
+}
+
+.linkedin-option:hover {
+    box-shadow: 0 8px 25px rgba(0, 119, 181, 0.3);
+}
+
+.contact-footer {
+    margin-top: 30px;
+    padding-top: 20px;
+    border-top: 1px solid var(--color-border);
+}
+
+.contact-footer p {
+    color: var(--color-text-light);
     font-size: 0.95rem;
-    background-color: white;
+    margin-bottom: 15px;
+}
+
+.social-links {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+}
+
+.social-links a {
+    color: var(--color-text-light);
+    font-size: 1.5rem;
+    transition: all 0.3s ease;
+    padding: 10px;
+    border-radius: 50%;
+    background: var(--color-background);
+}
+
+.social-links a:hover {
+    color: var(--color-primary);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 10px rgba(0, 44, 221, 0.1);
+}
+
+.collaboration-note {
+    background: linear-gradient(135deg, rgba(185, 205, 255, 0.2), rgba(185, 205, 255, 0.1));
+    border-left: 4px solid var(--color-accent);
+    padding: 20px;
+    border-radius: 8px;
+    margin-top: 30px;
+    text-align: left;
+}
+
+.collaboration-note h4 {
+    color: var(--color-primary);
+    margin-bottom: 10px;
+    font-size: 1.1rem;
+}
+
+.collaboration-note p {
     color: var(--color-text);
-    resize: vertical;
+    line-height: 1.5;
+    margin: 0;
 }
 
-.contact-form button {
-    width: fit-content;
-    align-self: flex-start;
-}
+@media (max-width: 768px) {
+    .contact-options {
+        flex-direction: column;
+        gap: 20px;
+    }
 
+    .contact-option {
+        min-width: 250px;
+    }
+
+    .section-header h3 {
+        font-size: 1.8rem;
+    }
+
+    .contact-intro {
+        font-size: 1.1rem;
+    }
+}
