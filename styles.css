@@ -152,6 +152,18 @@ nav a:hover {
     box-shadow: var(--shadow);
 }
 
+.section-header {
+    margin-bottom: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.section-header h3 {
+    font-size: 1.8rem;
+    color: var(--color-primary);
+    text-transform: uppercase;
+}
 /* Hero section */
 .hero {
     grid-column: 1 / span 4;
