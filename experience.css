@@ -67,8 +67,9 @@
 
 .tab-content h3 {
     color: var(--color-primary);
-    font-size: 1.5rem;
+    font-size: 1.4rem;
     margin-bottom: 8px;
+    padding-top: 10px;
 }
 
 .duration {
@@ -86,8 +87,10 @@
     border-radius: 20px;
     border: 1px solid rgba(185, 205, 255, 0.3);
     display: inline-block;
+    margin-top: 16px;
     margin-bottom: 16px;
     transition: all 0.3s ease;
+
 }
 
 .tech:hover {
@@ -111,6 +114,7 @@
     position: relative;
     overflow: hidden;
     margin-top: 12px;
+    margin-left: 12px;
 }
 
 .tab-content a::before {
