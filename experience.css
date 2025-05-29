@@ -1,25 +1,93 @@
+/* ---------------------------------------------------
+   Enhanced Experience Section
+   --------------------------------------------------- */
 .experience-section {
     grid-column: 1 / span 12;
-    animation: slideInLeft 0.8s ease forwards;
-    background: rgba(100, 153, 255, 0);
-    box-shadow: none;
-}
-
-.timeline {
+    background: var(--color-card-bg);
+    box-shadow: var(--shadow);
+    border-radius: 12px;
+    padding: 30px;
     position: relative;
-    margin-top: 30px;
-    padding-left: 30px;
-    border-left: 3px solid var(--color-accent);
     overflow: hidden;
 }
 
-.timeline-item {
-    position: relative;
+.experience-section::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    border-radius: 12px 12px 0 0;
+}
+
+.section-header {
+    text-align: center;
     margin-bottom: 40px;
-    animation: fadeInUp 0.8s ease forwards;
+    position: relative;
+}
+
+.section-header h3 {
+    font-size: 1.5rem;
+    color: var(--color-primary);
+    margin-bottom: 0.5rem;
+    font-weight: 700;
+    position: relative;
+    display: inline-block;
+}
+
+.section-header h3::after {
+    content: "";
+    position: absolute;
+    bottom: -8px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 60px;
+    height: 3px;
+    background: linear-gradient(90deg, var(--color-primary), var(--color-accent));
+    border-radius: 2px;
+}
+
+/* Timeline Container */
+.timeline-container {
+    max-width: 90%;
+    height: 400px;              /* Fixed height matching one item */
+    margin: 0 auto;
+    overflow-x: hidden;
+    overflow-y: auto;
+    scroll-snap-type: y mandatory;
+    -webkit-overflow-scrolling: touch;
+}
+
+.timeline-container::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 4px;
+    background: linear-gradient(180deg,
+    var(--color-accent) 0%,
+    var(--color-primary) 50%,
+    var(--color-accent) 100%);
+    border-radius: 2px;
+    box-shadow: 0 0 20px rgba(132, 232, 255, 0.3);
+}
+
+/* Timeline Items */
+.timeline-item {
+    display: grid;
+    grid-template-columns: 1fr 60px 1fr;
+    align-items: center;
+    gap: 30px;
+    padding: 30px 0;
     opacity: 0;
     transform: translateY(40px);
-    transition: transform 0.3s ease, opacity 0.3s ease;
+    transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    position: relative;
+    scroll-snap-align: start;
+    min-height: 400px;
 }
 
 .timeline-item.visible {
@@ -27,104 +95,341 @@
     transform: translateY(0);
 }
 
-.timeline-dot {
-    position: absolute;
-    left: -11px;
-    top: 5px;
-    width: 20px;
-    height: 20px;
-    background: #0b2a71;
-    border-radius: 50%;
-    border: 3px solid white;
-    box-shadow: 0 0 10px var(--color-accent);
-    z-index: 1;
+/* Alternating animation directions */
+.timeline-item:nth-child(odd) .left-panel {
+    transform: translateX(-50px);
+    transition: transform 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94) 0.2s;
 }
 
-.timeline-content {
-    background-color: var(--color-card-bg);
-    padding: 20px;
-    border-radius: 10px;
-    box-shadow: var(--shadow);
+.timeline-item:nth-child(even) .right-panel {
+    transform: translateX(50px);
+    transition: transform 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94) 0.2s;
+}
+
+.timeline-item.visible:nth-child(odd) .left-panel,
+.timeline-item.visible:nth-child(even) .right-panel {
+    transform: translateX(0);
+}
+
+/* Enhanced Left Panel */
+.left-panel {
+    background: linear-gradient(135deg, var(--color-card-bg) 0%, rgba(255, 255, 255, 0.95) 100%);
+    padding: 25px;
+    border-radius: 16px;
+    box-shadow: 0 8px 32px rgba(0, 44, 221, 0.1);
+    text-align: center;
     position: relative;
+    border: 1px solid rgba(132, 232, 255, 0.2);
     transition: all 0.3s ease;
-    cursor: default;
+    backdrop-filter: blur(10px);
 }
 
-.timeline-content:hover {
-    transform: scale(1.02);
-    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
-    background-color: rgba(240, 248, 255, 0.9);
+.left-panel:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 16px 48px rgba(0, 44, 221, 0.15);
+    border-color: var(--color-accent);
 }
 
-.timeline-content h4 {
-    color: var(--color-primary);
-    margin-bottom: 6px;
-    font-size: 1.2rem;
-}
-
-.timeline-content .company {
-    font-weight: 500;
-    color: var(--color-text-light);
-    margin-bottom: 10px;
-    font-size: 0.95rem;
-}
-
-.timeline-content .desc {
-    color: var(--color-text);
-    font-size: 0.95rem;
-    line-height: 1.6;
-}
-
-.timeline-content .tech {
-    font-style: italic;
-    font-size: 0.85rem;
-    color: var(--color-text-light);
-    margin-top: 10px;
-    text-align: right;
-}
-
-.timeline-content a {
-    margin-top: 10px;
-    display: inline-block;
-    font-size: 0.9rem;
-    color: var(--color-primary);
-    text-decoration: underline;
-    transition: color 0.3s;
-}
-
-.timeline-content a:hover {
-    color: var(--color-accent);
-}
-.timeline::before {
-    content: '';
+.left-panel::before {
+    content: "";
     position: absolute;
     top: 0;
-    left: -3px;
-    width: 3px;
-    height: 0;
-    background: var(--color-accent);
-    z-index: 0;
-    transition: height 0.5s ease-out;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--color-primary), var(--color-accent));
+    border-radius: 16px 16px 0 0;
+    opacity: 0;
+    transition: opacity 0.3s ease;
 }
 
-.timeline.grow::before {
-    height: 100%;
-}
-.tech-stack {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 8px;
-    margin-top: 10px;
+.left-panel:hover::before {
+    opacity: 1;
 }
 
-.badge {
-    background-color: #121212;
-    color: white;
-    padding: 4px 10px;
+.left-panel h4 {
+    font-size: 1.1rem;
+    color: var(--color-primary);
+    margin-bottom: 15px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.company-logo {
+    display: block;
+    width: 60px;
+    height: 60px;
+    margin: 15px auto;
     border-radius: 12px;
-    font-size: 0.75rem;
-    font-weight: 500;
-    display: inline-block;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
-    font-family: 'JetBrains Mono', monospace;
+    object-fit: contain;
+    background: rgba(255, 255, 255, 0.9);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease;
 }
+
+.company-logo:hover {
+    transform: scale(1.1) rotate(5deg);
+}
+
+.left-panel h3 {
+    font-size: 1.3rem;
+    color: var(--color-text);
+    margin: 15px 0 8px;
+    font-weight: 700;
+}
+
+.left-panel p {
+    font-size: 1rem;
+    color: var(--color-text-light);
+    font-weight: 500;
+    margin-bottom: 0;
+}
+
+/* Enhanced Timeline Dot */
+.timeline-dot {
+    width: 24px;
+    height: 24px;
+    background: linear-gradient(135deg, var(--color-primary), var(--color-accent));
+    border-radius: 50%;
+    border: 6px solid var(--color-secondary);
+    z-index: 10;
+    position: relative;
+    box-shadow:
+            0 0 0 4px rgba(132, 232, 255, 0.3),
+            0 4px 16px rgba(0, 44, 221, 0.2);
+    transition: all 0.4s ease;
+    animation: pulse 2s infinite;
+}
+
+.timeline-item:hover .timeline-dot {
+    transform: scale(1.3);
+    box-shadow:
+            0 0 0 8px rgba(132, 232, 255, 0.4),
+            0 8px 32px rgba(0, 44, 221, 0.3);
+}
+
+@keyframes pulse {
+    0%, 100% {
+        box-shadow:
+                0 0 0 4px rgba(132, 232, 255, 0.3),
+                0 4px 16px rgba(0, 44, 221, 0.2);
+    }
+    50% {
+        box-shadow:
+                0 0 0 8px rgba(132, 232, 255, 0.2),
+                0 4px 16px rgba(0, 44, 221, 0.3);
+    }
+}
+
+/* Enhanced Right Panel */
+.right-panel {
+    background: linear-gradient(135deg, var(--color-card-bg) 0%, rgba(255, 255, 255, 0.95) 100%);
+    padding: 25px;
+    border-radius: 16px;
+    box-shadow: 0 8px 32px rgba(0, 44, 221, 0.1);
+    position: relative;
+    border: 1px solid rgba(132, 232, 255, 0.2);
+    transition: all 0.3s ease;
+    backdrop-filter: blur(10px);
+}
+
+.right-panel:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 16px 48px rgba(0, 44, 221, 0.15);
+    border-color: var(--color-accent);
+}
+
+.right-panel::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--color-accent), var(--color-primary));
+    border-radius: 16px 16px 0 0;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.right-panel:hover::before {
+    opacity: 1;
+}
+
+.right-panel p {
+    font-size: 1rem;
+    color: var(--color-text);
+    margin-bottom: 15px;
+    line-height: 1.6;
+    font-weight: 400;
+}
+
+.right-panel .tech {
+    font-size: 0.9rem;
+    color: var(--color-primary);
+    margin-bottom: 15px;
+    font-weight: 600;
+    padding: 8px 16px;
+    background: rgba(0, 44, 221, 0.08);
+    border-radius: 20px;
+    display: inline-block;
+    border: 1px solid rgba(0, 44, 221, 0.15);
+}
+
+.right-panel a {
+    font-size: 0.95rem;
+    color: #2b50c7;
+    text-decoration: none;
+    font-weight: 600;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 20px;
+    background: linear-gradient(135deg, rgba(132, 232, 255, 0.25), rgba(0, 44, 221, 0.06));
+    border-radius: 25px;
+    border: 1px solid rgba(132, 232, 255, 0.3);
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.right-panel a::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+    transition: left 0.5s ease;
+}
+
+.right-panel a:hover::before {
+    left: 100%;
+}
+
+.right-panel a:hover {
+    color: var(--color-primary);
+    background: linear-gradient(135deg, rgba(132, 232, 255, 0.2), rgba(0, 44, 221, 0.1));
+    border-color: var(--color-primary);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(0, 44, 221, 0.2);
+}
+
+.right-panel a::after {
+    content: "→";
+    transition: transform 0.3s ease;
+}
+
+.right-panel a:hover::after {
+    transform: translateX(4px);
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+    .timeline-container {
+        padding: 30px 0;
+    }
+
+    .timeline-item {
+        grid-template-columns: 1fr 50px 1fr;
+        gap: 20px;
+        padding: 25px 0;
+    }
+
+    .left-panel, .right-panel {
+        padding: 20px;
+    }
+
+    .section-header h3 {
+        font-size: 2rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .experience-section {
+        padding: 20px;
+    }
+
+    .timeline-container::before {
+        left: 30px;
+        transform: none;
+    }
+
+    .timeline-item {
+        grid-template-columns: 60px 1fr;
+        gap: 20px;
+        padding: 20px 0;
+    }
+
+    .timeline-dot {
+        grid-row: 1 / span 2;
+        align-self: start;
+        margin-top: 20px;
+        margin-left: 30px;
+        transform: translateX(-50%);
+    }
+
+    .left-panel {
+        grid-column: 2;
+        grid-row: 1;
+        margin-bottom: 15px;
+    }
+
+    .right-panel {
+        grid-column: 2;
+        grid-row: 2;
+    }
+
+    .timeline-item:nth-child(odd) .left-panel,
+    .timeline-item:nth-child(even) .right-panel {
+        transform: translateX(0);
+    }
+
+    .section-header h3 {
+        font-size: 1.8rem;
+    }
+
+    .company-logo {
+        width: 50px;
+        height: 50px;
+    }
+}
+
+/* Enhanced entrance animations */
+@keyframes slideInFromLeft {
+    from {
+        opacity: 0;
+        transform: translateX(-60px) translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0) translateY(0);
+    }
+}
+
+@keyframes slideInFromRight {
+    from {
+        opacity: 0;
+        transform: translateX(60px) translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0) translateY(0);
+    }
+}
+
+.timeline-item.visible:nth-child(odd) .left-panel {
+    animation: slideInFromLeft 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+}
+
+.timeline-item.visible:nth-child(even) .right-panel {
+    animation: slideInFromRight 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+}
+
+/* Stagger animation delays */
+.timeline-item:nth-child(1) { transition-delay: 0.1s; }
+.timeline-item:nth-child(2) { transition-delay: 0.3s; }
+.timeline-item:nth-child(3) { transition-delay: 0.5s; }
+.timeline-item:nth-child(4) { transition-delay: 0.7s; }

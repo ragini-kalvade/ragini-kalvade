@@ -1,7 +1,7 @@
 :root {
     --color-primary: #002cdd;      /* sharper blue */
     --color-secondary: #ffffff;   /* white for contrast */
-    --color-accent: #84e8ff;      /* neon teal accent */
+    --color-accent: #b9cdff;      /* neon teal accent */
     --color-background: #f4f9ff;  /* brighter background */
     --color-text: #111827;        /* deep grey-black */
     --color-text-light: #6b7280;  /* softer grey */
@@ -173,7 +173,7 @@ nav a:hover {
     border-right: 3px solid #3362d1;
     font-size: 1.6rem;
     margin-top: 20px;
-    color: #3362d1;
+    color: #6290ff;
     text-transform: uppercase;
     margin-bottom: 50px;
 }

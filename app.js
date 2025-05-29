@@ -292,47 +292,362 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 });
 
-document.addEventListener("DOMContentLoaded", () => {
-    const items = document.querySelectorAll(".timeline-item");
+// Enhanced Experience Section JavaScript
+function initializeEnhancedExperience() {
+    // Timeline animation on scroll
+    const timelineItems = document.querySelectorAll('.timeline-item');
+    const experienceSection = document.querySelector('.experience-section');
 
-    const observer = new IntersectionObserver(entries => {
-        entries.forEach(entry => {
+    // Enhanced intersection observer with better thresholds
+    const observerOptions = {
+        threshold: 0.2,
+        rootMargin: '-50px 0px -50px 0px'
+    };
+
+    const timelineObserver = new IntersectionObserver((entries) => {
+        entries.forEach((entry, index) => {
             if (entry.isIntersecting) {
-                entry.target.classList.add("visible");
+                // Add staggered delay based on item position
+                setTimeout(() => {
+                    entry.target.classList.add('visible');
+
+                    // Add ripple effect to timeline dot
+                    const dot = entry.target.querySelector('.timeline-dot');
+                    if (dot) {
+                        createRippleEffect(dot);
+                    }
+                }, index * 200);
             }
         });
-    }, {
-        threshold: 0.2
+    }, observerOptions);
+
+    // Observe all timeline items
+    timelineItems.forEach(item => {
+        timelineObserver.observe(item);
+
+        // Add hover effects
+        addTimelineItemHoverEffects(item);
     });
+
+    // Progressive disclosure animation
+    if (experienceSection) {
+        const sectionObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('section-visible');
+                    animateTimelineSpine();
+                }
+            });
+        }, { threshold: 0.1 });
+
+        sectionObserver.observe(experienceSection);
+    }
+
+    // Initialize timeline controls if they exist
+    initializeTimelineControls();
+}
+
+function addTimelineItemHoverEffects(item) {
+    const leftPanel = item.querySelector('.left-panel');
+    const rightPanel = item.querySelector('.right-panel');
+    const dot = item.querySelector('.timeline-dot');
+
+    // Add mouse enter/leave effects
+    item.addEventListener('mouseenter', () => {
+        // Scale effect for panels
+        if (leftPanel) {
+            leftPanel.style.transform = 'translateY(-5px) scale(1.02)';
+        }
+        if (rightPanel) {
+            rightPanel.style.transform = 'translateY(-5px) scale(1.02)';
+        }
+
+        // Enhanced dot animation
+        if (dot) {
+            dot.style.transform = 'scale(1.3)';
+            dot.style.boxShadow = '0 0 0 8px rgba(132, 232, 255, 0.4), 0 8px 32px rgba(0, 44, 221, 0.3)';
+        }
+
+        // Add floating animation
+        item.classList.add('timeline-item-hover');
+    });
+
+    item.addEventListener('mouseleave', () => {
+        if (leftPanel) {
+            leftPanel.style.transform = '';
+        }
+        if (rightPanel) {
+            rightPanel.style.transform = '';
+        }
+
+        if (dot) {
+            dot.style.transform = '';
+            dot.style.boxShadow = '';
+        }
+
+        item.classList.remove('timeline-item-hover');
+    });
+
+    // Add click effects for project links
+    const projectLink = item.querySelector('.right-panel a');
+    if (projectLink) {
+        projectLink.addEventListener('click', (e) => {
+            createClickRipple(e, projectLink);
+        });
+    }
+}
+
+function createRippleEffect(element) {
+    const ripple = document.createElement('div');
+    ripple.style.cssText = `
+        position: absolute;
+        border-radius: 50%;
+        background: rgba(132, 232, 255, 0.6);
+        pointer-events: none;
+        transform: scale(0);
+        animation: ripple 0.8s ease-out;
+        top: 50%;
+        left: 50%;
+        width: 40px;
+        height: 40px;
+        margin-top: -20px;
+        margin-left: -20px;
+        z-index: -1;
+    `;
+
+    element.style.position = 'relative';
+    element.appendChild(ripple);
+
+    // Remove the ripple after animation
+    setTimeout(() => {
+        if (ripple.parentNode) {
+            ripple.parentNode.removeChild(ripple);
+        }
+    }, 800);
+}
+
+function createClickRipple(event, element) {
+    const rect = element.getBoundingClientRect();
+    const size = Math.max(rect.width, rect.height);
+    const x = event.clientX - rect.left - size / 2;
+    const y = event.clientY - rect.top - size / 2;
+
+    const ripple = document.createElement('div');
+    ripple.style.cssText = `
+        position: absolute;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.5);
+        pointer-events: none;
+        transform: scale(0);
+        animation: clickRipple 0.6s ease-out;
+        left: ${x}px;
+        top: ${y}px;
+        width: ${size}px;
+        height: ${size}px;
+        z-index: 1000;
+    `;
+
+    element.style.position = 'relative';
+    element.style.overflow = 'hidden';
+    element.appendChild(ripple);
+
+    setTimeout(() => {
+        if (ripple.parentNode) {
+            ripple.parentNode.removeChild(ripple);
+        }
+    }, 600);
+}
+
+function animateTimelineSpine() {
+    const timelineContainer = document.querySelector('.timeline-container');
+    if (!timelineContainer) return;
+
+    const spine = timelineContainer.querySelector('::before');
+
+    // Create animated gradient effect for the spine
+    let gradientPosition = 0;
+    const animateGradient = () => {
+        gradientPosition += 2;
+        if (gradientPosition > 200) gradientPosition = -100;
+
+        timelineContainer.style.setProperty('--gradient-position', `${gradientPosition}%`);
+        requestAnimationFrame(animateGradient);
+    };
+
+    animateGradient();
+}
+
+function initializeTimelineControls() {
+    // Auto-scroll functionality for timeline
+    let isAutoScrolling = false;
+    const timelineItems = document.querySelectorAll('.timeline-item');
+
+    // Optional: Add auto-scroll through timeline items
+    function autoScrollTimeline() {
+        if (isAutoScrolling || timelineItems.length === 0) return;
+
+        isAutoScrolling = true;
+        let currentIndex = 0;
+
+        const scrollToItem = () => {
+            if (currentIndex < timelineItems.length) {
+                timelineItems[currentIndex].scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'center'
+                });
+                currentIndex++;
+                setTimeout(scrollToItem, 3000); // 3 second intervals
+            } else {
+                isAutoScrolling = false;
+            }
+        };
+
+        setTimeout(scrollToItem, 1000); // Start after 1 second
+    }
+
+    // Add progress indicator
+    createTimelineProgress();
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+    const container = document.querySelector('#experience-timeline');
+    const items = container.querySelectorAll('.timeline-item');
+    const observerOptions = {
+        root: container,
+        threshold: 0.5
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                items.forEach(item => item.classList.remove('visible'));
+                entry.target.classList.add('visible');
+            }
+        });
+    }, observerOptions);
 
     items.forEach(item => observer.observe(item));
 });
 
-document.addEventListener("DOMContentLoaded", () => {
-    const timeline = document.querySelector(".timeline");
-    const items = document.querySelectorAll(".timeline-item");
+function createTimelineProgress() {
+    const experienceSection = document.querySelector('.experience-section');
+    if (!experienceSection) return;
 
-    const timelineObserver = new IntersectionObserver(entries => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                timeline.classList.add("grow");
-            }
+    const progressContainer = document.createElement('div');
+    progressContainer.className = 'timeline-progress';
+    progressContainer.style.cssText = `
+        position: absolute;
+        top: 20px;
+        right: 20px;
+        display: flex;
+        gap: 8px;
+        z-index: 10;
+    `;
+
+    const timelineItems = document.querySelectorAll('.timeline-item');
+
+    timelineItems.forEach((item, index) => {
+        const progressDot = document.createElement('div');
+        progressDot.className = 'progress-dot';
+        progressDot.style.cssText = `
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: rgba(132, 232, 255, 0.3);
+            border: 2px solid rgba(0, 44, 221, 0.5);
+            transition: all 0.3s ease;
+            cursor: pointer;
+        `;
+
+        progressDot.addEventListener('click', () => {
+            item.scrollIntoView({
+                behavior: 'smooth',
+                block: 'center'
+            });
         });
-    }, {
-        threshold: 0.1
+
+        // Update progress dot when item becomes visible
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    progressDot.style.background = 'var(--color-accent)';
+                    progressDot.style.borderColor = 'var(--color-primary)';
+                    progressDot.style.transform = 'scale(1.2)';
+                } else {
+                    progressDot.style.background = 'rgba(132, 232, 255, 0.3)';
+                    progressDot.style.borderColor = 'rgba(0, 44, 221, 0.5)';
+                    progressDot.style.transform = 'scale(1)';
+                }
+            });
+        }, { threshold: 0.5 });
+
+        observer.observe(item);
+        progressContainer.appendChild(progressDot);
     });
 
-    timelineObserver.observe(timeline);
+    experienceSection.appendChild(progressContainer);
+}
 
-    const itemObserver = new IntersectionObserver(entries => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                entry.target.classList.add("visible");
+// Add required CSS animations
+function addEnhancedAnimations() {
+    const style = document.createElement('style');
+    style.textContent = `
+        @keyframes ripple {
+            to {
+                transform: scale(2);
+                opacity: 0;
             }
-        });
-    }, {
-        threshold: 0.3
-    });
+        }
+        
+        @keyframes clickRipple {
+            to {
+                transform: scale(1);
+                opacity: 0;
+            }
+        }
+        
+        .timeline-item-hover {
+            animation: gentle-float 2s ease-in-out infinite;
+        }
+        
+        @keyframes gentle-float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-3px); }
+        }
+        
+        .section-visible {
+            animation: section-fade-in 1s ease-out forwards;
+        }
+        
+        @keyframes section-fade-in {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .timeline-progress:hover .progress-dot {
+            transform: scale(1.1);
+        }
+    `;
 
-    items.forEach(item => itemObserver.observe(item));
+    document.head.appendChild(style);
+}
+
+// Initialize everything when DOM is loaded
+document.addEventListener('DOMContentLoaded', () => {
+    addEnhancedAnimations();
+    initializeEnhancedExperience();
 });
+
+// Export functions for use in main app.js
+window.enhancedExperience = {
+    initializeEnhancedExperience,
+    addTimelineItemHoverEffects,
+    createRippleEffect,
+    animateTimelineSpine
+};
