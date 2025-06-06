@@ -1,5 +1,5 @@
 :root {
-    --color-primary: #002cdd;      /* sharper blue */
+    --color-primary: #001d8e;      /* sharper blue */
     --color-secondary: #ffffff;   /* white for contrast */
     --color-accent: #b9cdff;      /* neon teal accent */
     --color-background: #f4f9ff;  /* brighter background */
@@ -37,7 +37,7 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background-color: rgb(153, 182, 251);
+    background-color: var(--color-primary);
     margin-bottom: 35px;
     border-radius: 8px;
     opacity: 0;
@@ -183,12 +183,80 @@ nav a:hover {
 
 .hero h3 {
     border-right: 3px solid #3362d1;
-    font-size: 1.6rem;
+    font-size: 3.5rem;
     margin-top: 20px;
     color: #6290ff;
     text-transform: uppercase;
     margin-bottom: 50px;
 }
+.profile-summary {
+    position: relative;
+    background: var(--color-card-bg);
+    padding: 40px 30px;
+    border-radius: 12px;
+    box-shadow: var(--shadow);
+    overflow: hidden;
+    text-align: center;
+}
+
+.summary-heading {
+    font-size: 2rem;
+    font-weight: 600;
+    color: var(--color-primary);
+    margin-bottom: 1.5rem;
+    z-index: 2;
+    position: relative;
+}
+
+.summary-text {
+    font-size: 1.15rem;
+    line-height: 1.8;
+    color: var(--color-text);
+    font-weight: 450;
+    font-style: italic;
+    max-width: 750px;
+    margin: 0 auto;
+    z-index: 2;
+    position: relative;
+    transition: letter-spacing 0.3s ease;
+}
+
+.summary-text:hover {
+    letter-spacing: 0.4px;
+}
+
+.signature {
+    margin-top: 1.5rem;
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: var(--color-primary);
+    letter-spacing: 1px;
+    z-index: 2;
+    position: relative;
+}
+
+/* Quotation mark decoration */
+.quote-decorator {
+    content: "“";
+    position: absolute;
+    top: -40px;
+    left: -10px;
+    font-size: 10rem;
+    font-weight: 700;
+    color: var(--color-accent);
+    opacity: 0.06;
+    z-index: 0;
+    font-family: serif;
+}
+.puzzle-bg {
+    filter: drop-shadow(1px 1px #7b93ff);
+    position: absolute;
+    bottom: -250px;
+    right: -350px;
+    width: 800px;
+    opacity: 0.07;
+}
+
 .hero-buttons {
     margin-top: 20px;
     display: flex;
@@ -234,15 +302,6 @@ nav a:hover {
     to { width: 40ch; }
 }
 
-.portrait {
-    grid-column: 5 / span 4;
-    grid-row: 1;
-    background-color: var(--color-card-bg);
-    animation: slideInRight 0.8s ease forwards 0.6s;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
 
 .portrait img {
     width: 320px;
@@ -251,6 +310,56 @@ nav a:hover {
     border-radius: 50%;
 }
 
+#portrait-wrapper {
+    grid-column: 5 / span 4;
+    grid-row: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.glow-border {
+    /* Push the gradient out a bit so the inner card is framed */
+    padding: 4px;
+    display: inline-block;
+    border-radius: 12px;
+    background: linear-gradient(
+            45deg,
+            #0020ac,
+            rgb(83, 134, 255),
+            #b9cdff,
+            #ffffff,
+            #b9cdff,
+            rgb(83, 134, 255),
+            #0024b1
+    );
+    background-size: 400% 400%;
+    animation: gradientAnimation 10s ease infinite;
+}
+
+/* Keyframes to slide that gradient around the border */
+@keyframes gradientAnimation {
+    0% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
+.portrait {
+    background-color: #f7fbff;
+    border-radius: 8px;
+    animation: slideInRight 0.8s ease forwards 0.6s;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 5px;
+    width: 100%;
+}
 
 .projects {
     grid-column: 9 / span 4;
@@ -292,4 +401,9 @@ nav a:hover {
 
 .social a:hover {
     color: var(--color-secondary);
+}
+
+.block[data-aos] {
+    opacity: 0;
+    transition: opacity 0.6s ease, transform 0.6s ease;
 }

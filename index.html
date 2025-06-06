@@ -60,24 +60,28 @@
         </header>
 
         <div class="grid">
-            <section class="block hero" id="hero">
-                <h1>Ragini Kalvade.</h1>
+            <section class="block hero" id="hero" data-aos="fade-right" data-aos-duration="1000">
+            <h1>Ragini Kalvade.</h1>
                 <h3 id="typewriter"></h3>
                 <div class="hero-buttons">
                     <a href="media/resume.pdf" download class="btn primary-btn">Download Resume</a>
                     <a href="#contact" class="btn secondary-btn">Contact Me</a>
                 </div>
             </section>
-
-            <section class="block portrait" id="portrait">
-                <div class="glow-border">
+            <div class="glow-border" id="portrait-wrapper">
+                <section class="block portrait" id="portrait" data-aos="fade-left" data-aos-duration="1000">
                     <script src="https://unpkg.com/@dotlottie/player-component@2.7.12/dist/dotlottie-player.mjs" type="module"></script>
-                    <dotlottie-player src="https://lottie.host/57a76023-8767-4c50-b2e8-6e0212ee821b/ctQWfiPzA9.lottie" background="transparent"
-                                      speed="1" style="width: 400px; height: 400px" loop autoplay></dotlottie-player>
-                </div>
-            </section>
+                    <dotlottie-player
+                            src="https://lottie.host/57a76023-8767-4c50-b2e8-6e0212ee821b/ctQWfiPzA9.lottie"
+                            background="transparent"
+                            speed="1"
+                            style="width: 400px; height: 400px"
+                            loop autoplay>
+                    </dotlottie-player>
+                </section>
+            </div>
 
-            <div class="block skills" id="skills">
+            <div class="block skills" id="skills" data-aos="zoom-in-up" data-aos-duration="1000">
                 <div class="section-header">
                     <h3>Skills</h3>
                 </div>
@@ -257,16 +261,19 @@
                 </div>
             </div>
 
-            <section class="block education-section" id="about">
-                <div class="profile-summary">
-                    <h2>Profile Summary</h2>
-                    <p>
-                        Passionate Software Engineer with expertise in full-stack
-                        development, machine learning, and cloud computing. Graduate from
-                        the University of Illinois, Chicago with a Masters in Computer
-                        Science.
+            <section class="block education-section" id="about" data-aos="fade-up" data-aos-duration="1000">
+                <div class="profile-summary" data-aos="fade-up" data-aos-duration="1200">
+                    <img src="media/puzzle.png" class="puzzle-bg" alt="puzzle background">
+                    <div class="quote-decorator">“</div>
+                    <h2 class="summary-heading">Profile Summary</h2>
+                    <p class="summary-text">
+                        I see software as a puzzle — each line of code a piece contributing to something greater.
+                        I specialize in building intelligent systems that prioritize both performance and human-centered design.
+                        From full-stack development to distributed architectures, I focus on crafting solutions that are as scalable as they are intuitive.
                     </p>
+                    <p class="signature">— Ragini Kalvade, MSCS @ UIC</p>
                 </div>
+
                 <div class="education-cards">
                     <div class="education-card">
                         <div class="icon-badge"><i class="fas fa-graduation-cap"></i></div>
@@ -287,15 +294,15 @@
                         <div class="university">NIT Bhopal</div>
                         <div class="year">2018 - 2022</div>
                         <div class="description">
-                            Computer Science major with First Class Honors.
+                            Computer Science major graduated with First Class Honors.
                         </div>
                         <div class="card-footer">GPA: 8.4 / 10.0</div>
                     </div>
                 </div>
             </section>
 
-            <section class="block experience-tabbed-section" id="experience">
-                <div class="section-header">
+            <section class="block experience-tabbed-section" id="experience" data-aos="fade-up" data-aos-duration="1000">
+            <div class="section-header">
                     <h3>Experience</h3>
                 </div>
                 <div class="experience-tab-container">
@@ -307,60 +314,125 @@
                     <div class="tab-content active" id="uic">
                         <h3>Research Developer @ UIC Fall Prevention Lab</h3>
                         <p class="duration">Chicago, IL | Jan 2025 - Present</p>
-                        <p>Developed a web app for tracking patient cognitive progress and integrated therapist-facing dashboards.</p>
-                        <p class="tech">AWS · MediaPipe · JavaScript · MATLAB </p>
+                        <ul class="exp-list">
+                            <li>Developed a web-based training platform to support at-home cognitive and motor rehabilitation for older adults.</li>
+                            <li>Designed and implemented a Stroop-style game tailored for individuals with mild cognitive impairment.</li>
+                            <li>Led a reliability study for COG-Games under the mentorship of Dr. Tanvi Bhatt and Dr. Shuaijie Wang, contributing to evidence-based game design.</li>
+                        </ul>
+
+                        <p class="tech">AWS · MediaPipe · JavaScript · MATLAB</p>
                         <a href="https://s3.us-east-2.amazonaws.com/www.fratsforfalls.com/menu.html" target="_blank">View Website</a>
                     </div>
 
                     <div class="tab-content" id="db">
                         <h3>Senior Analyst @ Corporate Bank Technology</h3>
-                            <p class="duration">Pune, India | Jul 2022 - Jul 2024</p>
-                            <p>Junior Developer in documentary trade finance for global corporate bank operations.</p>
-                            <p>Built distributed systems for secure trade processing. Reduced latency from 4 days to 2 minutes using async pipelines.</p>
-                            <p class="tech">Java · Spring Boot · React · Kafka · GCP</p>
+                        <p class="duration">Pune, India | Jul 2022 - Jul 2024</p>
+                        <ul class="exp-list">
+                            <li>Junior Developer in documentary trade finance for global corporate bank operations.</li>
+                            <li>Maintained document templates and digital signature seals for Letters of Credit and Bank Guarantees, ensuring compliance with international trade standards.</li>
+                            <li>Built distributed systems for secure trade processing. Reduced latency from 4 days to 2 minutes using async pipelines.</li>
+                        </ul>
+                        <p class="tech">Java · Spring Boot · React · Kafka · GCP</p>
+
                         <h3>2021 Summer Intern @ Technology, Data, and Innovation</h3>
-                            <p class="duration">Remote | May 2021 - Jul 2021 </p>
-                            <p>Enhanced system performance, implemented CI/CD pipelines, and contributed to monitoring dashboards using React.</p>
-                            <p class="tech">React · ELK Stack · Spring Boot · Spring Data JPA</p>
-                            <a href="https://github.com/ragini-kalvade/devops-dashboard" target="_blank">View Project</a>
+                        <p class="duration">Remote | May 2021 - Jul 2021</p>
+                        <ul class="exp-list">
+                            <li>Enhanced system performance, implemented CI/CD pipelines, and contributed to monitoring dashboards using React.</li>
+                            <li>Validated the feasibility of integrating the ELK stack into the organizational fintech framework by cutting log query
+                                time by 50%.</li>
+
+                        </ul>
+                        <p class="tech">React · ELK Stack · Spring Boot · Spring Data JPA</p>
+                        <a href="https://github.com/ragini-kalvade/devops-dashboard" target="_blank">View Project</a>
                     </div>
+
+
+
                 </div>
             </section>
 
-
-            <section class="block projects-section" id="projects">
+            <section class="block projects-section" id="projects" data-aos="fade-up" data-aos-duration="1000">
                 <div class="section-header">
                     <h3>Projects</h3>
                 </div>
-                <div class="projects-carousel">
-                    <div class="project-card">
-                        <img src="media/project1.jpg" alt="Project 1" />
-                        <h4>COG-Games</h4>
-                        <p>Web game using nose tracking to help in cognitive training for older adults.Web game using nose tracking to help in cognitive training for older adults.</p>
-                        <p class="tech">Tech: Vue.js, MediaPipe, Node.js</p>
-                        <a href="https://s3.us-east-2.amazonaws.com/www.fratsforfalls.com/menu.html" target="_blank">View Code</a>
+
+                <div class="projects-grid">
+                    <!-- Card 1: GPU Failure Recovery -->
+                    <div class="project-card" data-aos="fade-up" data-aos-duration="800">
+                        <img src="media/megatron.png" alt="Proactive GPU Fault Tolerance" />
+                        <h4>Proactive GPU Fault Tolerance</h4>
+                        <p>Simulated GPU failures and automated checkpoint-based recovery during large-scale LLM training.</p>
+                        <p class="tech">Tech: PyTorch · Megatron-LM · nvidia-smi· Chameleon Cloud </p>
+                        <a href="https://github.com/ragini-kalvade/Megatron-LM" target="_blank">View Code</a>
                     </div>
 
-                    <div class="project-card">
-                        <img src="media/project2.jpg" alt="Project 2" />
-                        <h4>GPU Failure Recovery</h4>
-                        <p>Simulated GPU failure and automated checkpoint recovery during LLM training.</p>
-                        <p class="tech">Tech: Python, PyTorch, Megatron-LM</p>
-                        <a href="https://github.com/ragini-kalvade/gpu-recovery" target="_blank">View Code</a>
+                    <!-- Card 2: MathSolver -->
+                    <div class="project-card" data-aos="fade-up" data-aos-duration="800" data-aos-delay="100">
+                        <img src="media/mathsolver.png" alt="MathSolver" />
+                        <h4>MathSolver</h4>
+                        <p>Hybrid educational tool combining analytic solvers with PyTorch ML to solve and animate algebraic equations.</p>
+                        <p class="tech">Tech: Python · PyTorch · Matplotlib</p>
+                        <a href="https://github.com/ragini-kalvade/MathSolver" target="_blank">View Code</a>
                     </div>
 
-                    <div class="project-card">
-                        <img src="media/project3.jpg" alt="Project 3" />
-                        <h4>REDCap Integration</h4>
-                        <p>REDCap setup and CSV migration pipeline for Fall Prevention Lab study workflows.</p>
-                        <p class="tech">Tech: JavaScript, REDCap API, Node.js</p>
-                        <a href="#">View Code</a>
+                    <!-- Card 3: TweetStance -->
+                    <div class="project-card" data-aos="fade-up" data-aos-duration="800" data-aos-delay="200">
+                        <img src="media/tweetstance.png" alt="TweetStance" />
+                        <h4>TweetStance</h4>
+                        <p>Full-stack stance detection web app to classify tweets as “Support,” “Against,” or “Neutral.”</p>
+                        <p class="tech">Tech: Python · Django · NLP · JavaScript</p>
+                        <a href="https://github.com/ragini-kalvade/TweetStance" target="_blank">View Code</a>
                     </div>
+
+                    <!-- Card 4: Attack-the-Virus -->
+                    <div class="project-card" data-aos="fade-up" data-aos-duration="800" data-aos-delay="300">
+                        <img src="media/attack-virus.png" alt="Attack-the-Virus" />
+                        <h4>Attack-the-Virus</h4>
+                        <p>Interactive web game teaching immunology through levels that simulate antigen-antibody interactions.</p>
+                        <p class="tech">Tech: TypeScript · HTML · CSS · SQL</p>
+                        <a href="https://github.com/ragini-kalvade/Attack-the-Virus" target="_blank">View Code</a>
+                    </div>
+
+                    <!-- Card 5: AuthGuard -->
+                    <div class="project-card" data-aos="fade-up" data-aos-duration="800" data-aos-delay="400">
+                        <img src="media/authguard.png" alt="AuthGuard" />
+                        <h4>AuthGuard</h4>
+                        <p>Layered identity-authentication framework: password + signature match + real-time face-ID verification.</p>
+                        <p class="tech">Tech: Python · OpenCV · Django · SQLite</p>
+                        <a href="https://github.com/ragini-kalvade/AuthGuard" target="_blank">View Code</a>
+                    </div>
+
+                    <!-- Card 6: More on GitHub -->
+                    <div class="project-card more-card" data-aos="fade-up" data-aos-duration="800" data-aos-delay="500">
+                        <div class="more-card-inner">
+                            <div class="accent-stripe"></div>
+
+                            <div class="github-icon-container">
+                                <i class="fab fa-github fa-4x"></i>
+                            </div>
+
+                            <h4>More on GitHub</h4>
+
+                            <div class="live-data">
+                                <span class="badge stars"><i class="fas fa-star"></i><span id="gh-stars">–</span></span>
+                                <span class="badge forks"><i class="fas fa-code-branch"></i><span id="gh-forks">–</span></span>
+                                <span class="badge repos"><i class="fas fa-book"></i><span id="gh-repos">–</span></span>
+                            </div>
+
+                            <p>Explore additional repositories, contributions, and active research projects on my GitHub profile.</p>
+                            <p class="tech">Tech: Various</p>
+
+                            <a class="btn" href="https://github.com/ragini-kalvade" target="_blank">
+                                See My GitHub <i class="fas fa-external-link-alt"></i>
+                            </a>
+                        </div>
+                    </div>
+
                 </div>
-
             </section>
 
-            <section class="contact-section" id="contact">
+
+            <section class="contact-section" id="contact" data-aos="fade-up" data-aos-duration="1000">
                 <div class="section-header">
                     <h3>Let's Collaborate!</h3>
                 </div>
@@ -404,6 +476,11 @@
         </div>
     </div>
 </div>
+<script>
+    AOS.init();
+</script>
 
 </body>
+
 </html>
+

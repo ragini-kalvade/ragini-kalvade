@@ -135,35 +135,35 @@ function initializeSkillsCarousel() {
         }
     }
 
-    function goToCategory(index) {
-        if (index === currentIndex) return;
-
-        categories[currentIndex].classList.remove('active-category');
-        categories[currentIndex].classList.add('hidden-category');
-
-        const indicators = document.querySelectorAll('.carousel-indicator');
-        if (indicators[currentIndex]) {
-            indicators[currentIndex].classList.remove('active');
-        }
-
-        currentIndex = index;
-        categories[currentIndex].classList.remove('hidden-category');
-        categories[currentIndex].classList.add('active-category');
-
-        if (indicators[currentIndex]) {
-            indicators[currentIndex].classList.add('active');
-        }
-    }
-
-    function nextCategory() {
-        let nextIndex = (currentIndex + 1) % totalCategories;
-        goToCategory(nextIndex);
-    }
-
-    function prevCategory() {
-        let prevIndex = (currentIndex - 1 + totalCategories) % totalCategories;
-        goToCategory(prevIndex);
-    }
+    // function goToCategory(index) {
+    //     if (index === currentIndex) return;
+    //
+    //     categories[currentIndex].classList.remove('active-category');
+    //     categories[currentIndex].classList.add('hidden-category');
+    //
+    //     const indicators = document.querySelectorAll('.carousel-indicator');
+    //     if (indicators[currentIndex]) {
+    //         indicators[currentIndex].classList.remove('active');
+    //     }
+    //
+    //     currentIndex = index;
+    //     categories[currentIndex].classList.remove('hidden-category');
+    //     categories[currentIndex].classList.add('active-category');
+    //
+    //     if (indicators[currentIndex]) {
+    //         indicators[currentIndex].classList.add('active');
+    //     }
+    // }
+    //
+    // function nextCategory() {
+    //     let nextIndex = (currentIndex + 1) % totalCategories;
+    //     goToCategory(nextIndex);
+    // }
+    //
+    // function prevCategory() {
+    //     let prevIndex = (currentIndex - 1 + totalCategories) % totalCategories;
+    //     goToCategory(prevIndex);
+    // }
 
     let autoRotateInterval = setInterval(nextCategory, 4000);
 
@@ -208,9 +208,10 @@ function initializeInteractions() {
 function initializeAOS() {
     if (typeof AOS !== 'undefined') {
         AOS.init({
-            once: true,
+            once: false,
             duration: 800,
-            offset: 150
+            offset: 150,
+            easing: 'ease-in-out',
         });
     }
 }
@@ -823,4 +824,23 @@ document.addEventListener("DOMContentLoaded", () => {
             document.getElementById(tab.dataset.tab).classList.add("active");
         });
     });
+});
+
+document.addEventListener('DOMContentLoaded', () => {
+    const user = 'ragini-kalvade';
+    // Fetch repo count
+    fetch(`https://api.github.com/users/${user}`)
+    .then(res => res.json())
+    .then(u => {
+    document.getElementById('gh-repos').textContent = u.public_repos;
+});
+    // Fetch stars & forks across all repos
+    fetch(`https://api.github.com/users/${user}/repos?per_page=100`)
+    .then(res => res.json())
+    .then(repos => {
+    let stars = 0, forks = 0;
+    repos.forEach(r => { stars += r.stargazers_count; forks += r.forks_count; });
+    document.getElementById('gh-stars').textContent = stars;
+    document.getElementById('gh-forks').textContent = forks;
+});
 });

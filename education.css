@@ -9,6 +9,7 @@
     animation: none;
     margin-top: 0;
     min-height: 18rem;
+    font-size: 1.1rem;
 }
 
 .profile-summary {
@@ -54,7 +55,7 @@
 .education-card {
     position: relative;
     padding: 30px 25px 40px;
-    background: linear-gradient(135deg, rgba(118, 158, 255, 0.7), rgba(93, 139, 255, 0.82));
+    background: linear-gradient(135deg, rgb(14, 23, 81), rgb(0, 72, 255));
     color: white;
     border-radius: 12px;
     box-shadow: 0 8px 18px rgba(0, 0, 0, 0.2);
@@ -137,7 +138,7 @@
 }
 
 .education-card .description {
-    font-size: 0.9rem;
+    font-size: 1.1rem;
     line-height: 1.5;
     color: #e2e8f0;
     margin-top: 10px;
@@ -147,7 +148,7 @@
     border-top: 1px solid rgba(255,255,255,0.15);
     margin-top: 15px;
     padding-top: 10px;
-    font-size: 0.85rem;
+    font-size: 1rem;
     color: #e0eaff;
 }
 
