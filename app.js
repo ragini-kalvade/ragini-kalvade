@@ -844,3 +844,69 @@ document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('gh-forks').textContent = forks;
 });
 });
+
+document.addEventListener("DOMContentLoaded", () => {
+    const collabList = document.getElementById("collabList");
+    const buttons = [...collabList.querySelectorAll(".collab-btn")];
+    const pointer = document.getElementById("collabPointer");
+
+    // // Scatter the buttons randomly
+    // buttons.forEach(btn => {
+    //     const x = Math.random() * (collabList.clientWidth - 50); // prevent overflow
+    //     const y = Math.random() * (collabList.clientHeight - 300);
+    //     btn.style.left = `${x}px`;
+    //     btn.style.top = `${y}px`;
+    // });
+
+    // Animate the pointer to hover randomly
+    let currentIndex = 0;
+    function movePointerRandomly() {
+        const randomIndex = Math.floor(Math.random() * buttons.length);
+        const targetBtn = buttons[randomIndex];
+        const rect = targetBtn.getBoundingClientRect();
+        const listRect = collabList.getBoundingClientRect();
+
+        pointer.style.left = `${rect.left - listRect.left - 30}px`;
+        pointer.style.top = `${rect.top - listRect.top + rect.height / 2}px`;
+
+        // Add hover style temporarily
+        buttons.forEach(btn => btn.classList.remove("hovered"));
+        targetBtn.classList.add("hovered");
+    }
+
+    setInterval(movePointerRandomly, 1500);
+});
+
+
+document.addEventListener("DOMContentLoaded", () => {
+    const mousePointer = document.getElementById("mouse-pointer");
+    const options = document.querySelectorAll(".collab-option");
+
+    function randomHover() {
+        if (!options.length) return;
+        const option = options[Math.floor(Math.random() * options.length)];
+        const rect = option.getBoundingClientRect();
+
+        mousePointer.style.left = `${rect.left + 10}px`;
+        mousePointer.style.top = `${rect.top + 10 + window.scrollY}px`;
+
+        option.classList.add("hovered");
+        setTimeout(() => option.classList.remove("hovered"), 700);
+    }
+
+    setInterval(randomHover, 2000);
+});
+
+const pointer = document.getElementById("collabPointer");
+
+function movePointerTo(target) {
+    const rect = target.getBoundingClientRect();
+    const listRect = collabList.getBoundingClientRect();
+
+    const pointerX = target.offsetLeft - 30;
+    const pointerY = target.offsetTop + target.offsetHeight / 2 - 10;
+
+    pointer.style.left = `${pointerX}px`;
+    pointer.style.top = `${pointerY}px`;
+}
+

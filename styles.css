@@ -1,7 +1,7 @@
 :root {
     --color-primary: #001d8e;      /* sharper blue */
     --color-secondary: #ffffff;   /* white for contrast */
-    --color-accent: #b9cdff;      /* neon teal accent */
+    --color-accent: rgba(121, 163, 255, 0.3);      /* neon teal accent */
     --color-background: #f4f9ff;  /* brighter background */
     --color-text: #111827;        /* deep grey-black */
     --color-text-light: #6b7280;  /* softer grey */
