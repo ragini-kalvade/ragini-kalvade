@@ -1,15 +1,113 @@
 document.addEventListener('DOMContentLoaded', () => {
+    // Remove any leftover mobile overlay elements that might cause camera modal issues
+    const existingOverlays = document.querySelectorAll('.mobile-overlay');
+    existingOverlays.forEach(overlay => overlay.remove());
+    
+    // Ensure body overflow is reset
+    document.body.style.overflow = '';
 
+    initializeDarkMode();
     initializeAnimations();
     initializeNavigation();
     initializeTypewriter();
     initializeSkillsCarousel();
     initializeInteractions();
     initializeAOS();
+    initializeExperience();
+    initializeExperienceTabs();
 
     window.addEventListener('resize', adjustMainContentPadding);
+    
+    // Handle browser back navigation to prevent camera modal issues
+    window.addEventListener('popstate', () => {
+        // Remove any mobile overlays that might appear after back navigation
+        const overlays = document.querySelectorAll('.mobile-overlay');
+        overlays.forEach(overlay => overlay.remove());
+        
+        // Reset body overflow
+        document.body.style.overflow = '';
+        
+        // Remove any active mobile menu classes
+        const navCenter = document.querySelector('.nav-center');
+        const mobileToggle = document.querySelector('.mobile-menu-toggle');
+        
+        if (navCenter) navCenter.classList.remove('active');
+        if (mobileToggle) mobileToggle.classList.remove('active');
+    });
+    
+    // Handle page visibility changes to prevent camera modal issues
+    document.addEventListener('visibilitychange', () => {
+        if (!document.hidden) {
+            // Page became visible, clean up any leftover overlays
+            const overlays = document.querySelectorAll('.mobile-overlay');
+            overlays.forEach(overlay => overlay.remove());
+            
+            // Reset body overflow
+            document.body.style.overflow = '';
+        }
+    });
 });
 
+// Dark Mode Toggle Functionality
+function initializeDarkMode() {
+    const themeToggle = document.getElementById('theme-toggle');
+    const htmlElement = document.documentElement;
+    
+    // Check for saved theme preference or default to light mode
+    const currentTheme = localStorage.getItem('theme') || 'light';
+    
+    // Apply the theme immediately (before page renders)
+    htmlElement.setAttribute('data-theme', currentTheme);
+    
+    // Toggle theme function
+    function toggleTheme() {
+        const currentTheme = htmlElement.getAttribute('data-theme');
+        const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+        
+        // Add ripple effect
+        themeToggle.classList.add('ripple');
+        setTimeout(() => {
+            themeToggle.classList.remove('ripple');
+        }, 600);
+        
+        // Update theme
+        htmlElement.setAttribute('data-theme', newTheme);
+        localStorage.setItem('theme', newTheme);
+        
+        // Optional: Log for debugging
+        console.log(`Theme switched to: ${newTheme}`);
+    }
+    
+    // Add click event listener
+    if (themeToggle) {
+        themeToggle.addEventListener('click', toggleTheme);
+        
+        // Add keyboard support
+        themeToggle.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                toggleTheme();
+            }
+        });
+    }
+    
+    // Check system preference on first visit
+    if (!localStorage.getItem('theme')) {
+        const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        if (prefersDark) {
+            htmlElement.setAttribute('data-theme', 'dark');
+            localStorage.setItem('theme', 'dark');
+        }
+    }
+    
+    // Listen for system theme changes
+    window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
+        if (!localStorage.getItem('theme')) {
+            const newTheme = e.matches ? 'dark' : 'light';
+            htmlElement.setAttribute('data-theme', newTheme);
+        }
+    });
+}
 
 function initializeAnimations() {
     const header = document.querySelector(".main-header");
@@ -20,64 +118,160 @@ function initializeAnimations() {
         }, 100);
     }
 
+    // Animate all blocks on startup
     const blocks = document.querySelectorAll(".block");
     blocks.forEach((block, index) => {
-
-        if (isInViewport(block)) {
             setTimeout(() => {
                 animateBlock(block);
-            }, index * 100);
-        }
+        }, 300 + (index * 200)); // Stagger the animations
     });
 
     setupScrollAnimations();
 }
 
 function initializeNavigation() {
-
-    const sections = document.querySelectorAll('section');
-    const navLinks = document.querySelectorAll('nav a');
+    const sections = document.querySelectorAll('section[id]');
+    const navLinks = document.querySelectorAll('.nav-link');
 
     if (sections.length > 0 && navLinks.length > 0) {
+        // Set initial active state
+        updateActiveNavLink();
+        
+        // Update on scroll with throttling for performance
+        let ticking = false;
         window.addEventListener('scroll', () => {
-            let current = '';
+            if (!ticking) {
+                window.requestAnimationFrame(() => {
+                    updateActiveNavLink();
+                    ticking = false;
+                });
+                ticking = true;
+            }
+        });
+        
+        // Update on hash change
+        window.addEventListener('hashchange', updateActiveNavLink);
+        
+        // Add smooth scroll behavior for nav links
+        navLinks.forEach(link => {
+            link.addEventListener('click', (e) => {
+                const targetId = link.getAttribute('href');
+                if (targetId && targetId.startsWith('#')) {
+                    e.preventDefault();
+                    const targetSection = document.querySelector(targetId);
+                    if (targetSection) {
+                        const headerOffset = 100; // Account for sticky header
+                        const elementPosition = targetSection.offsetTop;
+                        const offsetPosition = elementPosition - headerOffset;
 
-            sections.forEach((section) => {
-                const sectionTop = section.offsetTop;
-                if (window.pageYOffset >= (sectionTop - 200)) {
-                    current = section.getAttribute('id');
+                        window.scrollTo({
+                            top: offsetPosition,
+                            behavior: 'smooth'
+                        });
+                        
+                        // Update URL without jumping
+                        history.pushState(null, null, targetId);
+                    }
                 }
             });
+        });
+    }
+    
+    function updateActiveNavLink() {
+        let current = '';
+        const scrollPosition = window.pageYOffset + 150; // Account for sticky header
 
-            navLinks.forEach((link) => {
-                link.classList.remove('active');
-                if (link.getAttribute('href') === `#${current}`) {
-                    link.classList.add('active');
-                }
-            });
+        sections.forEach((section) => {
+            const sectionTop = section.offsetTop;
+            const sectionHeight = section.offsetHeight;
+            const sectionId = section.getAttribute('id');
+            
+            if (scrollPosition >= sectionTop && scrollPosition < (sectionTop + sectionHeight)) {
+                current = sectionId;
+            }
+        });
+
+        // If at the very top, highlight home
+        if (window.pageYOffset < 100) {
+            current = 'hero';
+        }
+
+        navLinks.forEach((link) => {
+            link.classList.remove('active');
+            if (link.getAttribute('href') === `#${current}`) {
+                link.classList.add('active');
+            }
         });
     }
 
     // Mobile menu handling
-    const hamburger = document.getElementById("hamburger");
-    const navbar = document.getElementById("navbar");
-    if (hamburger && navbar) {
-        hamburger.addEventListener("click", () => {
-            navbar.classList.toggle("active");
-            hamburger.classList.toggle("open");
-        });
-    }
+    const mobileMenuToggle = document.getElementById("mobile-menu-toggle");
+    const navCenter = document.querySelector(".nav-center");
+    
+    if (mobileMenuToggle && navCenter) {
+        // Create overlay element
+        const overlay = document.createElement('div');
+        overlay.className = 'mobile-overlay';
+        overlay.style.cssText = `
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 9999;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        `;
+        document.body.appendChild(overlay);
 
-    // Mobile menu button
-    const menuButton = document.getElementById('mobile-menu-button');
-    if (menuButton) {
-        const navMenu = document.querySelector('.sidebar nav');
-        if (navMenu) {
-            menuButton.addEventListener('click', () => {
-                navMenu.classList.toggle('show-mobile-menu');
-                setTimeout(adjustMainContentPadding, 300);
+        mobileMenuToggle.addEventListener("click", () => {
+            navCenter.classList.toggle("active");
+            mobileMenuToggle.classList.toggle("active");
+            
+            if (navCenter.classList.contains("active")) {
+                overlay.style.opacity = "1";
+                overlay.style.visibility = "visible";
+                document.body.style.overflow = "hidden";
+            } else {
+                overlay.style.opacity = "0";
+                overlay.style.visibility = "hidden";
+                document.body.style.overflow = "";
+            }
+        });
+
+        // Close menu when clicking overlay
+        overlay.addEventListener("click", () => {
+            navCenter.classList.remove("active");
+            mobileMenuToggle.classList.remove("active");
+            overlay.style.opacity = "0";
+            overlay.style.visibility = "hidden";
+            document.body.style.overflow = "";
+        });
+
+        // Close menu when clicking nav links
+        const navLinks = document.querySelectorAll('.nav-link');
+        navLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                navCenter.classList.remove("active");
+                mobileMenuToggle.classList.remove("active");
+                overlay.style.opacity = "0";
+                overlay.style.visibility = "hidden";
+                document.body.style.overflow = "";
             });
-        }
+        });
+
+        // Close menu on escape key
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && navCenter.classList.contains("active")) {
+                navCenter.classList.remove("active");
+                mobileMenuToggle.classList.remove("active");
+                overlay.style.opacity = "0";
+                overlay.style.visibility = "hidden";
+                document.body.style.overflow = "";
+            }
+        });
     }
 }
 
@@ -135,35 +329,35 @@ function initializeSkillsCarousel() {
         }
     }
 
-    // function goToCategory(index) {
-    //     if (index === currentIndex) return;
-    //
-    //     categories[currentIndex].classList.remove('active-category');
-    //     categories[currentIndex].classList.add('hidden-category');
-    //
-    //     const indicators = document.querySelectorAll('.carousel-indicator');
-    //     if (indicators[currentIndex]) {
-    //         indicators[currentIndex].classList.remove('active');
-    //     }
-    //
-    //     currentIndex = index;
-    //     categories[currentIndex].classList.remove('hidden-category');
-    //     categories[currentIndex].classList.add('active-category');
-    //
-    //     if (indicators[currentIndex]) {
-    //         indicators[currentIndex].classList.add('active');
-    //     }
-    // }
-    //
-    // function nextCategory() {
-    //     let nextIndex = (currentIndex + 1) % totalCategories;
-    //     goToCategory(nextIndex);
-    // }
-    //
-    // function prevCategory() {
-    //     let prevIndex = (currentIndex - 1 + totalCategories) % totalCategories;
-    //     goToCategory(prevIndex);
-    // }
+    function goToCategory(index) {
+        if (index === currentIndex) return;
+
+        categories[currentIndex].classList.remove('active-category');
+        categories[currentIndex].classList.add('hidden-category');
+
+        const indicators = document.querySelectorAll('.carousel-indicator');
+        if (indicators[currentIndex]) {
+            indicators[currentIndex].classList.remove('active');
+        }
+
+        currentIndex = index;
+        categories[currentIndex].classList.remove('hidden-category');
+        categories[currentIndex].classList.add('active-category');
+
+        if (indicators[currentIndex]) {
+            indicators[currentIndex].classList.add('active');
+        }
+    }
+
+    function nextCategory() {
+        let nextIndex = (currentIndex + 1) % totalCategories;
+        goToCategory(nextIndex);
+    }
+
+    function prevCategory() {
+        let prevIndex = (currentIndex - 1 + totalCategories) % totalCategories;
+        goToCategory(prevIndex);
+    }
 
     let autoRotateInterval = setInterval(nextCategory, 4000);
 
@@ -242,6 +436,9 @@ function isInViewport(element) {
 }
 
 function animateBlock(block) {
+    // Mark block as animated
+    block.classList.add('animated');
+    
     const isRight = block.classList.contains('portrait') ||
         block.classList.contains('contact') ||
         block.classList.contains('projects') ||
@@ -253,10 +450,11 @@ function animateBlock(block) {
         block.style.animation = 'slideInLeft 0.8s ease forwards';
     }
 
+    // Ensure block is visible
     setTimeout(() => {
         block.style.opacity = '1';
         block.style.transform = 'translateX(0)';
-    }, 800);
+    }, 100);
 }
 
 function adjustMainContentPadding() {
@@ -273,25 +471,7 @@ function adjustMainContentPadding() {
     }
 }
 
-document.addEventListener("DOMContentLoaded", () => {
-    const sections = document.querySelectorAll("section[id]");
-    const scrollY = window.pageYOffset;
-
-    sections.forEach((section) => {
-        const sectionTop = section.offsetTop - 60;
-        const sectionHeight = section.offsetHeight;
-        const id = section.getAttribute("id");
-
-        const navLink = document.querySelector(`nav a[href="#${id}"]`);
-        if (navLink) {
-            if (scrollY > sectionTop && scrollY <= sectionTop + sectionHeight) {
-                navLink.classList.add("active");
-            } else {
-                navLink.classList.remove("active");
-            }
-        }
-    });
-});
+// Navigation active state is now handled in initializeNavigation() function
 
 // Enhanced Experience Section JavaScript
 function initializeEnhancedExperience() {
@@ -459,264 +639,44 @@ function createClickRipple(event, element) {
     }, 600);
 }
 
-// Fixed Experience Section JavaScript - Replace the experience-related code in app.js
-
-document.addEventListener("DOMContentLoaded", function() {
-    // Initialize all functions
-    initializeAnimations();
-    initializeNavigation();
-    initializeTypewriter();
-    initializeSkillsCarousel();
-    initializeInteractions();
-    initializeAOS();
-    initializeExperience(); // Add this line
-
-    window.addEventListener('resize', adjustMainContentPadding);
-});
+// Initialize experience section on startup
 
 function initializeExperience() {
-    const container = document.getElementById('experience-timeline');
-    if (!container) return;
-
-    const items = Array.from(container.querySelectorAll('.timeline-item'));
-    const chevron = document.getElementById('scroll-chevron');
-
-    if (!items.length) return;
-
-    let currentIndex = 0;
-
-    // Create and setup timeline vertical line
-    function setupTimelineLine() {
-        let line = container.querySelector('.timeline-vertical-line');
-        if (!line) {
-            line = document.createElement('div');
-            line.className = 'timeline-vertical-line';
-            container.insertBefore(line, container.firstChild);
-        }
-
-        // Calculate total height needed for the line
-        const totalHeight = items.reduce((height, item) => {
-            return height + item.offsetHeight + 20; // 20px for margin-bottom
-        }, 0);
-
-        line.style.height = Math.max(totalHeight, container.scrollHeight) + "px";
-    }
-
-    // Initialize timeline items visibility
-    function initializeItems() {
-        items.forEach((item, index) => {
-            item.classList.remove('active', 'next-glimpse', 'visible');
-            if (index === 0) {
-                item.classList.add('active', 'visible');
-            } else if (index === 1) {
-                item.classList.add('next-glimpse');
-            }
-        });
-    }
-
-    // Update active timeline item based on scroll position
-    function updateActiveItem() {
-        const containerRect = container.getBoundingClientRect();
-        const containerCenter = containerRect.top + containerRect.height / 2;
-
-        let closestIndex = 0;
-        let minDistance = Infinity;
-
-        items.forEach((item, index) => {
-            const itemRect = item.getBoundingClientRect();
-            const itemCenter = itemRect.top + itemRect.height / 2;
-            const distance = Math.abs(itemCenter - containerCenter);
-
-            if (distance < minDistance) {
-                minDistance = distance;
-                closestIndex = index;
-            }
-        });
-
-        // Only update if the active item has changed
-        if (closestIndex !== currentIndex) {
-            setActiveItem(closestIndex);
-        }
-    }
-
-    // Set specific item as active
-    function setActiveItem(index) {
-        if (index < 0 || index >= items.length) return;
-
-        // Clear all states
-        items.forEach(item => {
-            item.classList.remove('active', 'next-glimpse', 'visible');
-        });
-
-        // Set active item
-        currentIndex = index;
-        items[currentIndex].classList.add('active', 'visible');
-
-        // Set visible items (current and adjacent)
-        if (currentIndex > 0) {
-            items[currentIndex - 1].classList.add('visible');
-        }
-        if (currentIndex < items.length - 1) {
-            items[currentIndex + 1].classList.add('visible', 'next-glimpse');
-        }
-    }
-
-    // Smooth scroll to specific item
-    function scrollToItem(index) {
-        if (index < 0 || index >= items.length) return;
-
-        const item = items[index];
-        const containerRect = container.getBoundingClientRect();
-        const itemRect = item.getBoundingClientRect();
-
-        // Calculate scroll position to center the item
-        const scrollTop = container.scrollTop +
-            (itemRect.top - containerRect.top) -
-            (containerRect.height / 2) +
-            (itemRect.height / 2);
-
-        container.scrollTo({
-            top: scrollTop,
-            behavior: 'smooth'
-        });
-    }
-
-    // Update chevron visibility
-    function updateChevron() {
-        if (!chevron) return;
-
-        const isAtBottom = Math.abs(
-            container.scrollTop + container.clientHeight - container.scrollHeight
-        ) < 10;
-
-        const hasOverflow = container.scrollHeight > container.clientHeight + 5;
-
-        if (isAtBottom || !hasOverflow) {
-            chevron.style.display = "none";
-        } else {
-            chevron.style.display = "block";
-        }
-    }
-
-    // Handle wheel events for smooth navigation
-    function handleWheel(e) {
-        if (container.scrollHeight <= container.clientHeight + 5) return;
-
-        e.preventDefault();
-
-        const delta = Math.sign(e.deltaY);
-        let nextIndex = Math.max(0, Math.min(items.length - 1, currentIndex + delta));
-
-        if (nextIndex !== currentIndex) {
-            scrollToItem(nextIndex);
-        }
-    }
-
-    // Handle keyboard navigation
-    function handleKeydown(e) {
-        if (!['ArrowDown', 'ArrowUp', 'Space'].includes(e.key)) return;
-
-        e.preventDefault();
-
-        let nextIndex = currentIndex;
-        if (e.key === 'ArrowDown' || e.key === 'Space') {
-            nextIndex = Math.min(items.length - 1, currentIndex + 1);
-        } else if (e.key === 'ArrowUp') {
-            nextIndex = Math.max(0, currentIndex - 1);
-        }
-
-        if (nextIndex !== currentIndex) {
-            scrollToItem(nextIndex);
-        }
-    }
-
-    // Add hover effects to timeline items
-    function addHoverEffects() {
-        items.forEach(item => {
-            const leftPanel = item.querySelector('.left-panel');
-            const rightPanel = item.querySelector('.right-panel');
-            const dot = item.querySelector('.timeline-dot');
-
-            item.addEventListener('mouseenter', () => {
-                if (leftPanel) {
-                    leftPanel.style.transform = 'translateY(-5px) scale(1.02)';
-                    leftPanel.style.transition = 'transform 0.3s ease';
-                }
-                if (rightPanel) {
-                    rightPanel.style.transform = 'translateY(-5px) scale(1.02)';
-                    rightPanel.style.transition = 'transform 0.3s ease';
-                }
-                if (dot) {
-                    dot.style.transform = 'scale(1.3)';
-                    dot.style.transition = 'transform 0.3s ease';
-                }
-            });
-
-            item.addEventListener('mouseleave', () => {
-                if (leftPanel) {
-                    leftPanel.style.transform = '';
-                }
-                if (rightPanel) {
-                    rightPanel.style.transform = '';
-                }
-                if (dot) {
-                    dot.style.transform = '';
-                }
-            });
-
-            // Add click handler for project links
-            const projectLink = item.querySelector('.right-panel a');
-            if (projectLink) {
-                projectLink.addEventListener('click', (e) => {
-                    // Add visual feedback
-                    projectLink.style.transform = 'scale(0.95)';
-                    setTimeout(() => {
-                        projectLink.style.transform = '';
-                    }, 150);
-                });
-            }
-        });
-    }
-
-    // Initialize everything
-    function initialize() {
-        setupTimelineLine();
-        initializeItems();
-        addHoverEffects();
-        updateChevron();
-
-        // Scroll to first item after a brief delay
-        setTimeout(() => {
-            scrollToItem(0);
-        }, 100);
-    }
-
-    // Event listeners
-    container.addEventListener('wheel', handleWheel, { passive: false });
-    container.addEventListener('keydown', handleKeydown);
-    container.addEventListener('scroll', () => {
-        updateActiveItem();
-        updateChevron();
-    });
-
-    // Handle window resize
-    const resizeObserver = new ResizeObserver(() => {
-        setupTimelineLine();
-        updateChevron();
-    });
-    resizeObserver.observe(container);
-
-    // Make container focusable for keyboard navigation
-    container.setAttribute('tabindex', '0');
-
-    // Initialize on load
-    initialize();
-
-    // Re-initialize after fonts and images load
-    window.addEventListener('load', () => {
-        setTimeout(initialize, 200);
-    });
+    // This function is for timeline-based experience (not used in current HTML)
+    // The actual experience section uses tabs, handled by initializeExperienceTabs()
+    console.log('Experience section initialized');
 }
+
+function initializeExperienceTabs() {
+    const tabs = document.querySelectorAll(".tab");
+    const contents = document.querySelectorAll(".tab-content");
+
+    if (tabs.length === 0 || contents.length === 0) return;
+
+    tabs.forEach(tab => {
+        tab.addEventListener("click", () => {
+            // Remove active class from all
+            tabs.forEach(t => t.classList.remove("active"));
+            contents.forEach(c => c.classList.remove("active"));
+
+            // Add active to selected
+            tab.classList.add("active");
+            const targetId = tab.dataset.tab;
+            const targetContent = document.getElementById(targetId);
+            if (targetContent) {
+                targetContent.classList.add("active");
+            }
+        });
+    });
+
+    // Ensure first tab is active on load
+    if (tabs.length > 0 && contents.length > 0) {
+        tabs[0].classList.add("active");
+        contents[0].classList.add("active");
+    }
+}
+
+// Old timeline code removed - not needed for current tabbed experience section
 
 // Enhanced intersection observer for better performance
 function initializeTimelineObserver() {
@@ -809,22 +769,7 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 });
 
-document.addEventListener("DOMContentLoaded", () => {
-    const tabs = document.querySelectorAll(".tab");
-    const contents = document.querySelectorAll(".tab-content");
-
-    tabs.forEach(tab => {
-        tab.addEventListener("click", () => {
-            // Remove active class from all
-            tabs.forEach(t => t.classList.remove("active"));
-            contents.forEach(c => c.classList.remove("active"));
-
-            // Add active to selected
-            tab.classList.add("active");
-            document.getElementById(tab.dataset.tab).classList.add("active");
-        });
-    });
-});
+// Tab initialization moved to initializeExperienceTabs() function above
 
 document.addEventListener('DOMContentLoaded', () => {
     const user = 'ragini-kalvade';
@@ -909,4 +854,5 @@ function movePointerTo(target) {
     pointer.style.left = `${pointerX}px`;
     pointer.style.top = `${pointerY}px`;
 }
+
 
