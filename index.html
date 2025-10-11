@@ -8,6 +8,13 @@
     <meta name="author" content="Ragini Kalvade" />
     <title>Ragini Kalvade | Portfolio</title>
     
+    <!-- Accessibility & Performance -->
+    <meta name="robots" content="index, follow">
+    <meta name="theme-color" content="#2563eb">
+    <meta name="color-scheme" content="light dark">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    
     <!-- Stylesheets -->
     <link rel="stylesheet" href="styles.css" />
     <link rel="stylesheet" href="skills.css" />
@@ -42,10 +49,10 @@
 <body>
 
 <!-- Dark Mode Toggle Button -->
-<button class="theme-toggle" id="theme-toggle" aria-label="Toggle dark mode">
-    <i class="fas fa-sun theme-toggle-icon sun"></i>
-    <i class="fas fa-moon theme-toggle-icon moon"></i>
-</button>
+                        <button class="theme-toggle" id="theme-toggle" aria-label="Toggle dark mode" role="button" tabindex="0">
+                            <i class="fas fa-sun theme-toggle-icon sun" aria-hidden="true"></i>
+                            <i class="fas fa-moon theme-toggle-icon moon" aria-hidden="true"></i>
+                        </button>
 
 <!-- Main Portfolio -->
 <div id="portfolio">
@@ -95,13 +102,13 @@
         <main class="grid">
             <section class="block hero" id="hero" data-aos="fade-right" data-aos-duration="1000" aria-label="Hero introduction">
                 <h1>Ragini Kalvade.</h1>
-                <h2 id="typewriter" aria-live="polite"></h2>
+                <h2 id="typewriter" aria-live="polite" role="heading" aria-level="2" aria-label="Software Engineer"></h2>
                 <div class="hero-buttons">
-                    <a href="media/Resume.pdf" download class="btn primary-btn" aria-label="Download my resume">
-                        <i class="fas fa-download"></i> Download Resume
+                    <a href="media/Resume.pdf" download class="btn primary-btn" aria-label="Download my resume" role="button">
+                        <i class="fas fa-download" aria-hidden="true"></i> Download Resume
                     </a>
-                    <a href="#contact" class="btn secondary-btn" aria-label="Navigate to contact section">
-                        <i class="fas fa-envelope"></i> Contact Me
+                    <a href="#contact" class="btn secondary-btn" aria-label="Navigate to contact section" role="button">
+                        <i class="fas fa-envelope" aria-hidden="true"></i> Contact Me
                     </a>
                 </div>
             </section>
