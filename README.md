@@ -76,7 +76,7 @@ Analysis and research on software engineering practices, distributed systems des
 
 </div>
 
-<div align="center">
+<!-- <div align="center">
 <img src="https://github-readme-stats.vercel.app/api?username=ragini-kalvade&show_icons=true&hide_border=true&theme=default&hide_title=true&include_all_commits=true" alt="GitHub Stats" height="165"/>
 <img src="https://github-readme-stats.vercel.app/api/top-langs/?username=ragini-kalvade&layout=compact&hide_border=true&theme=default" alt="Top Languages" height="165"/>
-</div>
+</div> -->
