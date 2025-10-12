@@ -1,44 +1,17 @@
 /* projects.css - Modern Project Cards */
 .projects-section {
     grid-column: 1 / span 12;
-    padding: var(--spacing-xl);
-    background: var(--color-card-bg);
-    border: 1px solid var(--color-border);
-    border-radius: var(--radius-lg);
-    box-shadow: var(--shadow);
+    padding: var(--spacing-xl) 0;
+    background: transparent;
+    border: none;
+    border-radius: 0;
+    box-shadow: none;
     transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
     position: relative;
-    overflow: hidden;
+    overflow: visible;
 }
 
-.projects-section::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: linear-gradient(135deg, 
-        rgba(37, 99, 235, 0.02) 0%, 
-        rgba(139, 92, 246, 0.01) 100%);
-    pointer-events: none;
-}
 
-.projects-section::after {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 3px;
-    background: linear-gradient(90deg, var(--color-primary), var(--color-accent), transparent);
-    box-shadow: 0 2px 8px rgba(37, 99, 235, 0.3);
-}
-
-.projects-section:hover {
-    box-shadow: var(--shadow-hover);
-    border-color: var(--color-primary-light);
-}
 
 /* New: Grid layout for 2 rows × 3 columns */
 .projects-grid {
@@ -46,6 +19,7 @@
     grid-template-columns: repeat(3, 1fr);
     gap: var(--spacing-lg);
     margin-top: var(--spacing-md);
+    grid-auto-rows: 1fr;
 }
 
 /* Responsive breakpoints */
@@ -124,13 +98,23 @@
     background: var(--color-card-bg);
     border: 1px solid var(--color-border);
     border-radius: var(--radius-lg);
-    padding: 0;
+    padding: var(--spacing-xl);
     box-shadow: var(--shadow);
     display: flex;
     flex-direction: column;
+    gap: var(--spacing-md);
     overflow: hidden;
     transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
     position: relative;
+    min-height: 280px;
+    height: 100%;
+}
+
+/* Project Card Hover Effect */
+.project-card:hover {
+    transform: translateY(-8px);
+    box-shadow: var(--shadow-hover);
+    border-color: var(--color-primary-light);
 }
 
 .project-card::before {
@@ -160,39 +144,457 @@
     z-index: 2;
 }
 
-/* Enhanced hover effects */
-.project-card:hover {
-    transform: translateY(-12px);
-    box-shadow: var(--shadow-hover);
-    border-color: var(--color-primary-light);
-}
 
-.project-card:hover::after {
-    opacity: 1;
-}
-
-/* Project Image Styling */
-.project-card img {
+/* Subtle Background Animations */
+.project-bg-animation {
+    position: absolute;
+    top: 0;
+    left: 0;
     width: 100%;
-    height: 220px;
-    object-fit: cover;
-    object-position: center;
-    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-    position: relative;
-    z-index: 1;
-    filter: brightness(1) contrast(1.05) saturate(1.1);
+    height: 100%;
+    opacity: 0.05;
+    z-index: 0;
+    pointer-events: none;
+    overflow: hidden;
 }
 
-.project-card:hover img {
-    transform: scale(1.08);
-    filter: brightness(1.1) contrast(1.1) saturate(1.2);
+/* GPU Background - Network Lines */
+.network-lines {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+}
+
+.network-line {
+    position: absolute;
+    background: linear-gradient(90deg, transparent, var(--color-primary), transparent);
+    height: 1px;
+    width: 100%;
+    animation: networkFlow 4s linear infinite;
+}
+
+.network-line:nth-child(1) {
+    top: 30%;
+    animation-delay: 0s;
+}
+
+.network-line:nth-child(2) {
+    top: 50%;
+    animation-delay: 1.3s;
+}
+
+.network-line:nth-child(3) {
+    top: 70%;
+    animation-delay: 2.6s;
+}
+
+@keyframes networkFlow {
+    0% {
+        transform: translateX(-100%);
+        opacity: 0;
+    }
+    50% {
+        opacity: 1;
+    }
+    100% {
+        transform: translateX(100%);
+        opacity: 0;
+    }
+}
+
+.network-nodes span {
+    position: absolute;
+    width: 8px;
+    height: 8px;
+    background: var(--color-primary);
+    border-radius: 50%;
+    animation: nodePulse 2s ease-in-out infinite;
+}
+
+.network-nodes span:nth-child(1) { top: 20%; left: 20%; animation-delay: 0s; }
+.network-nodes span:nth-child(2) { top: 20%; right: 20%; animation-delay: 0.5s; }
+.network-nodes span:nth-child(3) { bottom: 20%; left: 20%; animation-delay: 1s; }
+.network-nodes span:nth-child(4) { bottom: 20%; right: 20%; animation-delay: 1.5s; }
+
+@keyframes nodePulse {
+    0%, 100% { transform: scale(1); opacity: 0.5; }
+    50% { transform: scale(1.5); opacity: 1; }
+}
+
+/* Math Background - Floating Symbols */
+.math-symbols {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+}
+
+.math-symbols span {
+    position: absolute;
+    font-size: 3rem;
+    color: var(--color-primary);
+    opacity: 0.3;
+    animation: mathFloat 6s ease-in-out infinite;
+}
+
+.math-symbols span:nth-child(1) { top: 10%; left: 15%; animation-delay: 0s; }
+.math-symbols span:nth-child(2) { top: 20%; right: 20%; animation-delay: 1.5s; }
+.math-symbols span:nth-child(3) { bottom: 25%; left: 25%; animation-delay: 3s; }
+.math-symbols span:nth-child(4) { bottom: 15%; right: 15%; animation-delay: 4.5s; }
+
+@keyframes mathFloat {
+    0%, 100% { transform: translateY(0) rotate(0deg); opacity: 0.2; }
+    50% { transform: translateY(-20px) rotate(10deg); opacity: 0.4; }
+}
+
+/* Tweet Background - Twitter Logo */
+.twitter-logo {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 8rem;
+    color: var(--color-primary);
+    opacity: 0.08;
+    animation: tweetPulse 3s ease-in-out infinite;
+}
+
+@keyframes tweetPulse {
+    0%, 100% { transform: translate(-50%, -50%) scale(1); }
+    50% { transform: translate(-50%, -50%) scale(1.05); }
+}
+
+/* Virus Background - DNA Strand */
+.dna-strand {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.dna-strand span {
+    width: 2px;
+    height: 80%;
+    background: linear-gradient(180deg, transparent, var(--color-primary), transparent);
+    animation: dnaRotate 4s ease-in-out infinite;
+}
+
+.dna-strand span:nth-child(1) { animation-delay: 0s; }
+.dna-strand span:nth-child(2) { animation-delay: 1.3s; }
+.dna-strand span:nth-child(3) { animation-delay: 2.6s; }
+
+@keyframes dnaRotate {
+    0%, 100% { transform: scaleY(1); opacity: 0.3; }
+    50% { transform: scaleY(0.8); opacity: 0.6; }
+}
+
+/* Auth Background - Fingerprint */
+.fingerprint {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 100px;
+    height: 100px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+}
+
+.print-line {
+    height: 2px;
+    background: var(--color-primary);
+    border-radius: 50%;
+    opacity: 0.2;
+    animation: printScan 3s ease-in-out infinite;
+}
+
+.print-line:nth-child(1) { width: 80%; animation-delay: 0s; }
+.print-line:nth-child(2) { width: 100%; animation-delay: 0.3s; }
+.print-line:nth-child(3) { width: 90%; animation-delay: 0.6s; }
+.print-line:nth-child(4) { width: 70%; animation-delay: 0.9s; }
+
+@keyframes printScan {
+    0%, 100% { opacity: 0.2; }
+    50% { opacity: 0.5; }
+}
+
+
+/* GPU Animation */
+.gpu-animation {
+    background: linear-gradient(135deg, 
+        rgba(37, 99, 235, 0.05) 0%, 
+        rgba(139, 92, 246, 0.03) 100%);
+}
+
+.gpu-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+    padding: 20px;
+}
+
+.gpu-unit {
+    width: 80px;
+    height: 60px;
+    background: linear-gradient(135deg, var(--color-primary), var(--color-primary-dark));
+    border-radius: 8px;
+    position: relative;
+    animation: gpuPulse 2s ease-in-out infinite;
+    box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
+}
+
+.gpu-unit:nth-child(2) { animation-delay: 0.5s; }
+.gpu-unit:nth-child(3) { 
+    animation-delay: 1s;
+    background: linear-gradient(135deg, rgba(139, 92, 246, 0.8), rgba(167, 139, 250, 0.6));
+    animation-name: gpuFailure;
+    box-shadow: 0 4px 12px rgba(139, 92, 246, 0.3);
+}
+.gpu-unit:nth-child(4) { animation-delay: 1.5s; }
+
+@keyframes gpuPulse {
+    0%, 100% { transform: scale(1); opacity: 1; }
+    50% { transform: scale(1.05); opacity: 0.8; }
+}
+
+@keyframes gpuFailure {
+    0%, 100% { transform: scale(1); }
+    25% { transform: scale(0.95); opacity: 0.5; }
+    50% { transform: scale(1.05); }
+    75% { transform: scale(0.95); opacity: 0.3; }
+}
+
+.checkpoint-indicator {
+    position: absolute;
+    bottom: 15px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 60px;
+    height: 4px;
+    background: var(--color-primary);
+    border-radius: 2px;
+    animation: checkpoint 3s ease-in-out infinite;
+    box-shadow: 0 0 8px var(--color-primary);
+}
+
+@keyframes checkpoint {
+    0% { width: 0; }
+    100% { width: 60px; }
+}
+
+/* Math Animation */
+.math-animation {
+    background: linear-gradient(135deg, 
+        rgba(37, 99, 235, 0.05) 0%, 
+        rgba(139, 92, 246, 0.03) 100%);
+    flex-direction: column;
+    gap: 15px;
+}
+
+.equation, .solution {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 1.3rem;
+    font-weight: 600;
+    color: var(--color-primary);
+    animation: fadeSlide 2s ease-in-out infinite;
+}
+
+.solution {
+    color: #10b981;
+    animation-delay: 1s;
+}
+
+.graph-line {
+    width: 120px;
+    height: 2px;
+    background: linear-gradient(90deg, #2563eb, #8b5cf6);
+    position: relative;
+    animation: drawLine 2s ease-in-out infinite;
+}
+
+.graph-line::before {
+    content: '';
+    position: absolute;
+    width: 8px;
+    height: 8px;
+    background: #2563eb;
+    border-radius: 50%;
+    top: -3px;
+    left: 0;
+    animation: plotPoint 2s ease-in-out infinite;
+}
+
+@keyframes fadeSlide {
+    0%, 100% { opacity: 1; transform: translateY(0); }
+    50% { opacity: 0.6; transform: translateY(-5px); }
+}
+
+@keyframes drawLine {
+    0% { width: 0; }
+    100% { width: 120px; }
+}
+
+@keyframes plotPoint {
+    0% { left: 0; }
+    100% { left: calc(100% - 8px); }
+}
+
+/* Tweet Animation */
+.tweet-animation {
+    background: linear-gradient(135deg, 
+        rgba(37, 99, 235, 0.05) 0%, 
+        rgba(139, 92, 246, 0.03) 100%);
+    flex-direction: column;
+    gap: 15px;
+}
+
+.tweet-icon {
+    font-size: 3rem;
+    animation: tweetFloat 2s ease-in-out infinite;
+}
+
+@keyframes tweetFloat {
+    0%, 100% { transform: translateY(0) rotate(0deg); }
+    50% { transform: translateY(-10px) rotate(5deg); }
+}
+
+.sentiment-bars {
+    display: flex;
+    gap: 8px;
+    align-items: flex-end;
+}
+
+.bar {
+    width: 30px;
+    border-radius: 4px 4px 0 0;
+    animation: barGrow 2s ease-in-out infinite;
+}
+
+.bar.support {
+    height: 60px;
+    background: linear-gradient(180deg, var(--color-primary), var(--color-primary-dark));
+}
+
+.bar.neutral {
+    height: 40px;
+    background: linear-gradient(180deg, var(--color-primary-light), var(--color-primary));
+    animation-delay: 0.3s;
+}
+
+.bar.against {
+    height: 50px;
+    background: linear-gradient(180deg, var(--color-accent), var(--color-accent-light));
+    animation-delay: 0.6s;
+}
+
+@keyframes barGrow {
+    0%, 100% { transform: scaleY(1); }
+    50% { transform: scaleY(0.8); }
+}
+
+/* Virus Animation */
+.virus-animation {
+    background: linear-gradient(135deg, 
+        rgba(37, 99, 235, 0.05) 0%, 
+        rgba(139, 92, 246, 0.03) 100%);
+    position: relative;
+}
+
+.virus {
+    font-size: 4rem;
+    animation: virusMove 3s ease-in-out infinite;
+}
+
+.antibody {
+    position: absolute;
+    font-size: 2.5rem;
+    animation: antibodyAttack 3s ease-in-out infinite;
+    top: 50%;
+    left: 20%;
+}
+
+.particles span {
+    position: absolute;
+    width: 6px;
+    height: 6px;
+    background: var(--color-accent);
+    border-radius: 50%;
+    animation: particleFloat 2s ease-in-out infinite;
+}
+
+.particles span:nth-child(1) { top: 20%; left: 30%; animation-delay: 0s; }
+.particles span:nth-child(2) { top: 60%; left: 70%; animation-delay: 0.7s; }
+.particles span:nth-child(3) { top: 40%; left: 50%; animation-delay: 1.4s; }
+
+@keyframes virusMove {
+    0%, 100% { transform: translate(0, 0) rotate(0deg); }
+    50% { transform: translate(20px, -10px) rotate(180deg); }
+}
+
+@keyframes antibodyAttack {
+    0%, 100% { transform: translateX(0); }
+    50% { transform: translateX(40px); }
+}
+
+@keyframes particleFloat {
+    0%, 100% { transform: translateY(0) scale(1); opacity: 1; }
+    50% { transform: translateY(-20px) scale(1.2); opacity: 0.5; }
+}
+
+/* Auth Animation */
+.auth-animation {
+    background: linear-gradient(135deg, 
+        rgba(37, 99, 235, 0.05) 0%, 
+        rgba(139, 92, 246, 0.03) 100%);
+    flex-direction: column;
+    gap: 20px;
+}
+
+.face-scan {
+    position: relative;
+    width: 100px;
+    height: 100px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.scan-line {
+    position: absolute;
+    width: 100%;
+    height: 2px;
+    background: var(--color-primary);
+    box-shadow: 0 0 10px var(--color-primary);
+    animation: scanMove 2s ease-in-out infinite;
+}
+
+.face-icon {
+    font-size: 3.5rem;
+    z-index: 1;
+}
+
+.lock-icon {
+    font-size: 2rem;
+    animation: lockPulse 2s ease-in-out infinite;
+}
+
+@keyframes scanMove {
+    0%, 100% { top: 0; }
+    50% { top: 100%; }
+}
+
+@keyframes lockPulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.2); }
 }
 
 /* Project Content */
 .project-card h4 {
-    font-size: clamp(1.25rem, 2.5vw, 1.5rem);
+    font-size: 1.3rem;
     color: var(--color-secondary);
-    margin: var(--spacing-lg) var(--spacing-lg) var(--spacing-md);
+    margin: 0;
     font-weight: 700;
     line-height: 1.3;
     letter-spacing: -0.01em;
@@ -202,22 +604,27 @@
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
+    min-height: 2.6rem;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
 }
 
 .project-card p {
-    font-size: clamp(1rem, 2vw, 1.125rem);
+    font-size: 0.95rem;
     color: var(--color-text);
-    margin: 0 var(--spacing-lg) var(--spacing-md);
-    line-height: 1.7;
+    margin: 0;
+    line-height: 1.65;
     font-weight: 400;
     position: relative;
     z-index: 2;
 }
 
 .project-card .tech {
-    font-size: clamp(0.875rem, 1.5vw, 1rem);
+    font-size: 0.85rem;
     color: var(--color-text-light);
-    margin: 0 var(--spacing-lg) var(--spacing-lg);
+    margin: 0;
     font-weight: 500;
     letter-spacing: 0.02em;
     position: relative;
@@ -226,6 +633,7 @@
     align-items: center;
     gap: 0.5rem;
     line-height: 1.6;
+    min-height: 2rem;
 }
 
 .project-card .tech::before {
@@ -239,7 +647,8 @@
     color: var(--color-primary);
     font-weight: 600;
     font-size: clamp(0.875rem, 1.5vw, 1rem);
-    margin: 0 var(--spacing-lg) var(--spacing-lg);
+    margin: 0;
+    margin-top: auto;
     align-self: flex-start;
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     display: inline-flex;
@@ -272,7 +681,6 @@
 .project-card a:hover {
     color: white;
     border-color: var(--color-primary);
-    transform: translateY(-2px);
     box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
 }
 
@@ -287,9 +695,6 @@
     margin-left: 0.25rem;
 }
 
-.project-card a:hover::after {
-    transform: translateX(4px);
-}
 
 /* Special styling for the GitHub icon card */
 .github-icon-container {
@@ -615,7 +1020,9 @@
 }
 
 [data-theme="dark"] .project-card:hover {
-    border-color: #58a6ff;
+    transform: translateY(-8px);
+    box-shadow: 0 12px 32px rgba(59, 130, 246, 0.2);
+    border-color: var(--color-primary-light);
 }
 
 [data-theme="dark"] .project-card img {
@@ -668,13 +1075,18 @@
         rgba(139, 92, 246, 0.03) 100%);
 }
 
+/* Dark mode project visual */
+[data-theme="dark"] .project-visual {
+    background: linear-gradient(135deg, 
+        rgba(59, 130, 246, 0.1) 0%, 
+        rgba(139, 92, 246, 0.08) 100%);
+}
+
+
 [data-theme="dark"] .projects-section::after {
     background: linear-gradient(90deg, #58a6ff, #a78bfa, transparent);
 }
 
-[data-theme="dark"] .projects-section:hover {
-    border-color: #58a6ff;
-}
 
 /* Responsive adjustments for GitHub card */
 @media (max-width: 768px) {

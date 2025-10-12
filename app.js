@@ -1,3 +1,82 @@
+// Animated Code Grid Background
+function initializeCodeGrid() {
+    const canvas = document.getElementById('codeGridCanvas');
+    if (!canvas) return;
+    
+    const ctx = canvas.getContext('2d');
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+    
+    const chars = '01';
+    const fontSize = 14;
+    const columns = canvas.width / fontSize;
+    const drops = [];
+    
+    for (let i = 0; i < columns; i++) {
+        drops[i] = Math.random() * canvas.height / fontSize;
+    }
+    
+    function draw() {
+        // Check for dark mode
+        const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+        
+        // Background fade color
+        ctx.fillStyle = isDark ? 'rgba(31, 31, 31, 0.05)' : 'rgba(240, 247, 255, 0.05)';
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+        
+        // Text color - blue accent
+        ctx.fillStyle = isDark ? '#3b82f6' : '#2563eb';
+        ctx.font = fontSize + 'px monospace';
+        
+        for (let i = 0; i < drops.length; i++) {
+            const text = chars[Math.floor(Math.random() * chars.length)];
+            ctx.fillText(text, i * fontSize, drops[i] * fontSize);
+            
+            if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
+                drops[i] = 0;
+            }
+            drops[i]++;
+        }
+    }
+    
+    setInterval(draw, 50);
+    
+    window.addEventListener('resize', () => {
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+    });
+}
+
+// Hero Rotating Text
+function initializeHeroRotatingText() {
+    const words = document.querySelectorAll('.rotating-word');
+    if (words.length === 0) return;
+    
+    let currentIndex = 0;
+    
+    setInterval(() => {
+        words[currentIndex].classList.remove('active');
+        currentIndex = (currentIndex + 1) % words.length;
+        words[currentIndex].classList.add('active');
+    }, 3000);
+}
+
+// Frosted Glass Navbar on Scroll
+function initializeFrostedNavbar() {
+    const header = document.querySelector('.main-header');
+    if (!header) return;
+    
+    window.addEventListener('scroll', () => {
+        const currentScroll = window.pageYOffset;
+        
+        if (currentScroll > 50) {
+            header.classList.add('scrolled');
+        } else {
+            header.classList.remove('scrolled');
+        }
+    });
+}
+
 document.addEventListener('DOMContentLoaded', () => {
     // Remove any leftover mobile overlay elements that might cause camera modal issues
     const existingOverlays = document.querySelectorAll('.mobile-overlay');
@@ -15,6 +94,9 @@ document.addEventListener('DOMContentLoaded', () => {
     initializeAOS();
     initializeExperience();
     initializeExperienceTabs();
+    initializeCodeGrid();
+    initializeHeroRotatingText();
+    initializeFrostedNavbar();
 
     window.addEventListener('resize', adjustMainContentPadding);
     

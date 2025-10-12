@@ -48,12 +48,6 @@
 
 <body>
 
-<!-- Dark Mode Toggle Button -->
-                        <button class="theme-toggle" id="theme-toggle" aria-label="Toggle dark mode" role="button" tabindex="0">
-                            <i class="fas fa-sun theme-toggle-icon sun" aria-hidden="true"></i>
-                            <i class="fas fa-moon theme-toggle-icon moon" aria-hidden="true"></i>
-                        </button>
-
 <!-- Main Portfolio -->
 <div id="portfolio">
     <div class="container">
@@ -69,13 +63,21 @@
 
                 <div class="nav-center">
                     <nav id="navbar">
-                        <a href="#hero" class="nav-link"><i class="fas fa-home"></i> <span>Home</span></a>
+                        <a href="#hero" class="nav-link active"><i class="fas fa-home"></i> <span>Home</span></a>
                         <a href="#about" class="nav-link"><i class="fas fa-user"></i> <span>About</span></a>
                         <!-- <a href="#skills" class="nav-link"><i class="fas fa-code"></i> <span>Skills</span></a> -->
                         <a href="#experience" class="nav-link"><i class="fas fa-briefcase"></i> <span>Experience</span></a>
                         <a href="#projects" class="nav-link"><i class="fas fa-lightbulb"></i> <span>Projects</span></a>
                         <a href="#contact" class="nav-link"><i class="fas fa-envelope"></i> <span>Contact</span></a>
                     </nav>
+                </div>
+                
+                <!-- Dark Mode Toggle in Navbar -->
+                <div class="nav-actions">
+                    <button class="theme-toggle" id="theme-toggle" aria-label="Toggle dark mode" role="button" tabindex="0">
+                        <i class="fas fa-sun theme-toggle-icon sun" aria-hidden="true"></i>
+                        <i class="fas fa-moon theme-toggle-icon moon" aria-hidden="true"></i>
+                    </button>
                 </div>
 
                 <div class="nav-social">
@@ -90,35 +92,54 @@
                     </a>
                 </div>
 
-                <!-- Mobile menu button -->
-                <button class="mobile-menu-toggle" id="mobile-menu-toggle">
-                    <span class="hamburger-line"></span>
-                    <span class="hamburger-line"></span>
-                    <span class="hamburger-line"></span>
-                </button>
             </div>
         </header>
 
         <main class="grid">
-            <section class="block hero" id="hero" data-aos="fade-right" data-aos-duration="1000" aria-label="Hero introduction">
-                <h1>Ragini Kalvade.</h1>
-                <h2 id="typewriter" aria-live="polite" role="heading" aria-level="2" aria-label="Software Engineer"></h2>
-                <div class="hero-buttons">
-                    <a href="media/Resume.pdf" download class="btn primary-btn" aria-label="Download my resume" role="button">
-                        <i class="fas fa-download" aria-hidden="true"></i> Download Resume
-                    </a>
-                    <a href="#contact" class="btn secondary-btn" aria-label="Navigate to contact section" role="button">
-                        <i class="fas fa-envelope" aria-hidden="true"></i> Contact Me
-                    </a>
+            <section class="hero-fullscreen" id="hero">
+                <!-- Animated Code Grid Background -->
+                <canvas id="codeGridCanvas" class="code-grid-bg"></canvas>
+                
+                <div class="hero-content-center">
+                    <div class="hero-text-wrapper">
+                        <h1 class="hero-name">Ragini Kalvade</h1>
+                        <h2 class="hero-role">Software Engineer</h2>
+                        <p class="hero-tagline">Building intelligent systems at the intersection of ML and scalable architecture</p>
+                        
+                        <!-- Rotating Subtitle -->
+                        <div class="hero-rotating-subtitle">
+                            <span class="rotating-prefix">I</span>
+                            <span class="rotating-words-hero">
+                                <span class="rotating-word active">RAG for LLMs</span>
+                                <span class="rotating-word">train ML models</span>
+                                <span class="rotating-word">design scalable applications</span>
+                                <span class="rotating-word">build distributed systems</span>
+                            </span>
+                        </div>
+                        
+                        <!-- Primary CTA -->
+                        <div class="hero-cta">
+                            <a href="#projects" class="hero-cta-button">
+                                <span>View Projects</span>
+                                <i class="fas fa-arrow-right"></i>
+                            </a>
+                            <a href="media/Resume.pdf" download class="hero-secondary-button">
+                                <i class="fas fa-download"></i>
+                                <span>Resume</span>
+                            </a>
+                        </div>
+            
+                    </div>
                 </div>
             </section>
 
-            <section class="block skills" id="skills" data-aos="zoom-in-up" data-aos-duration="1000">
-                <div class="section-header">
-                    <h3>Skills</h3>
-                </div>
+            <section class="block skills-education-section" id="skills" data-aos="fade-up" data-aos-duration="1000">
+                <div class="skills-column">
+                    <div class="section-header">
+                        <h3>Skills</h3>
+                    </div>
 
-                <div class="skills-carousel">
+                    <div class="skills-carousel">
                     <div class="skills-carousel-container">
                         <!-- Languages Category -->
                         <div class="skill-category">
@@ -291,22 +312,14 @@
                         <div class="carousel-indicators"></div>
                     </div>
                 </div>
-            </section>
-
-            <section class="block education-section" id="about" data-aos="fade-up" data-aos-duration="1000">
-                <div class="profile-summary" data-aos="fade-up" data-aos-duration="1200">
-                    <img src="media/puzzle.png" class="puzzle-bg" alt="puzzle background">
-                    <div class="quote-decorator">“</div>
-                    <h2 class="summary-heading">Profile Summary</h2>
-                    <p class="summary-text">
-                        I see software as a puzzle — each line of code a piece contributing to something greater.
-                        I specialize in building intelligent systems that prioritize both performance and human-centered design.
-                        From full-stack development to distributed architectures, I focus on crafting solutions that are as scalable as they are intuitive.
-                    </p>
-                    <p class="signature">— Ragini Kalvade, MSCS @ UIC</p>
                 </div>
 
-                <div class="education-cards">
+                <div class="education-column">
+                    <div class="section-header">
+                        <h3>Education</h3>
+                    </div>
+
+                    <div class="education-cards">
                     <div class="education-card">
                         <div class="icon-badge"><i class="fas fa-graduation-cap"></i></div>
                         <span class="degree-badge">MS</span>
@@ -321,7 +334,7 @@
 
                     <div class="education-card">
                         <div class="icon-badge"><i class="fas fa-user-graduate"></i></div>
-                        <span class="degree-badge">BTech</span>
+                        <span class="degree-badge">B.Tech</span>
                         <h2>Bachelor of Technology</h2>
                         <div class="university">NIT Bhopal</div>
                         <div class="year">2018 - 2022</div>
@@ -330,6 +343,7 @@
                         </div>
                         <div class="card-footer">GPA: 8.4 / 10.0</div>
                     </div>
+                </div>
                 </div>
             </section>
 
@@ -391,7 +405,19 @@
                 <div class="projects-grid">
                     <!-- Card 1: GPU Failure Recovery -->
                     <div class="project-card" data-aos="fade-up" data-aos-duration="800">
-                        <img src="media/megatron.png" alt="Proactive GPU Fault Tolerance" />
+                        <div class="project-bg-animation gpu-bg">
+                            <div class="network-lines">
+                                <div class="network-line"></div>
+                                <div class="network-line"></div>
+                                <div class="network-line"></div>
+                            </div>
+                            <div class="network-nodes">
+                                <span></span>
+                                <span></span>
+                                <span></span>
+                                <span></span>
+                            </div>
+                        </div>
                         <h4>Proactive GPU Fault Tolerance</h4>
                         <p>Simulated GPU failures and automated checkpoint-based recovery during large-scale LLM training.</p>
                         <p class="tech">Tech: PyTorch · Megatron-LM · nvidia-smi· Chameleon Cloud </p>
@@ -400,7 +426,14 @@
 
                     <!-- Card 2: MathSolver -->
                     <div class="project-card" data-aos="fade-up" data-aos-duration="800" data-aos-delay="100">
-                        <img src="media/mathsolver.png" alt="MathSolver" />
+                        <div class="project-bg-animation math-bg">
+                            <div class="math-symbols">
+                                <span>∫</span>
+                                <span>∑</span>
+                                <span>π</span>
+                                <span>∂</span>
+                            </div>
+                        </div>
                         <h4>MathSolver</h4>
                         <p>Hybrid educational tool combining analytic solvers with PyTorch ML to solve and animate algebraic equations.</p>
                         <p class="tech">Tech: Python · PyTorch · Matplotlib</p>
@@ -409,7 +442,9 @@
 
                     <!-- Card 3: TweetStance -->
                     <div class="project-card" data-aos="fade-up" data-aos-duration="800" data-aos-delay="200">
-                        <img src="media/tweetstance.png" alt="TweetStance" />
+                        <div class="project-bg-animation tweet-bg">
+                            <i class="fab fa-twitter twitter-logo"></i>
+                        </div>
                         <h4>TweetStance</h4>
                         <p>Full-stack stance detection web app to classify tweets as “Support,” “Against,” or “Neutral.”</p>
                         <p class="tech">Tech: Python · Django · NLP · JavaScript</p>
@@ -418,7 +453,13 @@
 
                     <!-- Card 4: Attack-the-Virus -->
                     <div class="project-card" data-aos="fade-up" data-aos-duration="800" data-aos-delay="300">
-                        <img src="media/attack-virus.png" alt="Attack-the-Virus" />
+                        <div class="project-bg-animation virus-bg">
+                            <div class="dna-strand">
+                                <span></span>
+                                <span></span>
+                                <span></span>
+                            </div>
+                        </div>
                         <h4>Attack-the-Virus</h4>
                         <p>Interactive web game teaching immunology through levels that simulate antigen-antibody interactions.</p>
                         <p class="tech">Tech: Angular · Typescript · SQL</p>
@@ -427,7 +468,14 @@
 
                     <!-- Card 5: AuthGuard -->
                     <div class="project-card" data-aos="fade-up" data-aos-duration="800" data-aos-delay="400">
-                        <img src="media/authguard.png" alt="AuthGuard" />
+                        <div class="project-bg-animation auth-bg">
+                            <div class="fingerprint">
+                                <div class="print-line"></div>
+                                <div class="print-line"></div>
+                                <div class="print-line"></div>
+                                <div class="print-line"></div>
+                            </div>
+                        </div>
                         <h4>AuthGuard</h4>
                         <p>Layered identity-authentication framework: password + signature match + real-time face-ID verification.</p>
                         <p class="tech">Tech: Python · OpenCV · Django · SQLite</p>
@@ -456,24 +504,8 @@
                             <!-- Stats and CTA Section -->
                             <div class="github-footer">
                                 <div class="github-stats">
-                                    <div class="stat-item">
-                                        <div class="stat-icon">
-                                            <i class="fas fa-star"></i>
-                                        </div>
-                                        <div class="stat-content">
-                                            <span class="stat-number" id="gh-stars">–</span>
-                                            <span class="stat-label">Stars</span>
-                                        </div>
-                                    </div>
-                                    <div class="stat-item">
-                                        <div class="stat-icon">
-                                            <i class="fas fa-code-branch"></i>
-                                        </div>
-                                        <div class="stat-content">
-                                            <span class="stat-number" id="gh-forks">–</span>
-                                            <span class="stat-label">Forks</span>
-                                        </div>
-                                    </div>
+                             
+                                    <!-- </div>
                                     <div class="stat-item">
                                         <div class="stat-icon">
                                             <i class="fas fa-book"></i>
@@ -481,7 +513,7 @@
                                         <div class="stat-content">
                                             <span class="stat-number" id="gh-repos">–</span>
                                             <span class="stat-label">Repos</span>
-                                        </div>
+                                        </div> -->
                                     </div>
                                 </div>
                                 
