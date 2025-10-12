@@ -1,5 +1,5 @@
 <div align="center">
-<img src="https://cdn.jsdelivr.net/gh/alohe/avatars/png/upstream_20.png" width="150" height="150" alt="Profile Picture" style="border-radius: 50%; box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);">
+<!-- <img src="https://cdn.jsdelivr.net/gh/alohe/avatars/png/upstream_20.png" width="150" height="150" alt="Profile Picture" style="border-radius: 50%; box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);"> -->
 <h1>Ragini Kalvade</h1>
 <h3>Software Engineer | Distributed Systems & AI/ML</h3>
 <p>Building resilient, scalable systems at the intersection of artificial intelligence and distributed cloud computing.</p>
