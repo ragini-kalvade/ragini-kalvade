@@ -1,97 +1,82 @@
 <div align="center">
-<img src="https://www.google.com/search?q=https://avatars.githubusercontent.com/u/74640191%3Fv%3D4" width="150" height="150" alt="Profile Picture" style="border-radius: 50%; box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);">
+<img src="https://cdn.jsdelivr.net/gh/alohe/avatars/png/upstream_20.png" width="150" height="150" alt="Profile Picture" style="border-radius: 50%; box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);">
 <h1>Ragini Kalvade</h1>
-<h2>Principal Software Designer | System Architect</h2>
-<p>Designing and delivering scalable, maintainable, and highly available software solutions that drive product excellence.</p>
+<h3>Software Engineer | Distributed Systems & AI/ML</h3>
+<p>Building resilient, scalable systems at the intersection of artificial intelligence and distributed cloud computing.</p>
 </div>
 
-💡 My Software Design Philosophy
-I specialize in transitioning complex business requirements into elegant, efficient, and robust technical architectures. My focus is on applying core software design principles—SOLID, DRY, and Separation of Concerns—to build systems that are easy to evolve and operate at scale. I believe that good design is a prerequisite for long-term product success.
+---
 
-🛠 Core Technical Competencies & Architecture Focus
-My expertise spans the full software development lifecycle, with deep specialization in architectural patterns, performance optimization, and distributed systems.
+## Technical Philosophy
 
-Category
+I focus on designing systems that balance performance, reliability, and maintainability. My work emphasizes fault-tolerant distributed architectures, machine learning infrastructure, and applying rigorous software engineering principles to complex technical challenges.
 
-Skills & Tools
+## Technical Expertise
 
-Architecture & Design Focus
+**Languages & Frameworks**  
+Python, Java, TypeScript, Go | Spring Boot, React, Node.js
 
-Backend & APIs
+**AI/ML & Distributed Systems**  
+Deep Learning, Protein Structure Prediction, Large Language Models | GPU Optimization, Distributed Training, Checkpointing Mechanisms
 
-Python, Node.js (Express), Java (Spring Boot), Go
+**Infrastructure & Cloud**  
+Docker, Kubernetes, AWS/Azure/GCP | Infrastructure as Code, CI/CD Automation
 
-Microservices, REST/gRPC APIs, Event-Driven Architecture (EDA)
+**Data Engineering**  
+PostgreSQL, MongoDB, Redis, Kafka | Data Pipeline Design, Stream Processing
 
-Frontend & UI/UX
+**Design Principles**  
+SOLID, Domain-Driven Design, Microservices Architecture, Event-Driven Systems
 
-React, TypeScript, Tailwind CSS, Component Libraries
+## Key Projects
 
-State Management (Context/Redux), Component Design, Responsive Layouts
+### Megatron-LM Fault-Tolerant Training Integration
+Designed and implemented a proof-of-concept checkpointing system for NVIDIA's Megatron-LM framework to enable GPU failure tolerance and automated recovery in distributed training environments. Focused on improving training resilience for large-scale language models.
 
-Cloud & DevOps
+**Stack:** Python, Distributed Computing, GPU Optimization
 
-AWS / Azure / GCP, Docker, Kubernetes (K8s), Terraform / Pulumi
+### DrugDiscoveryAI: Protein Structure Prediction
+Developed an AI-driven system for predicting protein structures to accelerate drug discovery research. Applied deep learning techniques to computational biology problems with focus on model accuracy and inference optimization.
 
-Infrastructure as Code (IaC), CI/CD Automation, Cloud-Native Design
+**Stack:** Python, Deep Learning, Bioinformatics
 
-Data & Storage
+### Attack-the-Virus: Educational Immunology Platform
+Created an interactive TypeScript-based educational game to teach human immune system concepts. Designed with scalable architecture and engaging user experience to make complex biological processes accessible.
 
-PostgreSQL, MongoDB, Redis, Kafka
+**Stack:** TypeScript, React, Game Design
 
-Data Modeling, Caching Strategies, Data Pipeline Design
+### AuthGuard: Multi-Level Authentication Framework
+Built a comprehensive authentication framework implementing multiple security layers and best practices for identity verification and access control.
 
-Design Principles
+**Stack:** Security Patterns, Authentication Protocols
 
-Domain-Driven Design (DDD), Distributed System Patterns, System Modeling (UML/C4)
+### Software Engineering Research: LLM Impact Analysis
+Conducted research analyzing the integration and impact of Large Language Models on software engineering workflows, examining productivity gains, code quality implications, and best practices for AI-assisted development.
 
-Code Maintainability, Testing Strategies, Security by Design
+**Stack:** Research Methodology, Empirical Analysis
 
-🚀 Featured Architectural Artifacts & Contributions
-These projects best demonstrate my ability to design and implement end-to-end, high-quality systems.
+## Current Research Interests
 
-Project Title
+- Fault tolerance and recovery mechanisms in distributed ML training
+- AI applications in computational biology and drug discovery
+- Large language model integration in software development workflows
+- System design patterns for ML infrastructure at scale
 
-Description & Design Focus
+## Research Work
 
-Technologies
+Analysis and research on software engineering practices, distributed systems design, and AI/ML applications.
 
-[Project 1: Real-Time Analytics Platform]
-
-Architected a distributed streaming platform using Kafka and Microservices to process over 1M events/second. Focused on fault tolerance and low-latency data aggregation. Replace with your own project!
-
-Java, Spring Cloud, Kafka, Cassandra, Kubernetes
-
-[Project 2: Modular E-commerce Backend]
-
-Designed a scalable e-commerce core using Domain-Driven Design (DDD) to encapsulate business logic, significantly reducing integration complexity for downstream teams. Replace with your own project!
-
-Python, Django/FastAPI, PostgreSQL, Docker
-
-[Contribution 3: Open-Source Library/Tooling]
-
-Contributed to the design and implementation of a custom CI/CD pipeline tool that standardized deployments across 10+ projects, focusing on security and efficiency. Replace with your own contribution!
-
-Go, Shell Scripting, Jenkins/GitHub Actions, Helm
-
-📫 Let's Connect
-I am always open to discussing new design challenges, system architecture best practices, and opportunities to mentor.
+---
 
 <div align="center">
-<a href="https://www.linkedin.com/in/ragini-kalvade" target="_blank">
-<img src="https://www.google.com/search?q=https://img.shields.io/badge/LinkedIn-Connect-0077B5%3Fstyle%3Dfor-the-badge%26logo%3Dlinkedin%26logoColor%3Dwhite" alt="LinkedIn Badge">
-</a>
-<a href="mailto:youremail@example.com">
-<img src="https://www.google.com/search?q=https://img.shields.io/badge/Email-Get%2520In%2520Touch-D14836%3Fstyle%3Dfor-the-badge%26logo%3Dgmail%26logoColor%3Dwhite" alt="Email Badge">
-</a>
-<a href="https://www.google.com/search?q=https://raginikalvade.medium.com/" target="_blank">
-<img src="https://www.google.com/search?q=https://img.shields.io/badge/Medium-Read%2520Articles-000000%3Fstyle%3Dfor-the-badge%26logo%3Dmedium%26logoColor%3Dwhite" alt="Medium Badge">
-</a>
+
+[![LinkedIn](https://img.shields.io/badge/LinkedIn-Connect-0077B5?style=flat-square&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/ragini-kalvade)
+[![Email](https://img.shields.io/badge/Email-Contact-D14836?style=flat-square&logo=gmail&logoColor=white)](mailto:your.email@example.com)
+[![Medium](https://img.shields.io/badge/Medium-Read-000000?style=flat-square&logo=medium&logoColor=white)](https://raginikalvade.medium.com/)
+
 </div>
 
 <div align="center">
-<!-- Optional: GitHub Stats (Professional, not flashy) -->
-<img src="https://www.google.com/search?q=https://github-readme-stats.vercel.app/api%3Fusername%3Dragini-kalvade%26show_icons%3Dtrue%26hide_border%3Dtrue%26theme%3Dbuefy" alt="GitHub Stats" width="400"/>
-&nbsp;
-<img src="https://www.google.com/search?q=https://github-readme-stats.vercel.app/api/top-langs/%3Fusername%3Dragini-kalvade%26layout%3Dcompact%26hide_border%3Dtrue%26theme%3Dbuefy" alt="Top Languages" width="350"/>
+<img src="https://github-readme-stats.vercel.app/api?username=ragini-kalvade&show_icons=true&hide_border=true&theme=default&hide_title=true&include_all_commits=true" alt="GitHub Stats" height="165"/>
+<img src="https://github-readme-stats.vercel.app/api/top-langs/?username=ragini-kalvade&layout=compact&hide_border=true&theme=default" alt="Top Languages" height="165"/>
 </div>
