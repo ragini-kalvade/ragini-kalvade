@@ -26,7 +26,7 @@ Docker, Kubernetes, AWS/Azure/GCP | Infrastructure as Code, CI/CD Automation
 PostgreSQL, MongoDB, Redis, Kafka | Data Pipeline Design, Stream Processing
 
 **Design Principles**  
-SOLID, Domain-Driven Design, Microservices Architecture, Event-Driven Systems
+Domain-Driven Design, Microservices Architecture, Event-Driven Systems
 
 ## Key Projects
 
