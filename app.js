@@ -260,8 +260,8 @@ function initializeNavigation() {
     }
     
     function updateActiveNavLink() {
-        let current = '';
-        const scrollPosition = window.pageYOffset + 150; // Account for sticky header
+        let current = 'hero'; // Default to hero
+        const scrollPosition = window.pageYOffset + 100; // Account for sticky header
 
         sections.forEach((section) => {
             const sectionTop = section.offsetTop;
@@ -273,9 +273,13 @@ function initializeNavigation() {
             }
         });
 
-        // If at the very top, highlight home
-        if (window.pageYOffset < 100) {
-            current = 'hero';
+        // If near bottom of page, highlight last section (contact)
+        const documentHeight = document.documentElement.scrollHeight;
+        const windowHeight = window.innerHeight;
+        const scrolledToBottom = (window.pageYOffset + windowHeight) >= (documentHeight - 100);
+        
+        if (scrolledToBottom) {
+            current = 'contact';
         }
 
         navLinks.forEach((link) => {
