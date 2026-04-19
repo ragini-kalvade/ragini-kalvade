@@ -8,7 +8,7 @@ document.addEventListener('DOMContentLoaded', () => {
     initExperienceTabs();
     initArchiveStaggerReveal();
     initProjectVisuals();
-    initArtTechSection();
+    initArtTechFiveModes();
 });
 
 function initMobileMenu() {
@@ -431,10 +431,19 @@ function initProjectVisuals() {
         ctx.moveTo(botX + 44, botY - 52);
         ctx.lineTo(botX + 58, botY - 78);
         ctx.stroke();
+        const heartX = botX + 60;
+        const heartY = botY - 80;
+        const heartPulse = 1 + Math.sin(t * 3.1) * 0.08;
+        ctx.save();
+        ctx.translate(heartX, heartY);
+        ctx.scale(heartPulse, heartPulse);
         ctx.beginPath();
-        ctx.arc(botX + 60, botY - 80, 3, 0, Math.PI * 2);
+        ctx.moveTo(0, 3);
+        ctx.bezierCurveTo(-6, -3, -5, -10, 0, -6);
+        ctx.bezierCurveTo(5, -10, 6, -3, 0, 3);
         ctx.fillStyle = palette.tertiary;
         ctx.fill();
+        ctx.restore();
 
         // Face panel
         ctx.fillStyle = `${palette.tertiary}2e`;
@@ -442,15 +451,25 @@ function initProjectVisuals() {
         ctx.roundRect(botX - 38, botY - 34, 76, 43, 12);
         ctx.fill();
 
-        // Eyes + smile
+        // Eyes + smile (cute expression)
         ctx.fillStyle = outline;
         ctx.beginPath();
-        ctx.arc(botX - 17, botY - 14, 6, 0, Math.PI * 2);
-        ctx.arc(botX + 17, botY - 14, 6, 0, Math.PI * 2);
+        ctx.arc(botX - 17, botY - 14, 6.2, 0, Math.PI * 2);
+        ctx.arc(botX + 17, botY - 14, 6.2, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.fillStyle = `${palette.primaryFixed || '#ffffff'}cc`;
+        ctx.beginPath();
+        ctx.arc(botX - 19, botY - 16, 2.1, 0, Math.PI * 2);
+        ctx.arc(botX + 15, botY - 16, 2.1, 0, Math.PI * 2);
         ctx.fill();
         ctx.beginPath();
-        ctx.arc(botX, botY - 2, 9, 0.2, Math.PI - 0.2);
+        ctx.arc(botX, botY - 1, 10, 0.2, Math.PI - 0.2);
         ctx.stroke();
+        ctx.fillStyle = `${palette.tertiary}88`;
+        ctx.beginPath();
+        ctx.arc(botX - 27, botY - 2, 4.4, 0, Math.PI * 2);
+        ctx.arc(botX + 27, botY - 2, 4.4, 0, Math.PI * 2);
+        ctx.fill();
 
         // Body
         ctx.fillStyle = `${palette.primary}18`;
@@ -980,4 +999,674 @@ function initArtTechSection() {
     if (state.animationFrame === null) {
         state.animationFrame = window.requestAnimationFrame(animate);
     }
+}
+
+function initArtTechFiveModes() {
+    const artSection = document.getElementById('art-tech');
+    const video = document.getElementById('art-tech-video');
+    const canvas = document.getElementById('art-tech-canvas');
+    const stage = document.getElementById('art-stage');
+    const intro = document.getElementById('art-intro');
+    const cameraButton = document.getElementById('art-tech-camera-btn');
+    const introDemoButton = document.getElementById('art-tech-demo-btn');
+    const gPill = document.getElementById('art-gpill');
+    const fPill = document.getElementById('art-fpill');
+    const saveButton = document.getElementById('art-save-btn');
+    const demoToggleButton = document.getElementById('art-demo-toggle-btn');
+    const previewToggleButton = document.getElementById('art-preview-toggle-btn');
+    const fullscreenButton = document.getElementById('art-fullscreen-btn');
+    const modeButtons = Array.from(document.querySelectorAll('[data-art-mode]'));
+    if (
+        !artSection || !video || !canvas || !stage || !intro || !cameraButton || !introDemoButton ||
+        !gPill || !fPill || !saveButton || !demoToggleButton || !previewToggleButton ||
+        !fullscreenButton || !modeButtons.length
+    ) return;
+
+    const context = canvas.getContext('2d');
+    if (!context) return;
+
+    const TIPS = [4, 8, 12, 16, 20];
+    const CONN = [
+        [0, 1], [1, 2], [2, 3], [3, 4], [0, 5], [5, 6], [6, 7], [7, 8],
+        [5, 9], [9, 10], [10, 11], [11, 12], [9, 13], [13, 14], [14, 15], [15, 16],
+        [13, 17], [17, 18], [18, 19], [19, 20], [0, 17]
+    ];
+    const BG = { wave: '#00050f', circuit: '#021a0a', ascii: '#050a00', glass: '#0d0608' };
+    const CHARS = '@#B%8&WM*oahkbdpqwmZO0QLCJUYXzcvunxrjft/\\|()1{}[]?-_+~<>i!lI;:,"^`. ';
+
+    let width = 0;
+    let height = 0;
+    let mode = 'wave';
+    let lastLandmarks = null;
+    let frame = 0;
+    let fpsCount = 0;
+    let lastFpsTime = Date.now();
+    let animationFrameId = null;
+    let trackingFrameId = null;
+    let stream = null;
+    let handsTracker = null;
+    let started = false;
+    let cameraActive = false;
+    let demoMode = true;
+    let previewEnabled = false;
+    let modeTransitionAlpha = 0;
+
+    const circuitLines = [];
+    const shadowTrail = [];
+    let voronoiImage = null;
+    let lastGlassSeed = '';
+
+    function resize() {
+        width = stage.clientWidth;
+        height = stage.clientHeight;
+        canvas.width = width;
+        canvas.height = height;
+        voronoiImage = null;
+        lastGlassSeed = '';
+    }
+
+    function setMode(nextMode) {
+        if (mode !== nextMode) {
+            modeTransitionAlpha = 0.28;
+        }
+        mode = nextMode;
+        artSection.dataset.artTheme = nextMode;
+        modeButtons.forEach((button) => {
+            button.classList.toggle('is-active', button.dataset.artMode === nextMode);
+        });
+    }
+
+    function refreshPreviewVisibility() {
+        const show = cameraActive && previewEnabled;
+        video.classList.toggle('is-live', show);
+    }
+
+    function updateDemoToggleUI() {
+        demoToggleButton.classList.toggle('is-on', demoMode);
+        demoToggleButton.textContent = demoMode ? 'demo on' : 'demo off';
+    }
+
+    function updatePreviewToggleUI() {
+        previewToggleButton.classList.toggle('is-on', previewEnabled);
+        previewToggleButton.textContent = previewEnabled ? 'hide camera' : 'show camera';
+    }
+
+    function updateFullscreenUI() {
+        fullscreenButton.classList.toggle('is-on', document.fullscreenElement === stage);
+        fullscreenButton.textContent = document.fullscreenElement === stage ? 'collapse' : 'expand';
+    }
+
+    function xAt(landmarks, i) {
+        return (1 - landmarks[i].x) * width;
+    }
+
+    function yAt(landmarks, i) {
+        return landmarks[i].y * height;
+    }
+
+    function point(landmarks, i) {
+        return { x: xAt(landmarks, i), y: yAt(landmarks, i) };
+    }
+
+    function fingertipPoints(landmarks) {
+        return TIPS.map((i) => point(landmarks, i));
+    }
+
+    function classifyGesture(landmarks) {
+        const extension = [8, 12, 16, 20].map((tip, i) => landmarks[tip].y < landmarks[[6, 10, 14, 18][i]].y);
+        const raised = extension.filter(Boolean).length;
+        const pinch = Math.hypot(landmarks[4].x - landmarks[8].x, landmarks[4].y - landmarks[8].y) < 0.07;
+        if (pinch) return 'pinch';
+        if (raised === 0) return 'fist';
+        if (raised === 1 && extension[0]) return 'point';
+        if (raised === 2 && extension[0] && extension[1]) return 'peace';
+        if (raised === 4) return 'open hand';
+        return 'hand';
+    }
+
+    function drawWave(time) {
+        const landmarks = lastLandmarks;
+        for (let wave = 0; wave < 5; wave += 1) {
+            let centerX = width / 2;
+            let centerY = height / 2;
+            let amplitude = height * 0.12;
+            const frequency = 2 + wave;
+            if (landmarks) {
+                const tip = point(landmarks, TIPS[wave]);
+                centerX = tip.x;
+                centerY = tip.y;
+                amplitude = height * 0.08 + Math.hypot(landmarks[TIPS[wave]].x - 0.5, landmarks[TIPS[wave]].y - 0.5) * height * 0.18;
+            }
+            const hue = 190 + wave * 30 + time * 15;
+            context.strokeStyle = `hsla(${hue},85%,65%,0.7)`;
+            context.lineWidth = 1.5;
+            context.beginPath();
+            for (let x = 0; x < width; x += 2) {
+                const phase = (x / width) * Math.PI * 2 * frequency + time * (1.5 + wave * 0.3);
+                const deltaX = (x - centerX) / width;
+                const envelope = Math.exp(-deltaX * deltaX * 4);
+                const y = centerY + Math.sin(phase) * amplitude * envelope;
+                if (x === 0) context.moveTo(x, y);
+                else context.lineTo(x, y);
+            }
+            context.stroke();
+        }
+        if (landmarks) {
+            CONN.forEach(([a, b]) => {
+                context.strokeStyle = 'rgba(100,200,255,0.1)';
+                context.lineWidth = 0.8;
+                context.beginPath();
+                context.moveTo(xAt(landmarks, a), yAt(landmarks, a));
+                context.lineTo(xAt(landmarks, b), yAt(landmarks, b));
+                context.stroke();
+            });
+            fingertipPoints(landmarks).forEach((p, i) => {
+                const hue = 190 + i * 30 + time * 15;
+                context.beginPath();
+                context.arc(p.x, p.y, 5, 0, Math.PI * 2);
+                context.fillStyle = `hsla(${hue},90%,70%,0.9)`;
+                context.fill();
+                context.beginPath();
+                context.arc(p.x, p.y, 12, 0, Math.PI * 2);
+                context.strokeStyle = `hsla(${hue},90%,70%,0.25)`;
+                context.lineWidth = 1.5;
+                context.stroke();
+            });
+            return;
+        }
+        for (let wave = 0; wave < 5; wave += 1) {
+            const hue = 190 + wave * 30 + time * 15;
+            context.strokeStyle = `hsla(${hue},80%,60%,0.5)`;
+            context.lineWidth = 1.2;
+            context.beginPath();
+            for (let x = 0; x < width; x += 2) {
+                const y = height / 2 + Math.sin((x / width) * Math.PI * 2 * (2 + wave) + time * (1.2 + wave * 0.25)) * height * (0.06 + wave * 0.02);
+                if (x === 0) context.moveTo(x, y);
+                else context.lineTo(x, y);
+            }
+            context.stroke();
+        }
+    }
+
+    function drawCircuit(time) {
+        const landmarks = lastLandmarks;
+        const nodes = landmarks
+            ? fingertipPoints(landmarks)
+            : Array.from({ length: 5 }, (_, i) => {
+                const angle = time * 0.3 + i * Math.PI * 2 / 5;
+                return { x: width / 2 + Math.cos(angle) * width * 0.28, y: height / 2 + Math.sin(angle) * height * 0.28 };
+            });
+
+        if (landmarks && Math.random() < 0.15) {
+            const a = nodes[Math.floor(Math.random() * nodes.length)];
+            const b = nodes[Math.floor(Math.random() * nodes.length)];
+            circuitLines.push({ x1: a.x, y1: a.y, x2: b.x, y2: a.y, x3: b.x, y3: b.y, life: 1, hue: 120 + Math.random() * 60 });
+        }
+        circuitLines.forEach((line) => {
+            line.life -= 0.008;
+            context.strokeStyle = `hsla(${line.hue},90%,55%,${line.life * 0.6})`;
+            context.lineWidth = 1;
+            context.beginPath();
+            context.moveTo(line.x1, line.y1);
+            context.lineTo(line.x2, line.y2);
+            context.lineTo(line.x3, line.y3);
+            context.stroke();
+        });
+        for (let i = circuitLines.length - 1; i >= 0; i -= 1) {
+            if (circuitLines[i].life <= 0) circuitLines.splice(i, 1);
+        }
+
+        if (landmarks) {
+            CONN.forEach(([a, b]) => {
+                const pA = point(landmarks, a);
+                const pB = point(landmarks, b);
+                context.strokeStyle = 'rgba(110,231,183,0.18)';
+                context.lineWidth = 0.8;
+                context.beginPath();
+                context.moveTo(pA.x, pA.y);
+                context.lineTo(pB.x, pA.y);
+                context.lineTo(pB.x, pB.y);
+                context.stroke();
+            });
+        }
+        for (let i = 0; i < nodes.length; i += 1) {
+            for (let j = i + 1; j < nodes.length; j += 1) {
+                const a = nodes[i];
+                const b = nodes[j];
+                context.strokeStyle = 'rgba(110,231,183,0.22)';
+                context.lineWidth = 1;
+                context.setLineDash([4, 6]);
+                context.beginPath();
+                context.moveTo(a.x, a.y);
+                context.lineTo(b.x, a.y);
+                context.lineTo(b.x, b.y);
+                context.stroke();
+                context.setLineDash([]);
+            }
+        }
+        nodes.forEach((node, i) => {
+            const pulse = Math.sin(time * 3 + i) * 3;
+            context.beginPath();
+            context.arc(node.x, node.y, 6 + pulse, 0, Math.PI * 2);
+            context.fillStyle = '#6ee7b7';
+            context.fill();
+            context.beginPath();
+            context.arc(node.x, node.y, 12 + pulse, 0, Math.PI * 2);
+            context.strokeStyle = 'rgba(110,231,183,0.4)';
+            context.lineWidth = 1.5;
+            context.stroke();
+            context.beginPath();
+            context.arc(node.x, node.y, 20 + pulse, 0, Math.PI * 2);
+            context.strokeStyle = 'rgba(110,231,183,0.12)';
+            context.lineWidth = 1;
+            context.stroke();
+            context.fillStyle = '#6ee7b7';
+            context.font = '9px monospace';
+            context.fillText(`0${i + 1}`, node.x + 14, node.y - 10);
+        });
+        context.strokeStyle = 'rgba(110,231,183,0.06)';
+        context.lineWidth = 0.5;
+        for (let x = 0; x < width; x += 24) {
+            context.beginPath();
+            context.moveTo(x, 0);
+            context.lineTo(x, height);
+            context.stroke();
+        }
+        for (let y = 0; y < height; y += 24) {
+            context.beginPath();
+            context.moveTo(0, y);
+            context.lineTo(width, y);
+            context.stroke();
+        }
+    }
+
+    function drawAscii(time) {
+        const landmarks = lastLandmarks;
+        const charWidth = 9;
+        const charHeight = 11;
+        const columns = Math.floor(width / charWidth);
+        const rows = Math.floor(height / charHeight);
+        context.font = `${charHeight - 1}px monospace`;
+        for (let row = 0; row < rows; row += 1) {
+            for (let col = 0; col < columns; col += 1) {
+                const px = col / columns;
+                const py = row / rows;
+                let value = 0;
+                if (landmarks) {
+                    TIPS.forEach((tipIndex) => {
+                        const dx = px - landmarks[tipIndex].x;
+                        const dy = py - landmarks[tipIndex].y;
+                        value += Math.exp(-(dx * dx + dy * dy) * 18) * 1.2;
+                    });
+                    CONN.forEach(([a, b]) => {
+                        const ax = 1 - landmarks[a].x;
+                        const ay = landmarks[a].y;
+                        const bx = 1 - landmarks[b].x;
+                        const by = landmarks[b].y;
+                        const ratio = Math.max(0, Math.min(1, ((px - ax) * (bx - ax) + (py - ay) * (by - ay)) / ((bx - ax) ** 2 + (by - ay) ** 2 + 1e-9)));
+                        const distance = Math.hypot(px - (ax + ratio * (bx - ax)), py - (ay + ratio * (by - ay)));
+                        value += Math.exp(-distance * distance * 80) * 0.5;
+                    });
+                } else {
+                    value = Math.abs(Math.sin(px * 8 + time) * Math.sin(py * 6 + time * 0.7));
+                }
+                value = Math.min(1, value);
+                const charIndex = Math.floor((1 - value) * (CHARS.length - 1));
+                const char = CHARS[charIndex];
+                if (char === ' ') continue;
+                context.fillStyle = `hsla(140,70%,${Math.floor(30 + value * 50)}%,${0.5 + value * 0.5})`;
+                context.fillText(char, col * charWidth, row * charHeight + charHeight);
+            }
+        }
+    }
+
+    function drawGlass(time) {
+        const landmarks = lastLandmarks;
+        const seeds = landmarks
+            ? Array.from({ length: 21 }, (_, i) => ({ x: xAt(landmarks, i), y: yAt(landmarks, i), h: (i * 37 + time * 8) % 360, seedIndex: i }))
+            : Array.from({ length: 9 }, (_, i) => {
+                const angle = time * 0.2 + i * Math.PI * 2 / 9;
+                const radius = width * 0.2 + Math.sin(time * 0.5 + i) * width * 0.1;
+                return { x: width / 2 + Math.cos(angle) * radius, y: height / 2 + Math.sin(angle) * radius, h: i * 40, seedIndex: i };
+            });
+
+        const seedKey = seeds.map((seed) => `${Math.round(seed.x / 8)},${Math.round(seed.y / 8)}`).join('|');
+        if (seedKey !== lastGlassSeed) {
+            lastGlassSeed = seedKey;
+            const step = 10;
+            const tmpCanvas = document.createElement('canvas');
+            tmpCanvas.width = width;
+            tmpCanvas.height = height;
+            const tmpContext = tmpCanvas.getContext('2d');
+            if (!tmpContext) return;
+            for (let y = 0; y < height; y += step) {
+                for (let x = 0; x < width; x += step) {
+                    let bestDistance = Infinity;
+                    let bestSeed = seeds[0];
+                    seeds.forEach((seed) => {
+                        const distance = (x - seed.x) ** 2 + (y - seed.y) ** 2;
+                        if (distance < bestDistance) {
+                            bestDistance = distance;
+                            bestSeed = seed;
+                        }
+                    });
+                    const isTip = TIPS.includes(bestSeed.seedIndex);
+                    tmpContext.fillStyle = `hsla(${bestSeed.h},75%,${isTip ? 65 : 45}%,0.82)`;
+                    tmpContext.fillRect(x, y, step, step);
+                }
+            }
+            tmpContext.strokeStyle = 'rgba(5,2,8,0.9)';
+            tmpContext.lineWidth = 2;
+            for (let y = 0; y < height; y += step) {
+                tmpContext.beginPath();
+                tmpContext.moveTo(0, y);
+                tmpContext.lineTo(width, y);
+                tmpContext.stroke();
+            }
+            for (let x = 0; x < width; x += step) {
+                tmpContext.beginPath();
+                tmpContext.moveTo(x, 0);
+                tmpContext.lineTo(x, height);
+                tmpContext.stroke();
+            }
+            voronoiImage = tmpCanvas;
+        }
+        if (voronoiImage) context.drawImage(voronoiImage, 0, 0);
+        const glow = context.createRadialGradient(width / 2, height / 2, 0, width / 2, height / 2, width * 0.5);
+        glow.addColorStop(0, 'rgba(255,240,200,0.06)');
+        glow.addColorStop(1, 'rgba(255,240,200,0)');
+        context.fillStyle = glow;
+        context.fillRect(0, 0, width, height);
+    }
+
+    function drawHandSilhouette(points, alpha) {
+        context.fillStyle = `rgba(5,2,1,${alpha})`;
+        context.strokeStyle = `rgba(5,2,1,${alpha})`;
+        CONN.forEach(([a, b]) => {
+            context.lineWidth = 10;
+            context.lineCap = 'round';
+            context.beginPath();
+            context.moveTo(points[a].x, points[a].y);
+            context.lineTo(points[b].x, points[b].y);
+            context.stroke();
+        });
+        [0, 5, 9, 13, 17].forEach((i) => {
+            context.beginPath();
+            context.arc(points[i].x, points[i].y, 8, 0, Math.PI * 2);
+            context.fill();
+        });
+    }
+
+    function drawShadow(time) {
+        const landmarks = lastLandmarks;
+        const warmBg = context.createLinearGradient(0, 0, width, height);
+        warmBg.addColorStop(0, '#2a0e00');
+        warmBg.addColorStop(1, '#0d0300');
+        context.fillStyle = warmBg;
+        context.fillRect(0, 0, width, height);
+        context.fillStyle = 'rgba(255,130,40,0.05)';
+        context.beginPath();
+        context.ellipse(width / 2, height * 0.52, width * 0.32, height * 0.4, 0, 0, Math.PI * 2);
+        context.fill();
+
+        if (landmarks) {
+            const allPoints = Array.from({ length: 21 }, (_, i) => ({ x: xAt(landmarks, i), y: yAt(landmarks, i) }));
+            shadowTrail.push(allPoints.map((p) => ({ ...p })));
+            if (shadowTrail.length > 6) shadowTrail.shift();
+            shadowTrail.forEach((trailFrame, frameIndex) => drawHandSilhouette(trailFrame, ((frameIndex + 1) / shadowTrail.length) * 0.108));
+            drawHandSilhouette(allPoints, 0.95);
+            TIPS.forEach((tip, i) => {
+                const p = point(landmarks, tip);
+                context.beginPath();
+                context.arc(p.x, p.y, 4, 0, Math.PI * 2);
+                context.fillStyle = `rgba(255,${100 + i * 20},20,0.7)`;
+                context.fill();
+            });
+            const base = point(landmarks, 0);
+            context.beginPath();
+            context.ellipse(base.x, base.y + 8, 18, 6, 0, 0, Math.PI * 2);
+            context.fillStyle = 'rgba(0,0,0,0.5)';
+            context.fill();
+        } else {
+            const idlePoints = Array.from({ length: 21 }, (_, i) => {
+                const finger = Math.floor(i / 4);
+                const segment = i % 4;
+                const baseX = width / 2 + (finger - 2) * 35;
+                const baseY = height * 0.7;
+                return { x: baseX + Math.sin(time * 0.8 + finger) * 10, y: baseY - segment * 45 - Math.sin(time * 0.6 + finger + segment) * 8 };
+            });
+            drawHandSilhouette(idlePoints, 0.7);
+        }
+
+        context.fillStyle = 'rgba(255,100,20,0.35)';
+        context.beginPath();
+        context.ellipse(width / 2, height * 0.92, width * 0.45, height * 0.06, 0, 0, Math.PI * 2);
+        context.fill();
+        context.fillStyle = 'rgba(255,100,20,0.12)';
+        context.beginPath();
+        context.ellipse(width / 2, height * 0.92, width * 0.55, height * 0.1, 0, 0, Math.PI * 2);
+        context.fill();
+    }
+
+    function drawFrame() {
+        frame += 1;
+        const time = frame * 0.016;
+        context.fillStyle = BG[mode];
+        if (mode === 'wave' || mode === 'ascii') {
+            context.fillRect(0, 0, width, height);
+        } else if (mode === 'circuit') {
+            context.fillStyle = 'rgba(2,26,10,0.25)';
+            context.fillRect(0, 0, width, height);
+        } else if (mode === 'glass') {
+            context.fillStyle = 'rgba(13,6,8,0.4)';
+            context.fillRect(0, 0, width, height);
+        }
+
+        if (mode === 'wave') drawWave(time);
+        else if (mode === 'circuit') drawCircuit(time);
+        else if (mode === 'ascii') drawAscii(time);
+        else if (mode === 'glass') drawGlass(time);
+
+        if (modeTransitionAlpha > 0.002) {
+            context.fillStyle = `rgba(8, 12, 24, ${modeTransitionAlpha})`;
+            context.fillRect(0, 0, width, height);
+            modeTransitionAlpha *= 0.86;
+        } else {
+            modeTransitionAlpha = 0;
+        }
+
+        animationFrameId = window.requestAnimationFrame(drawFrame);
+    }
+
+    function saveFrame() {
+        const output = document.createElement('canvas');
+        output.width = width;
+        output.height = height;
+        const outContext = output.getContext('2d');
+        if (!outContext) return;
+
+        outContext.drawImage(canvas, 0, 0);
+
+        const footerHeight = 28;
+        outContext.fillStyle = 'rgba(0,0,0,0.55)';
+        outContext.fillRect(0, height - footerHeight, width, footerHeight);
+        outContext.font = '500 12px system-ui, sans-serif';
+        outContext.textBaseline = 'middle';
+        outContext.fillStyle = 'rgba(255,255,255,0.35)';
+        outContext.fillText('created with hand art', 14, height - footerHeight / 2);
+
+        const handle = '@Ragini Kalvade';
+        const handleWidth = outContext.measureText(handle).width;
+        outContext.fillStyle = 'rgba(255,255,255,0.7)';
+        outContext.fillText(handle, width - handleWidth - 14, height - footerHeight / 2);
+
+        const anchor = document.createElement('a');
+        anchor.href = output.toDataURL('image/png');
+        anchor.download = `hand-art-${mode}-${Date.now()}.png`;
+        anchor.click();
+    }
+
+    function stopSession() {
+        if (trackingFrameId !== null) {
+            window.cancelAnimationFrame(trackingFrameId);
+            trackingFrameId = null;
+        }
+        if (animationFrameId !== null) {
+            window.cancelAnimationFrame(animationFrameId);
+            animationFrameId = null;
+        }
+        if (stream) {
+            stream.getTracks().forEach((track) => track.stop());
+            stream = null;
+        }
+        cameraActive = false;
+        refreshPreviewVisibility();
+        lastLandmarks = null;
+        started = false;
+        shadowTrail.length = 0;
+        circuitLines.length = 0;
+    }
+
+    function updateGesturePill() {
+        const gesture = lastLandmarks
+            ? classifyGesture(lastLandmarks)
+            : (cameraActive ? 'waiting for motion' : (demoMode ? 'canvas idle' : 'raise a hand'));
+        gPill.textContent = gesture;
+        gPill.classList.toggle('is-live', Boolean(lastLandmarks));
+    }
+
+    function startTrackingLoop() {
+        const track = async () => {
+            if (!stream || !handsTracker) return;
+            await handsTracker.send({ image: video });
+            fpsCount += 1;
+            const now = Date.now();
+            if (now - lastFpsTime > 1000) {
+                fPill.textContent = `${fpsCount} fps`;
+                fpsCount = 0;
+                lastFpsTime = now;
+            }
+            trackingFrameId = window.requestAnimationFrame(track);
+        };
+        trackingFrameId = window.requestAnimationFrame(track);
+    }
+
+    async function boot() {
+        if (started) return;
+        if (typeof window.Hands === 'undefined') {
+            cameraButton.textContent = 'mediapipe unavailable';
+            return;
+        }
+
+        intro.style.display = 'none';
+        try {
+            stream = await navigator.mediaDevices.getUserMedia({
+                video: { facingMode: 'user', width: 640, height: 480 }
+            });
+            video.srcObject = stream;
+            await new Promise((resolve) => {
+                video.onloadedmetadata = resolve;
+            });
+            await video.play();
+            cameraActive = true;
+            demoMode = false;
+            updateDemoToggleUI();
+            refreshPreviewVisibility();
+
+            resize();
+            handsTracker = new window.Hands({
+                locateFile: (file) => `https://cdn.jsdelivr.net/npm/@mediapipe/hands/${file}`
+            });
+            handsTracker.setOptions({
+                maxNumHands: 1,
+                modelComplexity: 1,
+                minDetectionConfidence: 0.7,
+                minTrackingConfidence: 0.6
+            });
+            handsTracker.onResults((results) => {
+                lastLandmarks = results.multiHandLandmarks?.length ? results.multiHandLandmarks[0] : null;
+                updateGesturePill();
+            });
+
+            started = true;
+            updateGesturePill();
+            startTrackingLoop();
+            if (animationFrameId === null) drawFrame();
+        } catch (error) {
+            console.warn('[art-tech] camera start failed:', error);
+            cameraActive = false;
+            demoMode = true;
+            updateDemoToggleUI();
+            refreshPreviewVisibility();
+            intro.style.display = 'flex';
+            cameraButton.textContent = 'retry (allow camera)';
+        }
+    }
+
+    function startDemoExperience() {
+        intro.style.display = 'none';
+        stopSession();
+        demoMode = true;
+        started = false;
+        updateDemoToggleUI();
+        refreshPreviewVisibility();
+        updateGesturePill();
+        if (animationFrameId === null) drawFrame();
+    }
+
+    async function toggleFullscreen() {
+        if (document.fullscreenElement === stage) {
+            await document.exitFullscreen();
+            return;
+        }
+        await stage.requestFullscreen();
+    }
+
+    function initNavSoftening() {
+        if (!('IntersectionObserver' in window)) return;
+        const observer = new IntersectionObserver((entries) => {
+            const active = entries.some((entry) => entry.isIntersecting && entry.intersectionRatio > 0.22);
+            document.body.classList.toggle('art-tech-focus', active);
+        }, { threshold: [0.2, 0.35, 0.6], rootMargin: '-90px 0px -32% 0px' });
+        observer.observe(artSection);
+    }
+
+    modeButtons.forEach((button) => {
+        button.addEventListener('click', () => {
+            setMode(button.dataset.artMode || 'wave');
+        });
+    });
+    cameraButton.addEventListener('click', boot);
+    introDemoButton.addEventListener('click', startDemoExperience);
+    saveButton.addEventListener('click', saveFrame);
+    demoToggleButton.addEventListener('click', () => {
+        if (demoMode) {
+            boot();
+        } else {
+            startDemoExperience();
+        }
+    });
+    previewToggleButton.addEventListener('click', () => {
+        previewEnabled = !previewEnabled;
+        updatePreviewToggleUI();
+        refreshPreviewVisibility();
+    });
+    fullscreenButton.addEventListener('click', () => {
+        toggleFullscreen().catch(() => {});
+    });
+    window.addEventListener('resize', resize);
+    window.addEventListener('pagehide', stopSession);
+    window.addEventListener('beforeunload', stopSession);
+    document.addEventListener('fullscreenchange', updateFullscreenUI);
+    initNavSoftening();
+
+    resize();
+    stage.classList.add('is-blooming');
+    window.setTimeout(() => stage.classList.remove('is-blooming'), 1400);
+    setMode(mode);
+    updateDemoToggleUI();
+    updatePreviewToggleUI();
+    updateFullscreenUI();
+    updateGesturePill();
+    if (animationFrameId === null) drawFrame();
 }
