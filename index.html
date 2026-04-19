@@ -6,7 +6,7 @@
     <meta name="description" content="Ragini Kalvade - Software Engineer specializing in full-stack development, machine learning, and distributed systems." />
     <meta name="keywords" content="Ragini Kalvade, Software Engineer, Computer Science, Full Stack Developer, Machine Learning, UIC" />
     <meta name="author" content="Ragini Kalvade" />
-    <title>RK Systems | Ragini Kalvade Portfolio</title>
+    <title>RK | Ragini Kalvade Portfolio</title>
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -133,6 +133,7 @@
         .exp-panel.active { display: block; animation: fadeIn .4s ease; }
 
         .nav-link.active { color: #7bd0ff; border-bottom-color: #7bd0ff; }
+        .project-visual-canvas { display: block; }
 
         .archive-reveal-item {
             opacity: 0;
@@ -166,6 +167,55 @@
             .mobile-menu.open { display: flex; }
             .mobile-menu { display: none; }
         }
+
+        .art-tech-section {
+            background:
+                radial-gradient(circle at 18% 22%, rgba(123, 208, 255, 0.16), transparent 45%),
+                radial-gradient(circle at 80% 80%, rgba(77, 224, 130, 0.14), transparent 44%),
+                linear-gradient(140deg, #040812 0%, #070d1f 46%, #03060f 100%);
+        }
+
+        .art-demo-shell {
+            position: relative;
+            border-radius: 1rem;
+            border: 1px solid rgba(123, 208, 255, 0.22);
+            background: rgba(9, 14, 29, 0.88);
+            box-shadow: 0 26px 60px -34px rgba(0, 0, 0, 0.8), inset 0 0 0 1px rgba(77, 224, 130, 0.06);
+            overflow: hidden;
+        }
+
+        .art-demo-canvas {
+            width: 100%;
+            height: min(66vh, 560px);
+            min-height: 360px;
+            display: block;
+        }
+
+        .art-style-btn {
+            border: 1px solid rgba(69, 70, 77, 0.45);
+            background: rgba(23, 31, 51, 0.75);
+            color: #c6c6cd;
+            transition: border-color 180ms ease, color 180ms ease, background-color 180ms ease, transform 180ms ease;
+        }
+
+        .art-style-btn:hover {
+            border-color: rgba(123, 208, 255, 0.45);
+            color: #dae2fd;
+            transform: translateY(-1px);
+        }
+
+        .art-style-btn.is-active {
+            border-color: rgba(123, 208, 255, 0.7);
+            background: rgba(123, 208, 255, 0.15);
+            color: #e3f5ff;
+        }
+
+        .visitor-count {
+            color: rgba(148, 163, 184, 0.72);
+            font-size: 10px;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+        }
     </style>
 </head>
 <body class="bg-background text-on-background selection:bg-primary/30">
@@ -174,7 +224,7 @@
 <!-- Top Nav -->
 <nav class="fixed top-0 w-full z-50 bg-slate-950/70 backdrop-blur-xl shadow-2xl shadow-blue-900/20 border-b border-outline-variant/10">
     <div class="flex justify-between items-center px-6 md:px-8 py-4 max-w-7xl mx-auto">
-        <a href="#home" class="text-xl font-bold tracking-tighter text-slate-50 headline-font">RK Systems</a>
+        <a href="#home" class="text-xl font-bold tracking-tighter text-slate-50 headline-font">RK SYSTEMS</a>
 
         <div class="hidden md:flex items-center gap-8">
             <a class="nav-link text-slate-400 hover:text-primary transition-colors headline-font tracking-tight pb-1 border-b-2 border-transparent" href="#home">Home</a>
@@ -273,7 +323,7 @@
                         <span class="mono-accent text-[10px] text-tertiary tracking-widest uppercase">Live_Signal</span>
                     </div>
                     <div class="absolute bottom-3 right-3 mono-accent text-[10px] text-outline tracking-widest uppercase pointer-events-none">
-                        Drag · Rotate
+                        Drag · Rotate · Pick a City
                     </div>
                 </div>
             </div>
@@ -350,6 +400,47 @@
                     <p class="text-on-surface-variant text-sm mt-4 font-light">Computer Science major, graduated with First Class Honors.</p>
                 </div>
             </div>
+        </div>
+    </section>
+
+    <!-- WHERE ART MEETS TECH -->
+    <section id="art-tech" class="art-tech-section py-24 px-6 relative overflow-hidden">
+        <div class="absolute inset-0 data-grid-bg opacity-[0.14] pointer-events-none"></div>
+        <div class="max-w-6xl mx-auto relative z-10">
+            <div class="text-center mb-12">
+                <h2 class="headline-font text-4xl md:text-6xl font-bold tracking-tight">Where Art Meets Tech</h2>
+                <p class="text-on-surface-variant mt-4 font-light max-w-3xl mx-auto">
+                    Because sometimes building beautiful things is reason enough.
+                </p>
+            </div>
+
+            <div class="art-demo-shell">
+                <canvas id="art-tech-canvas" class="art-demo-canvas" aria-label="Hand tracked generative demo"></canvas>
+                <video id="art-tech-video" autoplay playsinline muted class="hidden" aria-hidden="true"></video>
+
+                <div class="absolute left-4 top-4 right-4 flex flex-wrap items-center gap-3">
+                    <button id="art-tech-camera-btn" class="px-4 py-2 bg-primary text-on-primary rounded-lg text-sm font-semibold hover:bg-primary-fixed-dim transition-colors inline-flex items-center gap-2">
+                        <span class="material-symbols-outlined text-base">videocam</span>
+                        Try it
+                    </button>
+                    <button id="art-tech-demo-btn" class="px-4 py-2 bg-surface-container-high text-on-surface border border-outline-variant/20 rounded-lg text-sm font-medium hover:border-primary/45 hover:text-primary transition-colors">
+                        Demo Mode
+                    </button>
+                    <span id="art-tech-status" class="ml-auto mono-accent text-[10px] tracking-widest uppercase text-on-surface-variant bg-background/55 px-2 py-1 rounded border border-outline-variant/30">
+                        Demo mode active
+                    </span>
+                </div>
+            </div>
+
+            <div class="mt-6 flex flex-wrap justify-center gap-3">
+                <button type="button" class="art-style-btn is-active px-4 py-2 rounded-lg text-xs mono-accent tracking-widest uppercase" data-art-style="constellation">Constellation</button>
+                <button type="button" class="art-style-btn px-4 py-2 rounded-lg text-xs mono-accent tracking-widest uppercase" data-art-style="ribbon">Ribbon Flow</button>
+                <button type="button" class="art-style-btn px-4 py-2 rounded-lg text-xs mono-accent tracking-widest uppercase" data-art-style="pulse">Pulse Bloom</button>
+            </div>
+
+            <p class="mt-5 text-center mono-accent text-[11px] tracking-widest uppercase text-on-surface-variant">
+                MediaPipe · Real-time Interaction · Generative Visuals
+            </p>
         </div>
     </section>
 
@@ -687,82 +778,109 @@
 
             <div class="archive-grid grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                 <!-- Project 1 -->
-                <a href="https://github.com/ragini-kalvade/Megatron-LM" target="_blank" rel="noopener" class="group cursor-pointer block">
-                    <div class="relative overflow-hidden rounded-xl aspect-video mb-6 bg-surface-container-low border border-outline-variant/15">
-                        <img src="media/megatron.png" alt="GPU Fault Tolerance" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" onerror="this.style.display='none'" />
+                <a href="#" data-link-placeholder="msr-repo-url" class="group cursor-pointer block">
+                    <div data-project-visual="rag" class="relative overflow-hidden rounded-xl aspect-video mb-6 bg-surface-container-low border border-outline-variant/15">
+                        <canvas class="project-visual-canvas w-full h-full" aria-hidden="true"></canvas>
                         <div class="absolute inset-0 bg-gradient-to-t from-background via-background/40 to-transparent"></div>
                         <span class="absolute top-3 left-3 mono-accent text-[10px] px-2 py-1 rounded bg-background/80 backdrop-blur text-tertiary border border-tertiary/30 tracking-widest uppercase">01</span>
                     </div>
-                    <h3 class="headline-font text-xl font-bold mb-2 group-hover:text-primary transition-colors">Proactive GPU Fault Tolerance</h3>
-                    <p class="text-on-surface-variant text-sm font-light line-clamp-2">Simulated GPU failures and automated checkpoint-based recovery during large-scale LLM training.</p>
+                    <h3 class="headline-font text-xl font-bold mb-2 group-hover:text-primary transition-colors">Cloud-Native Incremental RAG Pipeline</h3>
+                    <p class="text-on-surface-variant text-sm font-light line-clamp-2">Large-scale document ingestion and retrieval pipeline with incremental reprocessing, fault-tolerant checkpoints, and cloud deployment on AWS.</p>
                     <div class="flex flex-wrap gap-2 mt-4">
-                        <span class="px-2 py-1 bg-surface-container-highest text-[10px] mono-accent rounded border border-outline-variant/10 text-outline uppercase">PyTorch</span>
-                        <span class="px-2 py-1 bg-surface-container-highest text-[10px] mono-accent rounded border border-outline-variant/10 text-outline uppercase">Megatron-LM</span>
-                        <span class="px-2 py-1 bg-surface-container-highest text-[10px] mono-accent rounded border border-outline-variant/10 text-outline uppercase">Chameleon</span>
+                        <span class="px-2 py-1 bg-surface-container-highest text-[10px] mono-accent rounded border border-outline-variant/10 text-outline uppercase">AWS</span>
+                        <span class="px-2 py-1 bg-surface-container-highest text-[10px] mono-accent rounded border border-outline-variant/10 text-outline uppercase">Spark EMR</span>
+                        <span class="px-2 py-1 bg-surface-container-highest text-[10px] mono-accent rounded border border-outline-variant/10 text-outline uppercase">Delta Lake</span>
+                        <span class="px-2 py-1 bg-surface-container-highest text-[10px] mono-accent rounded border border-outline-variant/10 text-outline uppercase">RAG</span>
+                        <span class="px-2 py-1 bg-surface-container-highest text-[10px] mono-accent rounded border border-outline-variant/10 text-outline uppercase">Lucene</span>
+                        <span class="px-2 py-1 bg-surface-container-highest text-[10px] mono-accent rounded border border-outline-variant/10 text-outline uppercase">Distributed Systems</span>
+                    </div>
+                    <div class="inline-flex items-center gap-2 text-primary font-medium mt-4 mono-accent text-xs tracking-widest uppercase">
+                        View Project / GitHub Repo <span class="material-symbols-outlined text-base">arrow_forward</span>
                     </div>
                 </a>
 
                 <!-- Project 2 -->
-                <a href="https://github.com/ragini-kalvade/MathSolver" target="_blank" rel="noopener" class="group cursor-pointer block">
-                    <div class="relative overflow-hidden rounded-xl aspect-video mb-6 bg-surface-container-low border border-outline-variant/15">
-                        <img src="media/mathsolver.png" alt="MathSolver" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" onerror="this.style.display='none'" />
+                <a href="#" data-link-placeholder="flink-graphrag-case-study-url" class="group cursor-pointer block">
+                    <div data-project-visual="graphrag" class="relative overflow-hidden rounded-xl aspect-video mb-6 bg-surface-container-low border border-outline-variant/15">
+                        <canvas class="project-visual-canvas w-full h-full" aria-hidden="true"></canvas>
                         <div class="absolute inset-0 bg-gradient-to-t from-background via-background/40 to-transparent"></div>
                         <span class="absolute top-3 left-3 mono-accent text-[10px] px-2 py-1 rounded bg-background/80 backdrop-blur text-tertiary border border-tertiary/30 tracking-widest uppercase">02</span>
                     </div>
-                    <h3 class="headline-font text-xl font-bold mb-2 group-hover:text-primary transition-colors">MathSolver</h3>
-                    <p class="text-on-surface-variant text-sm font-light line-clamp-2">Hybrid educational tool combining analytic solvers with PyTorch ML to solve and animate algebraic equations.</p>
+                    <h3 class="headline-font text-xl font-bold mb-2 group-hover:text-primary transition-colors">Flink-Neo4j GraphRAG Pipeline</h3>
+                    <p class="text-on-surface-variant text-sm font-light line-clamp-2">Streaming GraphRAG system that combines Apache Flink, Neo4j, and Kubernetes to enable low-latency, relationship-aware retrieval.</p>
                     <div class="flex flex-wrap gap-2 mt-4">
-                        <span class="px-2 py-1 bg-surface-container-highest text-[10px] mono-accent rounded border border-outline-variant/10 text-outline uppercase">Python</span>
-                        <span class="px-2 py-1 bg-surface-container-highest text-[10px] mono-accent rounded border border-outline-variant/10 text-outline uppercase">PyTorch</span>
-                        <span class="px-2 py-1 bg-surface-container-highest text-[10px] mono-accent rounded border border-outline-variant/10 text-outline uppercase">Matplotlib</span>
+                        <span class="px-2 py-1 bg-surface-container-highest text-[10px] mono-accent rounded border border-outline-variant/10 text-outline uppercase">Flink</span>
+                        <span class="px-2 py-1 bg-surface-container-highest text-[10px] mono-accent rounded border border-outline-variant/10 text-outline uppercase">Neo4j</span>
+                        <span class="px-2 py-1 bg-surface-container-highest text-[10px] mono-accent rounded border border-outline-variant/10 text-outline uppercase">GraphRAG</span>
+                        <span class="px-2 py-1 bg-surface-container-highest text-[10px] mono-accent rounded border border-outline-variant/10 text-outline uppercase">EKS</span>
+                        <span class="px-2 py-1 bg-surface-container-highest text-[10px] mono-accent rounded border border-outline-variant/10 text-outline uppercase">Kubernetes</span>
+                        <span class="px-2 py-1 bg-surface-container-highest text-[10px] mono-accent rounded border border-outline-variant/10 text-outline uppercase">Streaming</span>
+                    </div>
+                    <div class="inline-flex items-center gap-2 text-primary font-medium mt-4 mono-accent text-xs tracking-widest uppercase">
+                        Architecture Overview / Case Study <span class="material-symbols-outlined text-base">arrow_forward</span>
                     </div>
                 </a>
 
                 <!-- Project 3 -->
-                <a href="https://github.com/ragini-kalvade/TweetStance" target="_blank" rel="noopener" class="group cursor-pointer block">
-                    <div class="relative overflow-hidden rounded-xl aspect-video mb-6 bg-surface-container-low border border-outline-variant/15">
-                        <img src="media/tweetstance.png" alt="TweetStance" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" onerror="this.style.display='none'" />
+                <a href="#" data-link-placeholder="mage-demo-or-architecture-url" class="group cursor-pointer block">
+                    <div data-project-visual="mage" class="relative overflow-hidden rounded-xl aspect-video mb-6 bg-surface-container-low border border-outline-variant/15">
+                        <canvas class="project-visual-canvas w-full h-full" aria-hidden="true"></canvas>
                         <div class="absolute inset-0 bg-gradient-to-t from-background via-background/40 to-transparent"></div>
                         <span class="absolute top-3 left-3 mono-accent text-[10px] px-2 py-1 rounded bg-background/80 backdrop-blur text-tertiary border border-tertiary/30 tracking-widest uppercase">03</span>
                     </div>
-                    <h3 class="headline-font text-xl font-bold mb-2 group-hover:text-primary transition-colors">TweetStance</h3>
-                    <p class="text-on-surface-variant text-sm font-light line-clamp-2">Full-stack stance detection web app classifying tweets as Support, Against, or Neutral.</p>
+                    <h3 class="headline-font text-xl font-bold mb-2 group-hover:text-primary transition-colors">MAGE</h3>
+                    <p class="text-on-surface-variant text-sm font-light line-clamp-2">Agentic AI system focused on multi-step orchestration, reasoning, and tool-driven execution across complex workflows.</p>
                     <div class="flex flex-wrap gap-2 mt-4">
-                        <span class="px-2 py-1 bg-surface-container-highest text-[10px] mono-accent rounded border border-outline-variant/10 text-outline uppercase">Python</span>
-                        <span class="px-2 py-1 bg-surface-container-highest text-[10px] mono-accent rounded border border-outline-variant/10 text-outline uppercase">Django</span>
-                        <span class="px-2 py-1 bg-surface-container-highest text-[10px] mono-accent rounded border border-outline-variant/10 text-outline uppercase">NLP</span>
+                        <span class="px-2 py-1 bg-surface-container-highest text-[10px] mono-accent rounded border border-outline-variant/10 text-outline uppercase">Agentic AI</span>
+                        <span class="px-2 py-1 bg-surface-container-highest text-[10px] mono-accent rounded border border-outline-variant/10 text-outline uppercase">LLMs</span>
+                        <span class="px-2 py-1 bg-surface-container-highest text-[10px] mono-accent rounded border border-outline-variant/10 text-outline uppercase">Orchestration</span>
+                        <span class="px-2 py-1 bg-surface-container-highest text-[10px] mono-accent rounded border border-outline-variant/10 text-outline uppercase">Tool Use</span>
+                        <span class="px-2 py-1 bg-surface-container-highest text-[10px] mono-accent rounded border border-outline-variant/10 text-outline uppercase">Automation</span>
+                    </div>
+                    <div class="inline-flex items-center gap-2 text-primary font-medium mt-4 mono-accent text-xs tracking-widest uppercase">
+                        View Demo / Read Architecture <span class="material-symbols-outlined text-base">arrow_forward</span>
                     </div>
                 </a>
 
                 <!-- Project 4 -->
-                <a href="https://github.com/ragini-kalvade/Attack-the-Virus" target="_blank" rel="noopener" class="group cursor-pointer block">
-                    <div class="relative overflow-hidden rounded-xl aspect-video mb-6 bg-surface-container-low border border-outline-variant/15">
-                        <img src="media/attack-virus.png" alt="Attack-the-Virus" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" onerror="this.style.display='none'" />
+                <a href="#" data-link-placeholder="doremi-publication-doi-url" class="group cursor-pointer block">
+                    <div data-project-visual="doremi" class="relative overflow-hidden rounded-xl aspect-video mb-6 bg-surface-container-low border border-outline-variant/15">
+                        <canvas class="project-visual-canvas w-full h-full" aria-hidden="true"></canvas>
                         <div class="absolute inset-0 bg-gradient-to-t from-background via-background/40 to-transparent"></div>
                         <span class="absolute top-3 left-3 mono-accent text-[10px] px-2 py-1 rounded bg-background/80 backdrop-blur text-tertiary border border-tertiary/30 tracking-widest uppercase">04</span>
                     </div>
-                    <h3 class="headline-font text-xl font-bold mb-2 group-hover:text-primary transition-colors">Attack-the-Virus</h3>
-                    <p class="text-on-surface-variant text-sm font-light line-clamp-2">Interactive web game teaching immunology through simulated antigen-antibody interactions.</p>
+                    <h3 class="headline-font text-xl font-bold mb-2 group-hover:text-primary transition-colors">DoReMi</h3>
+                    <p class="text-on-surface-variant text-sm font-light line-clamp-2">Human-centered piano tutor robot using expressive feedback and structured evaluation to support beginner music learning.</p>
                     <div class="flex flex-wrap gap-2 mt-4">
-                        <span class="px-2 py-1 bg-surface-container-highest text-[10px] mono-accent rounded border border-outline-variant/10 text-outline uppercase">Angular</span>
-                        <span class="px-2 py-1 bg-surface-container-highest text-[10px] mono-accent rounded border border-outline-variant/10 text-outline uppercase">TypeScript</span>
-                        <span class="px-2 py-1 bg-surface-container-highest text-[10px] mono-accent rounded border border-outline-variant/10 text-outline uppercase">SQL</span>
+                        <span class="px-2 py-1 bg-surface-container-highest text-[10px] mono-accent rounded border border-outline-variant/10 text-outline uppercase">HRI</span>
+                        <span class="px-2 py-1 bg-surface-container-highest text-[10px] mono-accent rounded border border-outline-variant/10 text-outline uppercase">Robotics</span>
+                        <span class="px-2 py-1 bg-surface-container-highest text-[10px] mono-accent rounded border border-outline-variant/10 text-outline uppercase">UX Research</span>
+                        <span class="px-2 py-1 bg-surface-container-highest text-[10px] mono-accent rounded border border-outline-variant/10 text-outline uppercase">Misty</span>
+                        <span class="px-2 py-1 bg-surface-container-highest text-[10px] mono-accent rounded border border-outline-variant/10 text-outline uppercase">Published</span>
+                    </div>
+                    <div class="inline-flex items-center gap-2 text-primary font-medium mt-4 mono-accent text-xs tracking-widest uppercase">
+                        Read Publication <span class="material-symbols-outlined text-base">arrow_forward</span>
                     </div>
                 </a>
 
                 <!-- Project 5 -->
-                <a href="https://github.com/ragini-kalvade/AuthGuard" target="_blank" rel="noopener" class="group cursor-pointer block">
-                    <div class="relative overflow-hidden rounded-xl aspect-video mb-6 bg-surface-container-low border border-outline-variant/15">
-                        <img src="media/authguard.png" alt="AuthGuard" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" onerror="this.style.display='none'" />
+                <a href="#" data-link-placeholder="cog-games-dashboard-or-analysis-url" class="group cursor-pointer block">
+                    <div data-project-visual="cog" class="relative overflow-hidden rounded-xl aspect-video mb-6 bg-surface-container-low border border-outline-variant/15">
+                        <canvas class="project-visual-canvas w-full h-full" aria-hidden="true"></canvas>
                         <div class="absolute inset-0 bg-gradient-to-t from-background via-background/40 to-transparent"></div>
                         <span class="absolute top-3 left-3 mono-accent text-[10px] px-2 py-1 rounded bg-background/80 backdrop-blur text-tertiary border border-tertiary/30 tracking-widest uppercase">05</span>
                     </div>
-                    <h3 class="headline-font text-xl font-bold mb-2 group-hover:text-primary transition-colors">AuthGuard</h3>
-                    <p class="text-on-surface-variant text-sm font-light line-clamp-2">Layered identity-authentication framework: password + signature match + real-time face-ID verification.</p>
+                    <h3 class="headline-font text-xl font-bold mb-2 group-hover:text-primary transition-colors">Cog Games Analytics</h3>
+                    <p class="text-on-surface-variant text-sm font-light line-clamp-2">Analytics and visualization system for motion-tracking game studies, built to interpret participant performance, usability, and behavioral trends.</p>
                     <div class="flex flex-wrap gap-2 mt-4">
-                        <span class="px-2 py-1 bg-surface-container-highest text-[10px] mono-accent rounded border border-outline-variant/10 text-outline uppercase">Python</span>
-                        <span class="px-2 py-1 bg-surface-container-highest text-[10px] mono-accent rounded border border-outline-variant/10 text-outline uppercase">OpenCV</span>
-                        <span class="px-2 py-1 bg-surface-container-highest text-[10px] mono-accent rounded border border-outline-variant/10 text-outline uppercase">Django</span>
+                        <span class="px-2 py-1 bg-surface-container-highest text-[10px] mono-accent rounded border border-outline-variant/10 text-outline uppercase">Data Visualization</span>
+                        <span class="px-2 py-1 bg-surface-container-highest text-[10px] mono-accent rounded border border-outline-variant/10 text-outline uppercase">Analytics</span>
+                        <span class="px-2 py-1 bg-surface-container-highest text-[10px] mono-accent rounded border border-outline-variant/10 text-outline uppercase">Research</span>
+                        <span class="px-2 py-1 bg-surface-container-highest text-[10px] mono-accent rounded border border-outline-variant/10 text-outline uppercase">Motion Tracking</span>
+                        <span class="px-2 py-1 bg-surface-container-highest text-[10px] mono-accent rounded border border-outline-variant/10 text-outline uppercase">UX Metrics</span>
+                    </div>
+                    <div class="inline-flex items-center gap-2 text-primary font-medium mt-4 mono-accent text-xs tracking-widest uppercase">
+                        View Dashboard / See Analysis <span class="material-symbols-outlined text-base">arrow_forward</span>
                     </div>
                 </a>
 
@@ -844,6 +962,7 @@
             <a href="https://github.com/ragini-kalvade" target="_blank" rel="noopener" class="text-slate-500 hover:text-tertiary transition-colors mono-accent text-xs uppercase tracking-widest">GitHub</a>
             <a href="mailto:raginikalvade@gmail.com" class="text-slate-500 hover:text-tertiary transition-colors mono-accent text-xs uppercase tracking-widest">Mail</a>
         </div>
+        <div id="visitor-count" class="visitor-count mono-accent" aria-live="polite">Visits ...</div>
         <div class="flex items-center gap-2">
             <span class="w-2 h-2 rounded-full bg-tertiary shadow-[0_0_8px_rgba(77,224,130,0.5)] animate-pulse"></span>
             <span class="text-slate-500 mono-accent text-[10px] tracking-widest uppercase">Server_Ready</span>
@@ -860,6 +979,32 @@
 }
 </script>
 <script type="module" src="globe.js"></script>
+<script>
+    (() => {
+        const visitorCountElement = document.getElementById("visitor-count");
+        if (!visitorCountElement) return;
+
+        const namespace = "ragini-kalvade-portfolio";
+        const key = "home";
+
+        fetch(`https://api.countapi.xyz/hit/${namespace}/${key}`)
+            .then((response) => {
+                if (!response.ok) {
+                    throw new Error("CountAPI request failed");
+                }
+                return response.json();
+            })
+            .then((data) => {
+                const count = Number(data.value);
+                visitorCountElement.textContent = Number.isFinite(count)
+                    ? `Visits ${count.toLocaleString()}`
+                    : "Visits --";
+            })
+            .catch(() => {
+                visitorCountElement.textContent = "Visits --";
+            });
+    })();
+</script>
 <script>
     (() => {
         const canvas = document.getElementById("network-bg");

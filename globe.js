@@ -115,7 +115,7 @@ function initGlobe(canvas) {
             years: '2022-2024',
             labelOffset: { x: 72, y: 40 },
             role: 'Deutsche Bank',
-            intro: 'Senior Analyst on Corporate Bank Tech — shipped distributed systems for Letters of Credit and Bank Guarantees, cutting trade processing latency from 4 days to 2 minutes.',
+            intro: 'Senior Analyst on Corporate Bank Tech — shipped microservices for Letters of Credit and Bank Guarantees.',
         },
         {
             name: 'Singapore',
@@ -123,7 +123,7 @@ function initGlobe(canvas) {
             years: '2007-2013',
             labelOffset: { x: 0, y: 0 },
             role: 'Middle School',
-            intro: 'Formative school years abroad — first encounters with scientific computing, robotics clubs, and a city that runs like a well-tuned operating system.',
+            intro: 'Formative school years abroad — first encounters with scientific computing, animation clubs, and a city that runs like a well-tuned operating system.',
         },
         {
             name: 'Chicago',
