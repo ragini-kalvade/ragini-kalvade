@@ -181,21 +181,21 @@
         <div class="absolute top-1/4 right-0 w-96 h-96 bg-primary/5 rounded-full blur-[120px]"></div>
         <div class="absolute bottom-1/4 left-0 w-80 h-80 bg-tertiary/5 rounded-full blur-[100px]"></div>
 
-        <div class="max-w-6xl w-full z-10 text-center md:text-left flex flex-col md:flex-row items-center gap-12">
-            <div class="flex-1 space-y-8">
+        <div class="max-w-7xl w-full z-10 flex flex-col lg:flex-row items-center gap-12 lg:gap-16">
+            <div class="flex-1 text-center lg:text-left space-y-8">
                 <div class="inline-flex items-center gap-2 px-3 py-1 bg-surface-container-highest rounded-full border-l-2 border-tertiary">
                     <span class="w-2 h-2 rounded-full bg-tertiary animate-pulse"></span>
                     <span class="mono-accent text-xs font-medium text-tertiary tracking-widest uppercase">System Active · v2.0.4</span>
                 </div>
 
-                <h1 class="headline-font text-5xl md:text-7xl font-bold tracking-tighter text-on-background leading-[1.05]">
+                <h1 class="headline-font text-5xl md:text-6xl lg:text-7xl font-bold tracking-tighter text-on-background leading-[1.05]">
                     Ragini Kalvade:
                     <br />
                     <span class="text-transparent bg-clip-text bg-gradient-to-r from-primary to-on-primary-container">The Data-Driven Engineer</span>
                 </h1>
 
-                <p class="text-lg md:text-xl text-on-surface-variant max-w-2xl font-light leading-relaxed">
-                    Building intelligent systems at the intersection of ML and scalable architecture.
+                <p class="text-lg md:text-xl text-on-surface-variant max-w-2xl font-light leading-relaxed mx-auto lg:mx-0">
+                    Bridging the gap between scalable full-stack architecture and predictive intelligence.
                 </p>
 
                 <p class="text-base md:text-lg text-on-surface-variant font-light">
@@ -208,10 +208,13 @@
                     </span>
                 </p>
 
-                <div class="flex flex-wrap gap-4 pt-4 justify-center md:justify-start">
+                <div class="flex flex-wrap gap-4 pt-4 justify-center lg:justify-start">
                     <a href="#projects" class="px-8 py-4 bg-gradient-to-br from-primary to-on-primary-container text-on-primary font-semibold rounded-lg hover:scale-[1.02] transition-transform shadow-xl shadow-primary/10 inline-flex items-center gap-2">
                         View My Work
                         <span class="material-symbols-outlined text-base">arrow_forward</span>
+                    </a>
+                    <a href="#contact" class="px-8 py-4 bg-surface-container-highest text-on-surface border border-outline-variant/15 font-semibold rounded-lg hover:bg-surface-container-high transition-colors inline-flex items-center gap-2">
+                        Let's Connect
                     </a>
                     <a href="media/Resume.pdf" download class="px-8 py-4 bg-surface-container-highest text-on-surface border border-outline-variant/15 font-semibold rounded-lg hover:bg-surface-container-high transition-colors inline-flex items-center gap-2">
                         <span class="material-symbols-outlined text-base">download</span>
@@ -220,11 +223,18 @@
                 </div>
             </div>
 
-            <div class="w-full md:w-[380px] shrink-0">
-                <div class="relative group">
-                    <div class="absolute -inset-1 bg-gradient-to-r from-primary to-tertiary rounded-xl blur opacity-20 group-hover:opacity-40 transition duration-1000 group-hover:duration-200"></div>
-                    <div class="relative bg-surface-container-low rounded-xl overflow-hidden aspect-[4/5] border border-outline-variant/15">
-                        <img src="media/photo.jpg" alt="Ragini Kalvade portrait" class="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-700" />
+            <!-- Interactive Tech Signal Globe -->
+            <div class="w-full max-w-[480px] lg:w-[480px] shrink-0 relative">
+                <div class="absolute -inset-8 bg-gradient-to-r from-primary/10 to-tertiary/10 rounded-full blur-3xl opacity-60 pointer-events-none"></div>
+                <div id="signal-globe-wrap" class="relative aspect-square cursor-grab active:cursor-grabbing select-none">
+                    <canvas id="signal-globe" class="block w-full h-full"></canvas>
+                    <div id="globe-labels" class="absolute inset-0 pointer-events-none overflow-hidden"></div>
+                    <div class="absolute top-3 left-3 flex items-center gap-2 pointer-events-none">
+                        <span class="w-1.5 h-1.5 rounded-full bg-tertiary animate-pulse"></span>
+                        <span class="mono-accent text-[10px] text-tertiary tracking-widest uppercase">Live_Signal</span>
+                    </div>
+                    <div class="absolute bottom-3 right-3 mono-accent text-[10px] text-outline tracking-widest uppercase pointer-events-none">
+                        Drag · Rotate
                     </div>
                 </div>
             </div>
@@ -721,5 +731,13 @@
 </footer>
 
 <script src="app.js" defer></script>
+<script type="importmap">
+{
+  "imports": {
+    "three": "https://unpkg.com/three@0.160.0/build/three.module.js"
+  }
+}
+</script>
+<script type="module" src="globe.js"></script>
 </body>
 </html>
