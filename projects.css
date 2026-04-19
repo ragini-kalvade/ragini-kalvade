@@ -9,6 +9,9 @@
     transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
     position: relative;
     overflow: visible;
+    margin: 0;
+    width: 100%;
+    box-sizing: border-box;
 }
 
 
@@ -27,6 +30,10 @@
     .projects-section {
         padding: 24px;
     }
+    
+    .projects-grid {
+        gap: 18px;
+    }
 }
 
 @media (max-width: 992px) {
@@ -42,37 +49,37 @@
     }
     
     .projects-grid {
+        grid-template-columns: repeat(2, 1fr);
         gap: 15px;
     }
     
     .project-card {
         padding: 16px;
-    }
-    
-    .project-card img {
-        height: 150px;
+        min-height: 260px;
     }
     
     .project-card h4 {
-        font-size: 1.1rem;
+        font-size: clamp(1.1rem, 3vw, 1.3rem);
+        min-height: 2.4rem;
     }
     
     .project-card p {
-        font-size: 0.85rem;
+        font-size: clamp(0.85rem, 2vw, 0.95rem);
     }
     
     .project-card .tech {
-        font-size: 0.8rem;
+        font-size: clamp(0.75rem, 1.8vw, 0.85rem);
     }
 }
 
 @media (max-width: 600px) {
     .projects-grid {
         grid-template-columns: 1fr;
+        gap: 15px;
     }
     
-    .project-card img {
-        height: 180px;
+    .project-card {
+        min-height: 280px;
     }
 }
 
@@ -81,16 +88,30 @@
         padding: 16px;
     }
     
-    .project-card {
-        padding: 14px;
+    .projects-grid {
+        gap: 12px;
     }
     
-    .project-card img {
-        height: 160px;
+    .project-card {
+        padding: 14px;
+        min-height: 260px;
+    }
+    
+    .project-card h4 {
+        font-size: clamp(1rem, 4vw, 1.2rem);
+        min-height: 2.2rem;
+    }
+    
+    .project-card p {
+        font-size: clamp(0.8rem, 2.5vw, 0.9rem);
+    }
+    
+    .project-card .tech {
+        font-size: clamp(0.7rem, 2vw, 0.8rem);
     }
     
     .more-card {
-        padding-top: 30px;
+        padding-top: 20px;
     }
 }
 
@@ -662,6 +683,9 @@
     z-index: 2;
     letter-spacing: 0.01em;
     line-height: 1.5;
+    min-height: 44px; /* Touch target */
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: transparent;
 }
 
 .project-card a::before {

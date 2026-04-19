@@ -215,23 +215,32 @@
     }
     
     .education-card h2 {
-        font-size: 1.2rem;
+        font-size: clamp(1.1rem, 3vw, 1.3rem);
     }
     
     .education-card .description {
-        font-size: 1rem;
+        font-size: clamp(0.95rem, 2.5vw, 1.1rem);
+        line-height: 1.5;
+    }
+    
+    .education-card .university {
+        font-size: clamp(0.9rem, 2.5vw, 1rem);
+    }
+    
+    .education-card .year {
+        font-size: clamp(0.85rem, 2vw, 0.9rem);
     }
     
     .profile-summary {
-        padding: 0;
+        padding: var(--spacing-md);
     }
     
     .summary-heading {
-        font-size: 1.6rem;
+        font-size: clamp(1.4rem, 4vw, 1.8rem);
     }
     
     .summary-text {
-        font-size: 1rem;
+        font-size: clamp(0.95rem, 2.5vw, 1.1rem);
     }
 }
 
@@ -241,23 +250,51 @@
         min-height: auto;
     }
     
+    .education-cards {
+        gap: 12px;
+    }
+    
     .education-card {
-        padding: 20px 16px 30px;
+        padding: 20px 16px 28px;
+    }
+    
+    .education-card h2 {
+        font-size: clamp(1rem, 4vw, 1.2rem);
+        margin-top: 8px;
+    }
+    
+    .education-card .description {
+        font-size: clamp(0.9rem, 3vw, 1rem);
+        margin-top: 8px;
+    }
+    
+    .education-card .university {
+        font-size: clamp(0.85rem, 3vw, 0.95rem);
+    }
+    
+    .education-card .year {
+        font-size: clamp(0.8rem, 2.5vw, 0.85rem);
+    }
+    
+    .education-card .card-footer {
+        font-size: clamp(0.9rem, 2.5vw, 1rem);
+        margin-top: 12px;
+        padding-top: 8px;
     }
     
     .icon-badge {
-        top: 15px;
-        left: 15px;
-        padding: 8px;
-        font-size: 0.9rem;
+        top: 12px;
+        left: 12px;
+        padding: 6px;
+        font-size: 0.85rem;
     }
     
     .summary-heading {
-        font-size: 1.4rem;
+        font-size: clamp(1.3rem, 5vw, 1.6rem);
     }
     
     .summary-text {
-        font-size: 0.95rem;
+        font-size: clamp(0.9rem, 3vw, 1rem);
     }
     
     .puzzle-bg {

@@ -482,6 +482,10 @@
     background-color: var(--color-border);
     cursor: pointer;
     transition: all 0.3s ease;
+    min-width: 32px;
+    min-height: 8px;
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: transparent;
 }
 
 .carousel-indicator.active {
@@ -619,15 +623,22 @@
         width: 45px;
         height: 45px;
         font-size: 18px;
+        min-width: 44px;
+        min-height: 44px; /* Touch target */
     }
     
     .tech-name {
-        font-size: 0.75rem;
+        font-size: clamp(0.7rem, 2vw, 0.8rem);
     }
     
     .carousel-category-title {
-        font-size: 14px;
+        font-size: clamp(1rem, 3vw, 1.1rem);
         margin-bottom: 15px;
+    }
+    
+    .carousel-indicator {
+        min-width: 44px;
+        min-height: 8px; /* Touch target */
     }
 }
 
@@ -647,26 +658,35 @@
     }
     
     .tech-icon {
-        width: 40px;
-        height: 40px;
+        width: 44px;
+        height: 44px;
         font-size: 16px;
+        min-width: 44px;
+        min-height: 44px; /* Touch target */
     }
     
     .tech-name {
-        font-size: 0.7rem;
+        font-size: clamp(0.65rem, 2.5vw, 0.75rem);
     }
     
     .carousel-category-title {
-        font-size: 13px;
+        font-size: clamp(0.95rem, 3.5vw, 1.05rem);
     }
     
     .carousel-indicators {
-        gap: 6px;
+        gap: 8px;
     }
     
     .carousel-indicator {
-        width: 7px;
-        height: 7px;
+        width: 32px;
+        height: 8px;
+        min-width: 32px;
+        min-height: 8px;
+        cursor: pointer;
+    }
+    
+    .carousel-indicator.active {
+        width: 32px;
     }
 }
 
