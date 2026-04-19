@@ -87,6 +87,16 @@
             font-family: 'Inter', sans-serif;
             overflow-x: hidden;
         }
+        #network-bg {
+            position: fixed;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 5;
+            opacity: 0.70;
+            mix-blend-mode: screen;
+        }
         .headline-font { font-family: 'Space Grotesk', sans-serif; }
         .mono-accent { font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace; }
 
@@ -124,6 +134,34 @@
 
         .nav-link.active { color: #7bd0ff; border-bottom-color: #7bd0ff; }
 
+        .archive-reveal-item {
+            opacity: 0;
+            transform: translateY(24px) scale(0.985);
+            filter: blur(1px);
+            transition:
+                opacity 620ms cubic-bezier(0.22, 1, 0.36, 1),
+                transform 620ms cubic-bezier(0.22, 1, 0.36, 1),
+                filter 620ms cubic-bezier(0.22, 1, 0.36, 1);
+            transition-delay: var(--archive-reveal-delay, 0ms);
+            will-change: opacity, transform, filter;
+        }
+
+        .archive-reveal-item.archive-reveal-visible {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+            filter: blur(0);
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            .archive-reveal-item,
+            .archive-reveal-item.archive-reveal-visible {
+                opacity: 1;
+                transform: none;
+                filter: none;
+                transition: none;
+            }
+        }
+
         @media (max-width: 768px) {
             .mobile-menu.open { display: flex; }
             .mobile-menu { display: none; }
@@ -131,6 +169,7 @@
     </style>
 </head>
 <body class="bg-background text-on-background selection:bg-primary/30">
+<canvas id="network-bg" aria-hidden="true"></canvas>
 
 <!-- Top Nav -->
 <nav class="fixed top-0 w-full z-50 bg-slate-950/70 backdrop-blur-xl shadow-2xl shadow-blue-900/20 border-b border-outline-variant/10">
@@ -191,11 +230,11 @@
                 <h1 class="headline-font text-5xl md:text-6xl lg:text-7xl font-bold tracking-tighter text-on-background leading-[1.05]">
                     Ragini Kalvade:
                     <br />
-                    <span class="text-transparent bg-clip-text bg-gradient-to-r from-primary to-on-primary-container">The Data-Driven Engineer</span>
+                    <span class="text-transparent bg-clip-text bg-gradient-to-r from-primary to-on-primary-container">The Ordinary Computer Scientist</span>
                 </h1>
 
                 <p class="text-lg md:text-xl text-on-surface-variant max-w-2xl font-light leading-relaxed mx-auto lg:mx-0">
-                    Bridging the gap between scalable full-stack architecture and predictive intelligence.
+                    Bridging scalable systems and predictive intelligence
                 </p>
 
                 <p class="text-base md:text-lg text-on-surface-variant font-light">
@@ -224,8 +263,8 @@
             </div>
 
             <!-- Interactive Tech Signal Globe -->
-            <div class="w-full max-w-[480px] lg:w-[480px] shrink-0 relative">
-                <div class="absolute -inset-8 bg-gradient-to-r from-primary/10 to-tertiary/10 rounded-full blur-3xl opacity-60 pointer-events-none"></div>
+            <div class="w-full max-w-[560px] lg:w-[560px] xl:w-[620px] xl:max-w-[620px] shrink-0 relative">
+                <div class="absolute -inset-10 bg-gradient-to-r from-primary/10 to-tertiary/10 rounded-full blur-3xl opacity-60 pointer-events-none"></div>
                 <div id="signal-globe-wrap" class="relative aspect-square cursor-grab active:cursor-grabbing select-none">
                     <canvas id="signal-globe" class="block w-full h-full"></canvas>
                     <div id="globe-labels" class="absolute inset-0 pointer-events-none overflow-hidden"></div>
@@ -325,9 +364,11 @@
                 </div>
                 <div id="skillTabs" class="flex flex-wrap gap-2">
                     <button class="skill-tab px-4 py-2 rounded-lg mono-accent text-xs tracking-widest uppercase bg-primary/10 text-primary border border-primary/30" data-tab="languages">Languages</button>
-                    <button class="skill-tab px-4 py-2 rounded-lg mono-accent text-xs tracking-widest uppercase bg-surface-container-highest text-on-surface-variant border border-outline-variant/15 hover:border-primary/30 transition" data-tab="frontend">Frontend</button>
-                    <button class="skill-tab px-4 py-2 rounded-lg mono-accent text-xs tracking-widest uppercase bg-surface-container-highest text-on-surface-variant border border-outline-variant/15 hover:border-primary/30 transition" data-tab="backend">Backend &amp; DB</button>
-                    <button class="skill-tab px-4 py-2 rounded-lg mono-accent text-xs tracking-widest uppercase bg-surface-container-highest text-on-surface-variant border border-outline-variant/15 hover:border-primary/30 transition" data-tab="devops">DevOps</button>
+                    <button class="skill-tab px-4 py-2 rounded-lg mono-accent text-xs tracking-widest uppercase bg-surface-container-highest text-on-surface-variant border border-outline-variant/15 hover:border-primary/30 transition" data-tab="backend">Backend Engineering</button>
+                    <button class="skill-tab px-4 py-2 rounded-lg mono-accent text-xs tracking-widest uppercase bg-surface-container-highest text-on-surface-variant border border-outline-variant/15 hover:border-primary/30 transition" data-tab="clouddevops">Cloud &amp; DevOps</button>
+                    <button class="skill-tab px-4 py-2 rounded-lg mono-accent text-xs tracking-widest uppercase bg-surface-container-highest text-on-surface-variant border border-outline-variant/15 hover:border-primary/30 transition" data-tab="data">Data &amp; Databases</button>
+                    <button class="skill-tab px-4 py-2 rounded-lg mono-accent text-xs tracking-widest uppercase bg-surface-container-highest text-on-surface-variant border border-outline-variant/15 hover:border-primary/30 transition" data-tab="aiml">AI / ML</button>
+                    <button class="skill-tab px-4 py-2 rounded-lg mono-accent text-xs tracking-widest uppercase bg-surface-container-highest text-on-surface-variant border border-outline-variant/15 hover:border-primary/30 transition" data-tab="testing">Testing &amp; Tools</button>
                 </div>
             </div>
 
@@ -335,112 +376,192 @@
                 <!-- Languages -->
                 <div class="skill-panel active grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4" id="panel-languages">
                     <div class="bg-surface-container rounded-xl p-6 border border-outline-variant/15 hover:border-primary/40 transition-colors flex flex-col items-center gap-3">
-                        <span class="mono-accent text-lg font-bold text-primary">JS</span>
-                        <span class="text-sm text-on-surface">JavaScript</span>
-                    </div>
-                    <div class="bg-surface-container rounded-xl p-6 border border-outline-variant/15 hover:border-primary/40 transition-colors flex flex-col items-center gap-3">
-                        <span class="mono-accent text-lg font-bold text-primary">TS</span>
-                        <span class="text-sm text-on-surface">TypeScript</span>
+                        <span class="mono-accent text-lg font-bold text-primary">JAVA</span>
+                        <span class="text-sm text-on-surface">Java</span>
                     </div>
                     <div class="bg-surface-container rounded-xl p-6 border border-outline-variant/15 hover:border-primary/40 transition-colors flex flex-col items-center gap-3">
                         <i class="fab fa-python text-2xl text-primary"></i>
                         <span class="text-sm text-on-surface">Python</span>
                     </div>
                     <div class="bg-surface-container rounded-xl p-6 border border-outline-variant/15 hover:border-primary/40 transition-colors flex flex-col items-center gap-3">
-                        <span class="mono-accent text-lg font-bold text-primary">C++</span>
-                        <span class="text-sm text-on-surface">C++</span>
+                        <span class="mono-accent text-lg font-bold text-primary">SC</span>
+                        <span class="text-sm text-on-surface">Scala</span>
                     </div>
                     <div class="bg-surface-container rounded-xl p-6 border border-outline-variant/15 hover:border-primary/40 transition-colors flex flex-col items-center gap-3">
-                        <i class="fab fa-java text-2xl text-primary"></i>
-                        <span class="text-sm text-on-surface">Java</span>
+                        <span class="mono-accent text-lg font-bold text-primary">JS </span>
+                        <span class="text-sm text-on-surface">JavaScript</span>
                     </div>
                     <div class="bg-surface-container rounded-xl p-6 border border-outline-variant/15 hover:border-primary/40 transition-colors flex flex-col items-center gap-3">
-                        <i class="fab fa-php text-2xl text-primary"></i>
-                        <span class="text-sm text-on-surface">PHP</span>
-                    </div>
-                </div>
-
-                <!-- Frontend -->
-                <div class="skill-panel grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4" id="panel-frontend">
-                    <div class="bg-surface-container rounded-xl p-6 border border-outline-variant/15 hover:border-primary/40 transition-colors flex flex-col items-center gap-3">
-                        <i class="fab fa-react text-2xl text-primary"></i>
-                        <span class="text-sm text-on-surface">React</span>
-                    </div>
-                    <div class="bg-surface-container rounded-xl p-6 border border-outline-variant/15 hover:border-primary/40 transition-colors flex flex-col items-center gap-3">
-                        <i class="fab fa-vuejs text-2xl text-primary"></i>
-                        <span class="text-sm text-on-surface">Vue.js</span>
-                    </div>
-                    <div class="bg-surface-container rounded-xl p-6 border border-outline-variant/15 hover:border-primary/40 transition-colors flex flex-col items-center gap-3">
-                        <i class="fab fa-angular text-2xl text-primary"></i>
-                        <span class="text-sm text-on-surface">Angular</span>
-                    </div>
-                    <div class="bg-surface-container rounded-xl p-6 border border-outline-variant/15 hover:border-primary/40 transition-colors flex flex-col items-center gap-3">
-                        <i class="fab fa-figma text-2xl text-primary"></i>
-                        <span class="text-sm text-on-surface">Figma</span>
-                    </div>
-                    <div class="bg-surface-container rounded-xl p-6 border border-outline-variant/15 hover:border-primary/40 transition-colors flex flex-col items-center gap-3">
-                        <i class="fab fa-html5 text-2xl text-primary"></i>
-                        <span class="text-sm text-on-surface">HTML5</span>
-                    </div>
-                    <div class="bg-surface-container rounded-xl p-6 border border-outline-variant/15 hover:border-primary/40 transition-colors flex flex-col items-center gap-3">
-                        <i class="fab fa-css3-alt text-2xl text-primary"></i>
-                        <span class="text-sm text-on-surface">CSS</span>
-                    </div>
-                </div>
-
-                <!-- Backend & DB -->
-                <div class="skill-panel grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4" id="panel-backend">
-                    <div class="bg-surface-container rounded-xl p-6 border border-outline-variant/15 hover:border-primary/40 transition-colors flex flex-col items-center gap-3">
-                        <i class="fab fa-node-js text-2xl text-primary"></i>
-                        <span class="text-sm text-on-surface">Node.js</span>
-                    </div>
-                    <div class="bg-surface-container rounded-xl p-6 border border-outline-variant/15 hover:border-primary/40 transition-colors flex flex-col items-center gap-3">
-                        <i class="fas fa-leaf text-2xl text-primary"></i>
-                        <span class="text-sm text-on-surface">Spring Boot</span>
-                    </div>
-                    <div class="bg-surface-container rounded-xl p-6 border border-outline-variant/15 hover:border-primary/40 transition-colors flex flex-col items-center gap-3">
-                        <i class="fas fa-database text-2xl text-primary"></i>
-                        <span class="text-sm text-on-surface">MongoDB</span>
+                        <span class="mono-accent text-lg font-bold text-primary">GO</span>
+                        <span class="text-sm text-on-surface">Go</span>
                     </div>
                     <div class="bg-surface-container rounded-xl p-6 border border-outline-variant/15 hover:border-primary/40 transition-colors flex flex-col items-center gap-3">
                         <span class="mono-accent text-lg font-bold text-primary">SQL</span>
-                        <span class="text-sm text-on-surface">PostgreSQL</span>
-                    </div>
-                    <div class="bg-surface-container rounded-xl p-6 border border-outline-variant/15 hover:border-primary/40 transition-colors flex flex-col items-center gap-3">
-                        <i class="fas fa-database text-2xl text-primary"></i>
-                        <span class="text-sm text-on-surface">MySQL</span>
-                    </div>
-                    <div class="bg-surface-container rounded-xl p-6 border border-outline-variant/15 hover:border-primary/40 transition-colors flex flex-col items-center gap-3">
-                        <i class="fas fa-stream text-2xl text-primary"></i>
-                        <span class="text-sm text-on-surface">Kafka</span>
+                        <span class="text-sm text-on-surface">SQL</span>
                     </div>
                 </div>
 
-                <!-- DevOps -->
-                <div class="skill-panel grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4" id="panel-devops">
+                <!-- Backend Engineering -->
+                <div class="skill-panel grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4" id="panel-backend">
                     <div class="bg-surface-container rounded-xl p-6 border border-outline-variant/15 hover:border-primary/40 transition-colors flex flex-col items-center gap-3">
-                        <i class="fab fa-git-alt text-2xl text-primary"></i>
-                        <span class="text-sm text-on-surface">Git</span>
+                        <span class="mono-accent text-lg font-bold text-primary">SB</span>
+                        <span class="text-sm text-on-surface">Spring Boot</span>
+                    </div>
+                    <div class="bg-surface-container rounded-xl p-6 border border-outline-variant/15 hover:border-primary/40 transition-colors flex flex-col items-center gap-3">
+                        <span class="mono-accent text-lg font-bold text-primary">FAPI</span>
+                        <span class="text-sm text-on-surface">FastAPI</span>
+                    </div>
+                    <div class="bg-surface-container rounded-xl p-6 border border-outline-variant/15 hover:border-primary/40 transition-colors flex flex-col items-center gap-3">
+                        <span class="mono-accent text-lg font-bold text-primary">REST</span>
+                        <span class="text-sm text-on-surface">REST APIs</span>
+                    </div>
+                    <div class="bg-surface-container rounded-xl p-6 border border-outline-variant/15 hover:border-primary/40 transition-colors flex flex-col items-center gap-3">
+                        <span class="mono-accent text-lg font-bold text-primary">MS</span>
+                        <span class="text-sm text-on-surface">Microservices</span>
+                    </div>
+                    <div class="bg-surface-container rounded-xl p-6 border border-outline-variant/15 hover:border-primary/40 transition-colors flex flex-col items-center gap-3">
+                        <span class="mono-accent text-lg font-bold text-primary">DS</span>
+                        <span class="text-sm text-on-surface">Distributed Systems</span>
+                    </div>
+                    <div class="bg-surface-container rounded-xl p-6 border border-outline-variant/15 hover:border-primary/40 transition-colors flex flex-col items-center gap-3">
+                        <span class="mono-accent text-lg font-bold text-primary">SD</span>
+                        <span class="text-sm text-on-surface">System Design</span>
+                    </div>
+                </div>
+
+                <!-- Cloud & DevOps -->
+                <div class="skill-panel grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4" id="panel-clouddevops">
+                    <div class="bg-surface-container rounded-xl p-6 border border-outline-variant/15 hover:border-primary/40 transition-colors flex flex-col items-center gap-3">
+                        <span class="mono-accent text-lg font-bold text-primary">AWS</span>
+                        <span class="text-sm text-on-surface">AWS</span>
+                    </div>
+                    <div class="bg-surface-container rounded-xl p-6 border border-outline-variant/15 hover:border-primary/40 transition-colors flex flex-col items-center gap-3">
+                        <span class="mono-accent text-lg font-bold text-primary">GCP</span>
+                        <span class="text-sm text-on-surface">GCP</span>
                     </div>
                     <div class="bg-surface-container rounded-xl p-6 border border-outline-variant/15 hover:border-primary/40 transition-colors flex flex-col items-center gap-3">
                         <i class="fab fa-docker text-2xl text-primary"></i>
                         <span class="text-sm text-on-surface">Docker</span>
                     </div>
                     <div class="bg-surface-container rounded-xl p-6 border border-outline-variant/15 hover:border-primary/40 transition-colors flex flex-col items-center gap-3">
-                        <i class="fab fa-google text-2xl text-primary"></i>
-                        <span class="text-sm text-on-surface">Google Cloud</span>
+                        <span class="mono-accent text-lg font-bold text-primary">K8S</span>
+                        <span class="text-sm text-on-surface">Kubernetes</span>
                     </div>
                     <div class="bg-surface-container rounded-xl p-6 border border-outline-variant/15 hover:border-primary/40 transition-colors flex flex-col items-center gap-3">
-                        <i class="fab fa-jenkins text-2xl text-primary"></i>
+                        <span class="mono-accent text-lg font-bold text-primary">JNK</span>
                         <span class="text-sm text-on-surface">Jenkins</span>
                     </div>
                     <div class="bg-surface-container rounded-xl p-6 border border-outline-variant/15 hover:border-primary/40 transition-colors flex flex-col items-center gap-3">
-                        <i class="fas fa-network-wired text-2xl text-primary"></i>
-                        <span class="text-sm text-on-surface">Terraform</span>
+                        <span class="mono-accent text-lg font-bold text-primary">CICD</span>
+                        <span class="text-sm text-on-surface">CI/CD</span>
+                    </div>
+                </div>
+
+                <!-- Data & Databases -->
+                <div class="skill-panel grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4" id="panel-data">
+                    <div class="bg-surface-container rounded-xl p-6 border border-outline-variant/15 hover:border-primary/40 transition-colors flex flex-col items-center gap-3">
+                        <span class="mono-accent text-lg font-bold text-primary">PSQL</span>
+                        <span class="text-sm text-on-surface">PostgreSQL</span>
                     </div>
                     <div class="bg-surface-container rounded-xl p-6 border border-outline-variant/15 hover:border-primary/40 transition-colors flex flex-col items-center gap-3">
-                        <i class="fab fa-android text-2xl text-primary"></i>
-                        <span class="text-sm text-on-surface">Android</span>
+                        <span class="mono-accent text-lg font-bold text-primary">MDB</span>
+                        <span class="text-sm text-on-surface">MongoDB</span>
+                    </div>
+                    <div class="bg-surface-container rounded-xl p-6 border border-outline-variant/15 hover:border-primary/40 transition-colors flex flex-col items-center gap-3">
+                        <span class="mono-accent text-lg font-bold text-primary">N4J</span>
+                        <span class="text-sm text-on-surface">Neo4j</span>
+                    </div>
+                    <div class="bg-surface-container rounded-xl p-6 border border-outline-variant/15 hover:border-primary/40 transition-colors flex flex-col items-center gap-3">
+                        <span class="mono-accent text-lg font-bold text-primary">SPK</span>
+                        <span class="text-sm text-on-surface">Apache Spark</span>
+                    </div>
+                    <div class="bg-surface-container rounded-xl p-6 border border-outline-variant/15 hover:border-primary/40 transition-colors flex flex-col items-center gap-3">
+                        <span class="mono-accent text-lg font-bold text-primary">KAF</span>
+                        <span class="text-sm text-on-surface">Kafka</span>
+                    </div>
+                    <div class="bg-surface-container rounded-xl p-6 border border-outline-variant/15 hover:border-primary/40 transition-colors flex flex-col items-center gap-3">
+                        <span class="mono-accent text-lg font-bold text-primary">DL</span>
+                        <span class="text-sm text-on-surface">Delta Lake</span>
+                    </div>
+                </div>
+
+                <!-- AI / ML -->
+                <div class="skill-panel grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4" id="panel-aiml">
+                    <div class="bg-surface-container rounded-xl p-6 border border-outline-variant/15 hover:border-primary/40 transition-colors flex flex-col items-center gap-3">
+                        <span class="mono-accent text-lg font-bold text-primary">AGT</span>
+                        <span class="text-sm text-on-surface">AI Agents</span>
+                    </div>
+                    <div class="bg-surface-container rounded-xl p-6 border border-outline-variant/15 hover:border-primary/40 transition-colors flex flex-col items-center gap-3">
+                        <span class="mono-accent text-lg font-bold text-primary">MCP</span>
+                        <span class="text-sm text-on-surface">MCP Servers</span>
+                    </div>
+                    <div class="bg-surface-container rounded-xl p-6 border border-outline-variant/15 hover:border-primary/40 transition-colors flex flex-col items-center gap-3">
+                        <span class="mono-accent text-lg font-bold text-primary">MAS</span>
+                        <span class="text-sm text-on-surface">Multi-Agent Systems</span>
+                    </div>
+                    <div class="bg-surface-container rounded-xl p-6 border border-outline-variant/15 hover:border-primary/40 transition-colors flex flex-col items-center gap-3">
+                        <span class="mono-accent text-lg font-bold text-primary">LLM</span>
+                        <span class="text-sm text-on-surface">LLMs</span>
+                    </div>
+                    <div class="bg-surface-container rounded-xl p-6 border border-outline-variant/15 hover:border-primary/40 transition-colors flex flex-col items-center gap-3">
+                        <span class="mono-accent text-lg font-bold text-primary">NLP</span>
+                        <span class="text-sm text-on-surface">NLP</span>
+                    </div>
+                    <div class="bg-surface-container rounded-xl p-6 border border-outline-variant/15 hover:border-primary/40 transition-colors flex flex-col items-center gap-3">
+                        <span class="mono-accent text-lg font-bold text-primary">RAG</span>
+                        <span class="text-sm text-on-surface">RAG</span>
+                    </div>
+                    <div class="bg-surface-container rounded-xl p-6 border border-outline-variant/15 hover:border-primary/40 transition-colors flex flex-col items-center gap-3">
+                        <span class="mono-accent text-lg font-bold text-primary">GRAG</span>
+                        <span class="text-sm text-on-surface">GraphRAG</span>
+                    </div>
+                    <div class="bg-surface-container rounded-xl p-6 border border-outline-variant/15 hover:border-primary/40 transition-colors flex flex-col items-center gap-3">
+                        <span class="mono-accent text-lg font-bold text-primary">VEC</span>
+                        <span class="text-sm text-on-surface">Vector Search</span>
+                    </div>
+                    <div class="bg-surface-container rounded-xl p-6 border border-outline-variant/15 hover:border-primary/40 transition-colors flex flex-col items-center gap-3">
+                        <span class="mono-accent text-lg font-bold text-primary">EMB</span>
+                        <span class="text-sm text-on-surface">Embeddings</span>
+                    </div>
+                    <div class="bg-surface-container rounded-xl p-6 border border-outline-variant/15 hover:border-primary/40 transition-colors flex flex-col items-center gap-3">
+                        <span class="mono-accent text-lg font-bold text-primary">PT</span>
+                        <span class="text-sm text-on-surface">PyTorch</span>
+                    </div>
+                    <div class="bg-surface-container rounded-xl p-6 border border-outline-variant/15 hover:border-primary/40 transition-colors flex flex-col items-center gap-3">
+                        <span class="mono-accent text-lg font-bold text-primary">TF</span>
+                        <span class="text-sm text-on-surface">TensorFlow</span>
+                    </div>
+                    <div class="bg-surface-container rounded-xl p-6 border border-outline-variant/15 hover:border-primary/40 transition-colors flex flex-col items-center gap-3">
+                        <span class="mono-accent text-lg font-bold text-primary">SK</span>
+                        <span class="text-sm text-on-surface">scikit-learn</span>
+                    </div>
+                </div>
+
+                <!-- Testing & Tools -->
+                <div class="skill-panel grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4" id="panel-testing">
+                    <div class="bg-surface-container rounded-xl p-6 border border-outline-variant/15 hover:border-primary/40 transition-colors flex flex-col items-center gap-3">
+                        <span class="mono-accent text-lg font-bold text-primary">JU</span>
+                        <span class="text-sm text-on-surface">JUnit</span>
+                    </div>
+                    <div class="bg-surface-container rounded-xl p-6 border border-outline-variant/15 hover:border-primary/40 transition-colors flex flex-col items-center gap-3">
+                        <span class="mono-accent text-lg font-bold text-primary">PYT</span>
+                        <span class="text-sm text-on-surface">PyTest</span>
+                    </div>
+                    <div class="bg-surface-container rounded-xl p-6 border border-outline-variant/15 hover:border-primary/40 transition-colors flex flex-col items-center gap-3">
+                        <span class="mono-accent text-lg font-bold text-primary">SEL</span>
+                        <span class="text-sm text-on-surface">Selenium</span>
+                    </div>
+                    <div class="bg-surface-container rounded-xl p-6 border border-outline-variant/15 hover:border-primary/40 transition-colors flex flex-col items-center gap-3">
+                        <span class="mono-accent text-lg font-bold text-primary">CUC</span>
+                        <span class="text-sm text-on-surface">Cucumber</span>
+                    </div>
+                    <div class="bg-surface-container rounded-xl p-6 border border-outline-variant/15 hover:border-primary/40 transition-colors flex flex-col items-center gap-3">
+                        <span class="mono-accent text-lg font-bold text-primary">PW</span>
+                        <span class="text-sm text-on-surface">Playwright</span>
+                    </div>
+                    <div class="bg-surface-container rounded-xl p-6 border border-outline-variant/15 hover:border-primary/40 transition-colors flex flex-col items-center gap-3">
+                        <i class="fab fa-git-alt text-2xl text-primary"></i>
+                        <span class="text-sm text-on-surface">Git</span>
                     </div>
                 </div>
             </div>
@@ -564,7 +685,7 @@
                 </a>
             </div>
 
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <div class="archive-grid grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                 <!-- Project 1 -->
                 <a href="https://github.com/ragini-kalvade/Megatron-LM" target="_blank" rel="noopener" class="group cursor-pointer block">
                     <div class="relative overflow-hidden rounded-xl aspect-video mb-6 bg-surface-container-low border border-outline-variant/15">
@@ -739,5 +860,120 @@
 }
 </script>
 <script type="module" src="globe.js"></script>
+<script>
+    (() => {
+        const canvas = document.getElementById("network-bg");
+        if (!canvas) return;
+
+        const context = canvas.getContext("2d");
+        if (!context) return;
+
+        const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+        const maxDistance = 155;
+        const baseSpeed = 0.18;
+        const nodes = [];
+        let width = 0;
+        let height = 0;
+        let animationFrame = null;
+
+        function createNode() {
+            return {
+                x: Math.random() * width,
+                y: Math.random() * height,
+                vx: (Math.random() - 0.5) * baseSpeed,
+                vy: (Math.random() - 0.5) * baseSpeed,
+                radius: Math.random() * 1.3 + 0.6
+            };
+        }
+
+        function resize() {
+            const devicePixelRatio = Math.min(window.devicePixelRatio || 1, 2);
+            width = window.innerWidth;
+            height = window.innerHeight;
+            canvas.width = Math.floor(width * devicePixelRatio);
+            canvas.height = Math.floor(height * devicePixelRatio);
+            canvas.style.width = width + "px";
+            canvas.style.height = height + "px";
+            context.setTransform(devicePixelRatio, 0, 0, devicePixelRatio, 0, 0);
+
+            const count = width < 768 ? 42 : 72;
+            nodes.length = 0;
+            for (let index = 0; index < count; index += 1) {
+                nodes.push(createNode());
+            }
+        }
+
+        function drawNode(node) {
+            context.beginPath();
+            context.arc(node.x, node.y, node.radius, 0, Math.PI * 2);
+            context.fillStyle = "rgba(123, 208, 255, 0.28)";
+            context.fill();
+        }
+
+        function drawConnection(a, b, distance) {
+            const intensity = 1 - distance / maxDistance;
+            context.strokeStyle = `rgba(123, 208, 255, ${0.11 * intensity})`;
+            context.lineWidth = 1;
+            context.beginPath();
+            context.moveTo(a.x, a.y);
+            context.lineTo(b.x, b.y);
+            context.stroke();
+        }
+
+        function stepNode(node) {
+            node.x += node.vx;
+            node.y += node.vy;
+
+            if (node.x < 0 || node.x > width) node.vx *= -1;
+            if (node.y < 0 || node.y > height) node.vy *= -1;
+        }
+
+        function animate() {
+            context.clearRect(0, 0, width, height);
+
+            for (let index = 0; index < nodes.length; index += 1) {
+                const node = nodes[index];
+                stepNode(node);
+                drawNode(node);
+
+                for (let comparison = index + 1; comparison < nodes.length; comparison += 1) {
+                    const other = nodes[comparison];
+                    const dx = node.x - other.x;
+                    const dy = node.y - other.y;
+                    const distance = Math.sqrt(dx * dx + dy * dy);
+                    if (distance < maxDistance) {
+                        drawConnection(node, other, distance);
+                    }
+                }
+            }
+
+            animationFrame = window.requestAnimationFrame(animate);
+        }
+
+        function stop() {
+            if (animationFrame !== null) {
+                window.cancelAnimationFrame(animationFrame);
+                animationFrame = null;
+            }
+            context.clearRect(0, 0, width, height);
+        }
+
+        function start() {
+            if (prefersReducedMotion.matches) {
+                stop();
+                return;
+            }
+            if (animationFrame === null) {
+                animate();
+            }
+        }
+
+        window.addEventListener("resize", resize);
+        prefersReducedMotion.addEventListener("change", start);
+
+        resize();
+        start();
+    })();
+</script>
 </body>
 </html>
