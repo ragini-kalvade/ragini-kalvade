@@ -16,6 +16,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/devicon.min.css" />
 
     <script id="tailwind-config">
         tailwind.config = {
@@ -128,6 +129,18 @@
         .skill-panel { display: none; }
         .skill-panel.active { display: grid; animation: fadeIn .4s ease; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(8px);} to { opacity: 1; transform: translateY(0);} }
+
+        .skill-stack-icon {
+            display: block;
+            width: 2rem;
+            height: 2rem;
+            font-size: 2rem;
+            line-height: 1;
+            flex-shrink: 0;
+        }
+        .skill-panel i[class*="devicon"] {
+            font-size: 2rem;
+        }
 
         .exp-panel { display: none; }
         .exp-panel.active { display: block; animation: fadeIn .4s ease; }
@@ -784,207 +797,248 @@
                 <div>
                     <span class="mono-accent text-tertiary text-xs tracking-widest uppercase">// Toolkit</span>
                     <h2 class="headline-font text-4xl md:text-5xl font-bold tracking-tight mt-3">Technical Stack</h2>
-                    <p class="text-on-surface-variant mt-2 font-light">Languages, frameworks and infrastructure I reach for.</p>
+                    <p class="text-on-surface-variant mt-2 font-light">Frameworks, infrastructure, and observability tools I use in production.</p>
                 </div>
                 <div id="skillTabs" class="flex flex-wrap gap-2">
-                    <button class="skill-tab px-4 py-2 rounded-lg mono-accent text-xs tracking-widest uppercase bg-primary/10 text-primary border border-primary/30" data-tab="languages">Languages</button>
-                    <button class="skill-tab px-4 py-2 rounded-lg mono-accent text-xs tracking-widest uppercase bg-surface-container-highest text-on-surface-variant border border-outline-variant/15 hover:border-primary/30 transition" data-tab="backend">Backend Engineering</button>
+                    <button class="skill-tab px-4 py-2 rounded-lg mono-accent text-xs tracking-widest uppercase bg-primary/10 text-primary border border-primary/30" data-tab="aiml">AI / ML</button>
                     <button class="skill-tab px-4 py-2 rounded-lg mono-accent text-xs tracking-widest uppercase bg-surface-container-highest text-on-surface-variant border border-outline-variant/15 hover:border-primary/30 transition" data-tab="clouddevops">Cloud &amp; DevOps</button>
+                    <button class="skill-tab px-4 py-2 rounded-lg mono-accent text-xs tracking-widest uppercase bg-surface-container-highest text-on-surface-variant border border-outline-variant/15 hover:border-primary/30 transition" data-tab="backend">Backend Engineering</button>
                     <button class="skill-tab px-4 py-2 rounded-lg mono-accent text-xs tracking-widest uppercase bg-surface-container-highest text-on-surface-variant border border-outline-variant/15 hover:border-primary/30 transition" data-tab="data">Data &amp; Databases</button>
-                    <button class="skill-tab px-4 py-2 rounded-lg mono-accent text-xs tracking-widest uppercase bg-surface-container-highest text-on-surface-variant border border-outline-variant/15 hover:border-primary/30 transition" data-tab="aiml">AI / ML</button>
+                    <button class="skill-tab px-4 py-2 rounded-lg mono-accent text-xs tracking-widest uppercase bg-surface-container-highest text-on-surface-variant border border-outline-variant/15 hover:border-primary/30 transition" data-tab="languages">Languages</button>
+                    <button class="skill-tab px-4 py-2 rounded-lg mono-accent text-xs tracking-widest uppercase bg-surface-container-highest text-on-surface-variant border border-outline-variant/15 hover:border-primary/30 transition" data-tab="observability">Logging &amp; Monitoring</button>
                     <button class="skill-tab px-4 py-2 rounded-lg mono-accent text-xs tracking-widest uppercase bg-surface-container-highest text-on-surface-variant border border-outline-variant/15 hover:border-primary/30 transition" data-tab="testing">Testing &amp; Tools</button>
                 </div>
             </div>
 
             <div class="relative">
-                <!-- Languages -->
-                <div class="skill-panel active grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4" id="panel-languages">
+                <!-- AI / ML -->
+                <div class="skill-panel active grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4" id="panel-aiml">
                     <div class="bg-surface-container rounded-xl p-6 border border-outline-variant/15 hover:border-primary/40 transition-colors flex flex-col items-center gap-3">
-                        <span class="mono-accent text-lg font-bold text-primary">JAVA</span>
-                        <span class="text-sm text-on-surface">Java</span>
+                        <img class="skill-stack-icon" src="https://cdn.simpleicons.org/langgraph/7bd0ff" alt="" width="32" height="32" loading="lazy" decoding="async" />
+                        <span class="text-sm text-on-surface">LangGraph</span>
                     </div>
                     <div class="bg-surface-container rounded-xl p-6 border border-outline-variant/15 hover:border-primary/40 transition-colors flex flex-col items-center gap-3">
-                        <i class="fab fa-python text-2xl text-primary"></i>
-                        <span class="text-sm text-on-surface">Python</span>
+                        <img class="skill-stack-icon" src="https://cdn.simpleicons.org/langchain/7bd0ff" alt="" width="32" height="32" loading="lazy" decoding="async" />
+                        <span class="text-sm text-on-surface">LangChain</span>
                     </div>
                     <div class="bg-surface-container rounded-xl p-6 border border-outline-variant/15 hover:border-primary/40 transition-colors flex flex-col items-center gap-3">
-                        <span class="mono-accent text-lg font-bold text-primary">SC</span>
-                        <span class="text-sm text-on-surface">Scala</span>
+                        <img class="skill-stack-icon" src="https://cdn.simpleicons.org/huggingface/7bd0ff" alt="" width="32" height="32" loading="lazy" decoding="async" />
+                        <span class="text-sm text-on-surface">Hugging Face</span>
                     </div>
                     <div class="bg-surface-container rounded-xl p-6 border border-outline-variant/15 hover:border-primary/40 transition-colors flex flex-col items-center gap-3">
-                        <span class="mono-accent text-lg font-bold text-primary">JS </span>
-                        <span class="text-sm text-on-surface">JavaScript</span>
+                        <i class="devicon-pytorch-original colored skill-stack-icon" aria-hidden="true"></i>
+                        <span class="text-sm text-on-surface">PyTorch</span>
                     </div>
                     <div class="bg-surface-container rounded-xl p-6 border border-outline-variant/15 hover:border-primary/40 transition-colors flex flex-col items-center gap-3">
-                        <span class="mono-accent text-lg font-bold text-primary">GO</span>
-                        <span class="text-sm text-on-surface">Go</span>
+                        <i class="devicon-tensorflow-original colored skill-stack-icon" aria-hidden="true"></i>
+                        <span class="text-sm text-on-surface">TensorFlow</span>
                     </div>
                     <div class="bg-surface-container rounded-xl p-6 border border-outline-variant/15 hover:border-primary/40 transition-colors flex flex-col items-center gap-3">
-                        <span class="mono-accent text-lg font-bold text-primary">SQL</span>
-                        <span class="text-sm text-on-surface">SQL</span>
-                    </div>
-                </div>
-
-                <!-- Backend Engineering -->
-                <div class="skill-panel grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4" id="panel-backend">
-                    <div class="bg-surface-container rounded-xl p-6 border border-outline-variant/15 hover:border-primary/40 transition-colors flex flex-col items-center gap-3">
-                        <span class="mono-accent text-lg font-bold text-primary">SB</span>
-                        <span class="text-sm text-on-surface">Spring Boot</span>
+                        <i class="devicon-scikitlearn-plain colored skill-stack-icon" aria-hidden="true"></i>
+                        <span class="text-sm text-on-surface">scikit-learn</span>
                     </div>
                     <div class="bg-surface-container rounded-xl p-6 border border-outline-variant/15 hover:border-primary/40 transition-colors flex flex-col items-center gap-3">
-                        <span class="mono-accent text-lg font-bold text-primary">FAPI</span>
-                        <span class="text-sm text-on-surface">FastAPI</span>
+                        <img class="skill-stack-icon" src="https://cdn.simpleicons.org/spacy/7bd0ff" alt="" width="32" height="32" loading="lazy" decoding="async" />
+                        <span class="text-sm text-on-surface">spaCy</span>
                     </div>
                     <div class="bg-surface-container rounded-xl p-6 border border-outline-variant/15 hover:border-primary/40 transition-colors flex flex-col items-center gap-3">
-                        <span class="mono-accent text-lg font-bold text-primary">REST</span>
-                        <span class="text-sm text-on-surface">REST APIs</span>
+                        <img class="skill-stack-icon" src="https://cdn.simpleicons.org/ollama/7bd0ff" alt="" width="32" height="32" loading="lazy" decoding="async" />
+                        <span class="text-sm text-on-surface">Ollama</span>
                     </div>
                     <div class="bg-surface-container rounded-xl p-6 border border-outline-variant/15 hover:border-primary/40 transition-colors flex flex-col items-center gap-3">
-                        <span class="mono-accent text-lg font-bold text-primary">MS</span>
-                        <span class="text-sm text-on-surface">Microservices</span>
+                        <img class="skill-stack-icon" src="https://cdn.simpleicons.org/pydantic/7bd0ff" alt="" width="32" height="32" loading="lazy" decoding="async" />
+                        <span class="text-sm text-on-surface">Pydantic</span>
                     </div>
                     <div class="bg-surface-container rounded-xl p-6 border border-outline-variant/15 hover:border-primary/40 transition-colors flex flex-col items-center gap-3">
-                        <span class="mono-accent text-lg font-bold text-primary">DS</span>
-                        <span class="text-sm text-on-surface">Distributed Systems</span>
+                        <img class="skill-stack-icon" src="https://cdn.simpleicons.org/anthropic/7bd0ff" alt="" width="32" height="32" loading="lazy" decoding="async" />
+                        <span class="text-sm text-on-surface">Anthropic</span>
                     </div>
                     <div class="bg-surface-container rounded-xl p-6 border border-outline-variant/15 hover:border-primary/40 transition-colors flex flex-col items-center gap-3">
-                        <span class="mono-accent text-lg font-bold text-primary">SD</span>
-                        <span class="text-sm text-on-surface">System Design</span>
+                        <i class="devicon-neo4j-plain colored skill-stack-icon" aria-hidden="true"></i>
+                        <span class="text-sm text-on-surface">Neo4j</span>
+                    </div>
+                    <div class="bg-surface-container rounded-xl p-6 border border-outline-variant/15 hover:border-primary/40 transition-colors flex flex-col items-center gap-3">
+                        <span class="material-symbols-outlined skill-stack-icon text-primary" aria-hidden="true">electrical_services</span>
+                        <span class="text-sm text-on-surface">MCP</span>
                     </div>
                 </div>
 
                 <!-- Cloud & DevOps -->
                 <div class="skill-panel grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4" id="panel-clouddevops">
                     <div class="bg-surface-container rounded-xl p-6 border border-outline-variant/15 hover:border-primary/40 transition-colors flex flex-col items-center gap-3">
-                        <span class="mono-accent text-lg font-bold text-primary">AWS</span>
+                        <i class="devicon-amazonwebservices-plain colored skill-stack-icon" aria-hidden="true"></i>
                         <span class="text-sm text-on-surface">AWS</span>
                     </div>
                     <div class="bg-surface-container rounded-xl p-6 border border-outline-variant/15 hover:border-primary/40 transition-colors flex flex-col items-center gap-3">
-                        <span class="mono-accent text-lg font-bold text-primary">GCP</span>
+                        <i class="devicon-googlecloud-plain colored skill-stack-icon" aria-hidden="true"></i>
                         <span class="text-sm text-on-surface">GCP</span>
                     </div>
                     <div class="bg-surface-container rounded-xl p-6 border border-outline-variant/15 hover:border-primary/40 transition-colors flex flex-col items-center gap-3">
-                        <i class="fab fa-docker text-2xl text-primary"></i>
+                        <i class="devicon-docker-plain colored skill-stack-icon" aria-hidden="true"></i>
                         <span class="text-sm text-on-surface">Docker</span>
                     </div>
                     <div class="bg-surface-container rounded-xl p-6 border border-outline-variant/15 hover:border-primary/40 transition-colors flex flex-col items-center gap-3">
-                        <span class="mono-accent text-lg font-bold text-primary">K8S</span>
+                        <i class="devicon-kubernetes-plain colored skill-stack-icon" aria-hidden="true"></i>
                         <span class="text-sm text-on-surface">Kubernetes</span>
                     </div>
                     <div class="bg-surface-container rounded-xl p-6 border border-outline-variant/15 hover:border-primary/40 transition-colors flex flex-col items-center gap-3">
-                        <span class="mono-accent text-lg font-bold text-primary">JNK</span>
+                        <i class="devicon-jenkins-plain colored skill-stack-icon" aria-hidden="true"></i>
                         <span class="text-sm text-on-surface">Jenkins</span>
                     </div>
                     <div class="bg-surface-container rounded-xl p-6 border border-outline-variant/15 hover:border-primary/40 transition-colors flex flex-col items-center gap-3">
-                        <span class="mono-accent text-lg font-bold text-primary">CICD</span>
+                        <i class="devicon-githubactions-plain colored skill-stack-icon" aria-hidden="true"></i>
                         <span class="text-sm text-on-surface">CI/CD</span>
+                    </div>
+                </div>
+
+                <!-- Backend Engineering -->
+                <div class="skill-panel grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4" id="panel-backend">
+                    <div class="bg-surface-container rounded-xl p-6 border border-outline-variant/15 hover:border-primary/40 transition-colors flex flex-col items-center gap-3">
+                        <i class="devicon-spring-plain colored skill-stack-icon" aria-hidden="true"></i>
+                        <span class="text-sm text-on-surface">Spring Boot</span>
+                    </div>
+                    <div class="bg-surface-container rounded-xl p-6 border border-outline-variant/15 hover:border-primary/40 transition-colors flex flex-col items-center gap-3">
+                        <i class="devicon-fastapi-plain colored skill-stack-icon" aria-hidden="true"></i>
+                        <span class="text-sm text-on-surface">FastAPI</span>
+                    </div>
+                    <div class="bg-surface-container rounded-xl p-6 border border-outline-variant/15 hover:border-primary/40 transition-colors flex flex-col items-center gap-3">
+                        <i class="devicon-nginx-plain colored skill-stack-icon" aria-hidden="true"></i>
+                        <span class="text-sm text-on-surface">REST APIs</span>
+                    </div>
+                    <div class="bg-surface-container rounded-xl p-6 border border-outline-variant/15 hover:border-primary/40 transition-colors flex flex-col items-center gap-3">
+                        <span class="material-symbols-outlined skill-stack-icon text-primary" aria-hidden="true">hub</span>
+                        <span class="text-sm text-on-surface">Microservices</span>
+                    </div>
+                    <div class="bg-surface-container rounded-xl p-6 border border-outline-variant/15 hover:border-primary/40 transition-colors flex flex-col items-center gap-3">
+                        <span class="material-symbols-outlined skill-stack-icon text-primary" aria-hidden="true">lan</span>
+                        <span class="text-sm text-on-surface">Distributed Systems</span>
+                    </div>
+                    <div class="bg-surface-container rounded-xl p-6 border border-outline-variant/15 hover:border-primary/40 transition-colors flex flex-col items-center gap-3">
+                        <span class="material-symbols-outlined skill-stack-icon text-primary" aria-hidden="true">architecture</span>
+                        <span class="text-sm text-on-surface">System Design</span>
                     </div>
                 </div>
 
                 <!-- Data & Databases -->
                 <div class="skill-panel grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4" id="panel-data">
                     <div class="bg-surface-container rounded-xl p-6 border border-outline-variant/15 hover:border-primary/40 transition-colors flex flex-col items-center gap-3">
-                        <span class="mono-accent text-lg font-bold text-primary">PSQL</span>
+                        <i class="devicon-postgresql-plain colored skill-stack-icon" aria-hidden="true"></i>
                         <span class="text-sm text-on-surface">PostgreSQL</span>
                     </div>
                     <div class="bg-surface-container rounded-xl p-6 border border-outline-variant/15 hover:border-primary/40 transition-colors flex flex-col items-center gap-3">
-                        <span class="mono-accent text-lg font-bold text-primary">MDB</span>
+                        <i class="devicon-mongodb-plain colored skill-stack-icon" aria-hidden="true"></i>
                         <span class="text-sm text-on-surface">MongoDB</span>
                     </div>
                     <div class="bg-surface-container rounded-xl p-6 border border-outline-variant/15 hover:border-primary/40 transition-colors flex flex-col items-center gap-3">
-                        <span class="mono-accent text-lg font-bold text-primary">N4J</span>
+                        <i class="devicon-neo4j-plain colored skill-stack-icon" aria-hidden="true"></i>
                         <span class="text-sm text-on-surface">Neo4j</span>
                     </div>
                     <div class="bg-surface-container rounded-xl p-6 border border-outline-variant/15 hover:border-primary/40 transition-colors flex flex-col items-center gap-3">
-                        <span class="mono-accent text-lg font-bold text-primary">SPK</span>
+                        <i class="devicon-apachespark-original colored skill-stack-icon" aria-hidden="true"></i>
                         <span class="text-sm text-on-surface">Apache Spark</span>
                     </div>
                     <div class="bg-surface-container rounded-xl p-6 border border-outline-variant/15 hover:border-primary/40 transition-colors flex flex-col items-center gap-3">
-                        <span class="mono-accent text-lg font-bold text-primary">KAF</span>
+                        <img class="skill-stack-icon" src="https://cdn.simpleicons.org/apachekafka/7bd0ff" alt="" width="32" height="32" loading="lazy" decoding="async" />
                         <span class="text-sm text-on-surface">Kafka</span>
                     </div>
                     <div class="bg-surface-container rounded-xl p-6 border border-outline-variant/15 hover:border-primary/40 transition-colors flex flex-col items-center gap-3">
-                        <span class="mono-accent text-lg font-bold text-primary">DL</span>
+                        <img class="skill-stack-icon" src="https://cdn.simpleicons.org/databricks/7bd0ff" alt="" width="32" height="32" loading="lazy" decoding="async" />
                         <span class="text-sm text-on-surface">Delta Lake</span>
                     </div>
                 </div>
 
-                <!-- AI / ML -->
-                <div class="skill-panel grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4" id="panel-aiml">
+                <!-- Languages -->
+                <div class="skill-panel grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4" id="panel-languages">
                     <div class="bg-surface-container rounded-xl p-6 border border-outline-variant/15 hover:border-primary/40 transition-colors flex flex-col items-center gap-3">
-                        <span class="mono-accent text-lg font-bold text-primary">AGT</span>
-                        <span class="text-sm text-on-surface">AI Agents</span>
+                        <i class="devicon-java-plain colored skill-stack-icon" aria-hidden="true"></i>
+                        <span class="text-sm text-on-surface">Java</span>
                     </div>
                     <div class="bg-surface-container rounded-xl p-6 border border-outline-variant/15 hover:border-primary/40 transition-colors flex flex-col items-center gap-3">
-                        <span class="mono-accent text-lg font-bold text-primary">MCP</span>
-                        <span class="text-sm text-on-surface">MCP Servers</span>
+                        <i class="devicon-python-plain colored skill-stack-icon" aria-hidden="true"></i>
+                        <span class="text-sm text-on-surface">Python</span>
                     </div>
                     <div class="bg-surface-container rounded-xl p-6 border border-outline-variant/15 hover:border-primary/40 transition-colors flex flex-col items-center gap-3">
-                        <span class="mono-accent text-lg font-bold text-primary">MAS</span>
-                        <span class="text-sm text-on-surface">Multi-Agent Systems</span>
+                        <i class="devicon-scala-plain colored skill-stack-icon" aria-hidden="true"></i>
+                        <span class="text-sm text-on-surface">Scala</span>
                     </div>
                     <div class="bg-surface-container rounded-xl p-6 border border-outline-variant/15 hover:border-primary/40 transition-colors flex flex-col items-center gap-3">
-                        <span class="mono-accent text-lg font-bold text-primary">LLM</span>
-                        <span class="text-sm text-on-surface">LLMs</span>
+                        <i class="devicon-javascript-plain colored skill-stack-icon" aria-hidden="true"></i>
+                        <span class="text-sm text-on-surface">JavaScript</span>
                     </div>
                     <div class="bg-surface-container rounded-xl p-6 border border-outline-variant/15 hover:border-primary/40 transition-colors flex flex-col items-center gap-3">
-                        <span class="mono-accent text-lg font-bold text-primary">NLP</span>
-                        <span class="text-sm text-on-surface">NLP</span>
+                        <i class="devicon-go-plain colored skill-stack-icon" aria-hidden="true"></i>
+                        <span class="text-sm text-on-surface">Go</span>
                     </div>
                     <div class="bg-surface-container rounded-xl p-6 border border-outline-variant/15 hover:border-primary/40 transition-colors flex flex-col items-center gap-3">
-                        <span class="mono-accent text-lg font-bold text-primary">RAG</span>
-                        <span class="text-sm text-on-surface">RAG</span>
+                        <i class="devicon-postgresql-plain colored skill-stack-icon" aria-hidden="true"></i>
+                        <span class="text-sm text-on-surface">SQL</span>
+                    </div>
+                </div>
+
+                <!-- Logging & Monitoring -->
+                <div class="skill-panel grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4" id="panel-observability">
+                    <div class="bg-surface-container rounded-xl p-6 border border-outline-variant/15 hover:border-primary/40 transition-colors flex flex-col items-center gap-3">
+                        <span class="material-symbols-outlined skill-stack-icon text-primary" aria-hidden="true">science</span>
+                        <span class="text-sm text-on-surface">LangSmith</span>
                     </div>
                     <div class="bg-surface-container rounded-xl p-6 border border-outline-variant/15 hover:border-primary/40 transition-colors flex flex-col items-center gap-3">
-                        <span class="mono-accent text-lg font-bold text-primary">GRAG</span>
-                        <span class="text-sm text-on-surface">GraphRAG</span>
+                        <span class="material-symbols-outlined skill-stack-icon text-primary" aria-hidden="true">monitoring</span>
+                        <span class="text-sm text-on-surface">Langfuse</span>
                     </div>
                     <div class="bg-surface-container rounded-xl p-6 border border-outline-variant/15 hover:border-primary/40 transition-colors flex flex-col items-center gap-3">
-                        <span class="mono-accent text-lg font-bold text-primary">VEC</span>
-                        <span class="text-sm text-on-surface">Vector Search</span>
+                        <i class="devicon-elasticsearch-original colored skill-stack-icon" aria-hidden="true"></i>
+                        <span class="text-sm text-on-surface">Elasticsearch</span>
                     </div>
                     <div class="bg-surface-container rounded-xl p-6 border border-outline-variant/15 hover:border-primary/40 transition-colors flex flex-col items-center gap-3">
-                        <span class="mono-accent text-lg font-bold text-primary">EMB</span>
-                        <span class="text-sm text-on-surface">Embeddings</span>
+                        <img class="skill-stack-icon" src="https://cdn.simpleicons.org/logstash/7bd0ff" alt="" width="32" height="32" loading="lazy" decoding="async" />
+                        <span class="text-sm text-on-surface">Logstash</span>
                     </div>
                     <div class="bg-surface-container rounded-xl p-6 border border-outline-variant/15 hover:border-primary/40 transition-colors flex flex-col items-center gap-3">
-                        <span class="mono-accent text-lg font-bold text-primary">PT</span>
-                        <span class="text-sm text-on-surface">PyTorch</span>
+                        <i class="devicon-kibana-plain colored skill-stack-icon" aria-hidden="true"></i>
+                        <span class="text-sm text-on-surface">Kibana</span>
                     </div>
                     <div class="bg-surface-container rounded-xl p-6 border border-outline-variant/15 hover:border-primary/40 transition-colors flex flex-col items-center gap-3">
-                        <span class="mono-accent text-lg font-bold text-primary">TF</span>
-                        <span class="text-sm text-on-surface">TensorFlow</span>
+                        <i class="devicon-prometheus-original colored skill-stack-icon" aria-hidden="true"></i>
+                        <span class="text-sm text-on-surface">Prometheus</span>
                     </div>
                     <div class="bg-surface-container rounded-xl p-6 border border-outline-variant/15 hover:border-primary/40 transition-colors flex flex-col items-center gap-3">
-                        <span class="mono-accent text-lg font-bold text-primary">SK</span>
-                        <span class="text-sm text-on-surface">scikit-learn</span>
+                        <i class="devicon-grafana-original colored skill-stack-icon" aria-hidden="true"></i>
+                        <span class="text-sm text-on-surface">Grafana</span>
+                    </div>
+                    <div class="bg-surface-container rounded-xl p-6 border border-outline-variant/15 hover:border-primary/40 transition-colors flex flex-col items-center gap-3">
+                        <img class="skill-stack-icon" src="https://cdn.simpleicons.org/datadog/7bd0ff" alt="" width="32" height="32" loading="lazy" decoding="async" />
+                        <span class="text-sm text-on-surface">Datadog</span>
+                    </div>
+                    <div class="bg-surface-container rounded-xl p-6 border border-outline-variant/15 hover:border-primary/40 transition-colors flex flex-col items-center gap-3">
+                        <img class="skill-stack-icon" src="https://cdn.simpleicons.org/opentelemetry/7bd0ff" alt="" width="32" height="32" loading="lazy" decoding="async" />
+                        <span class="text-sm text-on-surface">OpenTelemetry</span>
                     </div>
                 </div>
 
                 <!-- Testing & Tools -->
                 <div class="skill-panel grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4" id="panel-testing">
                     <div class="bg-surface-container rounded-xl p-6 border border-outline-variant/15 hover:border-primary/40 transition-colors flex flex-col items-center gap-3">
-                        <span class="mono-accent text-lg font-bold text-primary">JU</span>
+                        <img class="skill-stack-icon" src="https://cdn.simpleicons.org/junit5/7bd0ff" alt="" width="32" height="32" loading="lazy" decoding="async" />
                         <span class="text-sm text-on-surface">JUnit</span>
                     </div>
                     <div class="bg-surface-container rounded-xl p-6 border border-outline-variant/15 hover:border-primary/40 transition-colors flex flex-col items-center gap-3">
-                        <span class="mono-accent text-lg font-bold text-primary">PYT</span>
+                        <img class="skill-stack-icon" src="https://cdn.simpleicons.org/pytest/7bd0ff" alt="" width="32" height="32" loading="lazy" decoding="async" />
                         <span class="text-sm text-on-surface">PyTest</span>
                     </div>
                     <div class="bg-surface-container rounded-xl p-6 border border-outline-variant/15 hover:border-primary/40 transition-colors flex flex-col items-center gap-3">
-                        <span class="mono-accent text-lg font-bold text-primary">SEL</span>
+                        <i class="devicon-selenium-plain colored skill-stack-icon" aria-hidden="true"></i>
                         <span class="text-sm text-on-surface">Selenium</span>
                     </div>
                     <div class="bg-surface-container rounded-xl p-6 border border-outline-variant/15 hover:border-primary/40 transition-colors flex flex-col items-center gap-3">
-                        <span class="mono-accent text-lg font-bold text-primary">CUC</span>
+                        <i class="devicon-cucumber-plain colored skill-stack-icon" aria-hidden="true"></i>
                         <span class="text-sm text-on-surface">Cucumber</span>
                     </div>
                     <div class="bg-surface-container rounded-xl p-6 border border-outline-variant/15 hover:border-primary/40 transition-colors flex flex-col items-center gap-3">
-                        <span class="mono-accent text-lg font-bold text-primary">PW</span>
+                        <i class="devicon-playwright-plain colored skill-stack-icon" aria-hidden="true"></i>
                         <span class="text-sm text-on-surface">Playwright</span>
                     </div>
                     <div class="bg-surface-container rounded-xl p-6 border border-outline-variant/15 hover:border-primary/40 transition-colors flex flex-col items-center gap-3">
-                        <i class="fab fa-git-alt text-2xl text-primary"></i>
+                        <i class="devicon-git-plain colored skill-stack-icon" aria-hidden="true"></i>
                         <span class="text-sm text-on-surface">Git</span>
                     </div>
                 </div>
@@ -1328,15 +1382,15 @@
         const namespace = "ragini-kalvade-portfolio";
         const key = "home";
 
-        fetch(`https://api.countapi.xyz/hit/${namespace}/${key}`)
+        fetch(`https://api.counterapi.dev/v1/${namespace}/${key}/up`)
             .then((response) => {
                 if (!response.ok) {
-                    throw new Error("CountAPI request failed");
+                    throw new Error("CounterAPI request failed");
                 }
                 return response.json();
             })
             .then((data) => {
-                const count = Number(data.value);
+                const count = Number(data.count);
                 visitorCountElement.textContent = Number.isFinite(count)
                     ? `Visits ${count.toLocaleString()}`
                     : "Visits --";
