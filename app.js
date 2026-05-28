@@ -1,13 +1,275 @@
 // RK Systems portfolio interactions
 
+const PROJECTS = [
+    {
+        number: '01',
+        title: 'ForecastingError404',
+        category: 'Agentic AI / Prediction Systems',
+        outcome: 'Multi-agent forecasting system for Kalshi markets combining parallel model reasoning, evidence fusion, and calibrated judge arbitration.',
+        bullets: [
+            'Built parallel DeepSeek and Claude pipelines with a judge agent that audits bias, confidence, and correlated errors.',
+            'Gathered category-aware evidence from nine external APIs plus Tavily search with graceful degradation.'
+        ],
+        tech: ['Python', 'FastAPI', 'LangGraph', 'OpenRouter', 'Multi-Agent'],
+        links: {
+            github: 'https://github.com/ragini-kalvade/AI-Prophets-Forecasting404',
+            demo: 'https://youtu.be/i8Kv7EjxVyQ'
+        },
+        visualType: 'forecast',
+        visualDescription: 'Abstract multi-agent diagram showing event input, parallel evidence and model pipelines, judge arbitration, and final prediction output.',
+        visualCaption: 'Multi-agent prediction with evidence fusion and judge calibration'
+    },
+    {
+        number: '02',
+        title: 'Flink-Neo4j GraphRAG Pipeline',
+        category: 'Streaming Systems / Graph Retrieval',
+        outcome: 'Streaming GraphRAG system combining Flink, Neo4j, and Kubernetes for relationship-aware retrieval.',
+        bullets: [
+            'Processed document and entity streams with Apache Flink.',
+            'Modeled relationships in Neo4j to improve graph-aware retrieval.'
+        ],
+        tech: ['Flink', 'Neo4j', 'GraphRAG', 'EKS', 'Kubernetes'],
+        links: {
+            github: 'https://github.com/rkalv/MSR-Research-GraphRAG-Cloud-Pipeline',
+            demo: 'https://youtu.be/Xj0raJIpaqg'
+        },
+        visualType: 'graphrag',
+        visualDescription: 'Abstract streaming graph diagram showing Flink processing entity streams into Neo4j graph nodes for relationship-aware retrieval.',
+        visualCaption: 'Streaming graph updates for relationship-aware retrieval'
+    },
+    {
+        number: '03',
+        title: 'Distributed Systems Simulator',
+        category: 'Distributed Systems / Algorithms',
+        outcome: 'Actor-based simulator for distributed algorithms and message-passing behavior.',
+        bullets: [
+            'Implemented distributed algorithm behavior over actor nodes and message channels.',
+            'Modeled snapshot markers, node state, and message flow for system-level experimentation.'
+        ],
+        tech: ['Akka', 'Scala', 'Actors', 'Distributed Systems'],
+        links: {
+            github: 'https://github.com/rkalv/distributed-sys-simulator'
+        },
+        visualType: 'distributed',
+        visualDescription: 'Abstract distributed systems diagram showing actor nodes exchanging messages and snapshot markers to capture global state.',
+        visualCaption: 'Actor-based distributed algorithm simulator'
+    },
+    {
+        number: '04',
+        title: 'Cloud-Native Incremental RAG Pipeline',
+        category: 'ML Systems / Cloud Infrastructure',
+        outcome: 'Large-scale document ingestion and retrieval pipeline with incremental reprocessing, fault-tolerant checkpoints, and AWS deployment.',
+        bullets: [
+            'Used Spark, hashing, checkpoints, and cloud orchestration to avoid redundant reprocessing.',
+            'Built retrieval infrastructure across embeddings, indexing, and AWS-backed storage.'
+        ],
+        tech: ['AWS', 'Spark', 'EMR', 'Delta Lake', 'RAG', 'Lucene'],
+        links: {
+            github: 'https://github.com/rkalv/incremental-spark-rag-pipeline',
+            demo: 'https://youtu.be/Nf04b2GoBq4'
+        },
+        visualType: 'rag',
+        visualDescription: 'Abstract system diagram showing documents flowing through change detection, chunking, embeddings, indexing, and retrieval nodes.',
+        visualCaption: 'Incremental document ingestion and retrieval pipeline'
+    },
+    {
+        number: '05',
+        title: 'DoReMi',
+        category: 'HRI / Robotics / UX Research',
+        outcome: 'Human-centered piano tutor robot using expressive feedback and structured evaluation.',
+        bullets: [
+            'Designed real-time and summarized feedback modes for beginner piano practice.',
+            'Used robot expressions, lights, and structured evaluation to support learning.'
+        ],
+        tech: ['HRI', 'Robotics', 'UX Research', 'Misty'],
+        links: {
+            publication: 'https://dl.acm.org/doi/10.1145/3776734.3794611'
+        },
+        visualType: 'doremi',
+        visualDescription: 'Abstract human-robot interaction diagram showing piano input flowing into feedback logic and robot cues.',
+        visualCaption: 'Human-robot feedback system for piano practice'
+    }
+];
+
+const DIAGRAM_NODES = {
+    forecast: ['Event', 'Evidence', 'Model A/B', 'Judge', 'Forecast'],
+    rag: ['Documents', 'Change Det.', 'Chunking', 'Embeddings', 'Index', 'Retrieval'],
+    graphrag: ['Stream', 'Flink', 'Entities', 'Neo4j', 'Graph RAG'],
+    distributed: ['Actors', 'Messages', 'Snapshots', 'Global State'],
+    doremi: ['Piano', 'Feedback', 'Modes', 'Robot']
+};
+
+function escapeHtml(text) {
+    return String(text)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;');
+}
+
+function ProjectVisualCanvas({ type, visualDescription, visualCaption }) {
+    const nodes = DIAGRAM_NODES[type] || ['Input', 'Process', 'Output'];
+    const figure = document.createElement('figure');
+    figure.className = 'project-visual';
+
+    const svgNs = 'http://www.w3.org/2000/svg';
+    const svg = document.createElementNS(svgNs, 'svg');
+    svg.setAttribute('class', 'project-visual-svg');
+    svg.setAttribute('viewBox', '0 0 360 120');
+    svg.setAttribute('role', 'img');
+    svg.setAttribute('aria-label', visualDescription);
+
+    const defs = document.createElementNS(svgNs, 'defs');
+    const marker = document.createElementNS(svgNs, 'marker');
+    marker.setAttribute('id', `arrow-${type}`);
+    marker.setAttribute('markerWidth', '6');
+    marker.setAttribute('markerHeight', '6');
+    marker.setAttribute('refX', '5');
+    marker.setAttribute('refY', '3');
+    marker.setAttribute('orient', 'auto');
+    const markerPath = document.createElementNS(svgNs, 'path');
+    markerPath.setAttribute('d', 'M0,0 L6,3 L0,6 Z');
+    markerPath.setAttribute('fill', 'rgba(192, 132, 252, 0.85)');
+    marker.appendChild(markerPath);
+    defs.appendChild(marker);
+    svg.appendChild(defs);
+
+    const count = nodes.length;
+    const spacing = count > 1 ? 300 / (count - 1) : 0;
+    const y = 52;
+
+    nodes.forEach((label, index) => {
+        const x = 30 + index * spacing;
+        const rect = document.createElementNS(svgNs, 'rect');
+        rect.setAttribute('x', String(x - 22));
+        rect.setAttribute('y', String(y - 14));
+        rect.setAttribute('width', '44');
+        rect.setAttribute('height', '28');
+        rect.setAttribute('rx', '4');
+        rect.setAttribute('class', 'project-visual-node');
+        svg.appendChild(rect);
+
+        const text = document.createElementNS(svgNs, 'text');
+        text.setAttribute('x', String(x));
+        text.setAttribute('y', String(y + 4));
+        text.setAttribute('text-anchor', 'middle');
+        text.setAttribute('class', 'project-visual-label');
+        text.textContent = label.length > 10 ? `${label.slice(0, 9)}…` : label;
+        svg.appendChild(text);
+
+        if (index < count - 1) {
+            const line = document.createElementNS(svgNs, 'line');
+            line.setAttribute('x1', String(x + 24));
+            line.setAttribute('y1', String(y));
+            line.setAttribute('x2', String(x + spacing - 24));
+            line.setAttribute('y2', String(y));
+            line.setAttribute('class', 'project-visual-edge');
+            line.setAttribute('marker-end', `url(#arrow-${type})`);
+            svg.appendChild(line);
+        }
+    });
+
+    figure.appendChild(svg);
+
+    const caption = document.createElement('figcaption');
+    caption.className = 'project-visual-caption mono-accent';
+    caption.textContent = visualCaption;
+    figure.appendChild(caption);
+
+    return figure;
+}
+
+function buildProjectLinks(project) {
+    const links = project.links || {};
+    const items = [];
+    if (links.github) {
+        items.push({ href: links.github, label: 'GitHub', aria: `GitHub repository for ${project.title}` });
+    }
+    if (links.demo) {
+        items.push({ href: links.demo, label: 'Demo', aria: `Demo video for ${project.title}` });
+    }
+    if (links.publication) {
+        items.push({ href: links.publication, label: 'Publication', aria: `Publication for ${project.title}` });
+    }
+    if (links.caseStudy) {
+        items.push({ href: links.caseStudy, label: 'Case Study', aria: `Case study for ${project.title}` });
+    }
+    return items.map(({ href, label, aria }) =>
+        `<a href="${href}" target="_blank" rel="noopener" class="project-card-link" aria-label="${escapeHtml(aria)}">${label} <span class="material-symbols-outlined text-base" aria-hidden="true">arrow_forward</span></a>`
+    ).join('');
+}
+
+function renderProjects() {
+    const grid = document.getElementById('projects-grid');
+    if (!grid) return;
+
+    grid.innerHTML = '';
+
+    PROJECTS.forEach((project) => {
+        const article = document.createElement('article');
+        article.className = 'project-card group';
+
+        const visualWrap = document.createElement('div');
+        visualWrap.className = 'project-card-visual hud-frame';
+        visualWrap.appendChild(ProjectVisualCanvas({
+            type: project.visualType,
+            visualDescription: project.visualDescription,
+            visualCaption: project.visualCaption
+        }));
+        article.appendChild(visualWrap);
+
+        const body = document.createElement('div');
+        body.className = 'project-card-body glass-panel';
+        body.innerHTML = `
+            <div class="project-card-meta">
+                <span class="project-card-number mono-accent">${escapeHtml(project.number)}</span>
+                <span class="project-card-category mono-accent">${escapeHtml(project.category)}</span>
+            </div>
+            <h3>${escapeHtml(project.title)}</h3>
+            <p class="project-card-outcome">${escapeHtml(project.outcome)}</p>
+            <ul class="project-card-bullets">
+                ${project.bullets.map((b) => `<li>${escapeHtml(b)}</li>`).join('')}
+            </ul>
+            <div class="project-card-tags">
+                ${project.tech.map((t) => `<span class="brutal-chip">${escapeHtml(t)}</span>`).join('')}
+            </div>
+            <div class="project-card-links project-card-links-row">
+                ${buildProjectLinks(project)}
+            </div>
+        `;
+        article.appendChild(body);
+        grid.appendChild(article);
+    });
+
+    const explore = document.createElement('article');
+    explore.className = 'project-card group project-card-explore';
+    explore.innerHTML = `
+        <div class="project-card-visual hud-frame project-card-visual-explore">
+            <div class="project-card-explore-icon" aria-hidden="true"><i class="fab fa-github"></i></div>
+        </div>
+        <div class="project-card-body glass-panel">
+            <div class="project-card-meta">
+                <span class="project-card-number mono-accent">+</span>
+                <span class="project-card-category mono-accent">Open Source</span>
+            </div>
+            <h3>Explore My GitHub</h3>
+            <p class="project-card-outcome">More engineering work, experiments, and research repositories.</p>
+            <div class="project-card-links project-card-links-row">
+                <a href="https://github.com/ragini-kalvade" target="_blank" rel="noopener" class="project-card-link" aria-label="View Ragini Kalvade GitHub profile">GitHub <span class="material-symbols-outlined text-base" aria-hidden="true">arrow_forward</span></a>
+            </div>
+        </div>
+    `;
+    grid.appendChild(explore);
+}
+
 document.addEventListener('DOMContentLoaded', () => {
+    renderProjects();
+    initArchiveStaggerReveal();
     initMobileMenu();
     initActiveNav();
     initRotatingWords();
     initSkillTabs();
     initExperienceTabs();
-    initArchiveStaggerReveal();
-    initProjectVisuals();
     initArtTechFiveModes();
 });
 
@@ -67,12 +329,13 @@ function initActiveNav() {
 function initRotatingWords() {
     const words = document.querySelectorAll('.rotating-word');
     if (words.length < 2) return;
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
     let idx = 0;
     setInterval(() => {
         words[idx].classList.remove('active');
         idx = (idx + 1) % words.length;
         words[idx].classList.add('active');
-    }, 2600);
+    }, 4000);
 }
 
 function initSkillTabs() {
@@ -138,7 +401,7 @@ function initArchiveStaggerReveal() {
     if (!archiveSection) return;
 
     const archiveItems = Array.from(
-        archiveSection.querySelectorAll('.archive-grid > a')
+        archiveSection.querySelectorAll('.archive-grid > .project-card')
     );
     if (!archiveItems.length) return;
 
@@ -174,467 +437,6 @@ function initArchiveStaggerReveal() {
     observer.observe(archiveSection);
 }
 
-function initProjectVisuals() {
-    const cards = Array.from(document.querySelectorAll('[data-project-visual]'));
-    if (!cards.length) return;
-
-    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
-    const states = [];
-    let animationFrame = null;
-
-    const getPalette = () => {
-        const isDark = document.documentElement.classList.contains('dark');
-        if (isDark) {
-            return {
-                bgA: '#0b1326',
-                bgB: '#171f33',
-                primary: '#7bd0ff',
-                tertiary: '#4de082',
-                outline: 'rgba(144, 144, 151, 0.32)',
-                surface: 'rgba(23, 31, 51, 0.74)',
-                ink: '#dae2fd'
-            };
-        }
-        return {
-            bgA: '#f3f8ff',
-            bgB: '#e8f3ff',
-            primary: '#00668a',
-            tertiary: '#0f8f4c',
-            outline: 'rgba(40, 67, 90, 0.2)',
-            surface: 'rgba(217, 231, 244, 0.74)',
-            ink: '#112030'
-        };
-    };
-
-    function buildParticles(kind, width, height) {
-        const count = kind === 'mage' ? 30 : (kind === 'cog' ? 24 : 18);
-        return Array.from({ length: count }, () => ({
-            x: Math.random() * width,
-            y: Math.random() * height,
-            vx: (Math.random() - 0.5) * 0.35,
-            vy: (Math.random() - 0.5) * 0.35,
-            r: 1 + Math.random() * 2
-        }));
-    }
-
-    function ensureSize(state) {
-        const rect = state.canvas.getBoundingClientRect();
-        const width = Math.max(1, Math.floor(rect.width));
-        const height = Math.max(1, Math.floor(rect.height));
-        if (width === state.width && height === state.height) return;
-
-        const dpr = Math.min(window.devicePixelRatio || 1, 2);
-        state.canvas.width = Math.floor(width * dpr);
-        state.canvas.height = Math.floor(height * dpr);
-        state.canvas.style.width = `${width}px`;
-        state.canvas.style.height = `${height}px`;
-        state.ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-
-        state.width = width;
-        state.height = height;
-        state.particles = buildParticles(state.kind, width, height);
-    }
-
-    function drawBackdrop(state, palette) {
-        const { ctx, width, height } = state;
-        const g = ctx.createLinearGradient(0, 0, width, height);
-        g.addColorStop(0, palette.bgA);
-        g.addColorStop(1, palette.bgB);
-        ctx.fillStyle = g;
-        ctx.fillRect(0, 0, width, height);
-
-        const gridStep = Math.max(18, Math.floor(width / 12));
-        ctx.strokeStyle = palette.outline;
-        ctx.lineWidth = 1;
-        for (let x = 0; x <= width; x += gridStep) {
-            ctx.beginPath();
-            ctx.moveTo(x, 0);
-            ctx.lineTo(x, height);
-            ctx.stroke();
-        }
-        for (let y = 0; y <= height; y += gridStep) {
-            ctx.beginPath();
-            ctx.moveTo(0, y);
-            ctx.lineTo(width, y);
-            ctx.stroke();
-        }
-
-        ctx.fillStyle = palette.surface;
-        ctx.fillRect(0, height * 0.62, width, height * 0.38);
-    }
-
-    function animateParticles(state, palette) {
-        const { ctx, width, height, particles } = state;
-        particles.forEach((particle) => {
-            particle.x += particle.vx;
-            particle.y += particle.vy;
-            if (particle.x < 0 || particle.x > width) particle.vx *= -1;
-            if (particle.y < 0 || particle.y > height) particle.vy *= -1;
-
-            ctx.beginPath();
-            ctx.arc(particle.x, particle.y, particle.r, 0, Math.PI * 2);
-            ctx.fillStyle = `${palette.primary}66`;
-            ctx.fill();
-        });
-    }
-
-    function drawRag(state, t, palette) {
-        const { ctx, width, height } = state;
-        drawBackdrop(state, palette);
-
-        const laneCount = 6;
-        const laneGap = height / (laneCount + 1);
-        for (let i = 1; i <= laneCount; i += 1) {
-            const y = i * laneGap;
-            const pulse = 0.55 + Math.sin(t * 2 + i * 0.65) * 0.32;
-            ctx.strokeStyle = `${palette.primary}${Math.floor(80 + pulse * 120).toString(16).padStart(2, '0')}`;
-            ctx.lineWidth = 2;
-            ctx.beginPath();
-            ctx.moveTo(width * 0.06, y);
-            ctx.lineTo(width * (0.24 + pulse * 0.44), y);
-            ctx.stroke();
-
-            const docX = width * (0.09 + ((t * 0.11 + i * 0.17) % 0.17));
-            ctx.beginPath();
-            ctx.arc(docX, y, 3.2, 0, Math.PI * 2);
-            ctx.fillStyle = palette.ink;
-            ctx.fill();
-
-            const dotX = width * (0.28 + ((t * 0.16 + i * 0.13) % 0.64));
-            ctx.beginPath();
-            ctx.arc(dotX, y, 3, 0, Math.PI * 2);
-            ctx.fillStyle = palette.tertiary;
-            ctx.fill();
-        }
-
-        ctx.font = '600 9px ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace';
-        ctx.fillStyle = `${palette.ink}cc`;
-        ctx.fillText('INGEST', width * 0.04, height * 0.13);
-        ctx.fillText('INDEX', width * 0.24, height * 0.13);
-        ctx.fillText('RETRIEVE', width * 0.76, height * 0.13);
-    }
-
-    function drawGraphRag(state, t, palette) {
-        const { ctx, width, height } = state;
-        drawBackdrop(state, palette);
-
-        const nodes = [
-            [0.18, 0.24], [0.4, 0.2], [0.64, 0.28], [0.83, 0.2],
-            [0.25, 0.52], [0.5, 0.5], [0.74, 0.56], [0.34, 0.8], [0.62, 0.78]
-        ].map(([x, y], idx) => ({
-            x: width * x + Math.sin(t * 1.1 + idx) * 3,
-            y: height * y + Math.cos(t * 0.9 + idx * 0.6) * 3
-        }));
-        const edges = [[0, 1], [1, 2], [2, 3], [1, 5], [0, 4], [4, 5], [5, 6], [4, 7], [5, 8], [6, 8], [2, 6]];
-
-        ctx.lineWidth = 1.6;
-        edges.forEach(([a, b], idx) => {
-            const glow = 0.35 + 0.3 * Math.sin(t * 1.7 + idx);
-            ctx.strokeStyle = `${palette.primary}${Math.floor(70 + glow * 120).toString(16).padStart(2, '0')}`;
-            ctx.beginPath();
-            ctx.moveTo(nodes[a].x, nodes[a].y);
-            ctx.lineTo(nodes[b].x, nodes[b].y);
-            ctx.stroke();
-        });
-
-        nodes.forEach((node, idx) => {
-            ctx.beginPath();
-            ctx.arc(node.x, node.y, idx % 3 === 0 ? 4.5 : 3.2, 0, Math.PI * 2);
-            ctx.fillStyle = idx % 3 === 0 ? palette.tertiary : palette.primary;
-            ctx.fill();
-        });
-
-        const streamX = width * ((t * 0.1) % 1);
-        ctx.fillStyle = `${palette.ink}cc`;
-        ctx.fillRect(streamX, height * 0.08, 16, 6);
-        ctx.fillRect((streamX + width * 0.35) % width, height * 0.08, 16, 6);
-        ctx.fillRect((streamX + width * 0.65) % width, height * 0.08, 16, 6);
-    }
-
-    function drawMage(state, t, palette) {
-        const { ctx, width, height } = state;
-        drawBackdrop(state, palette);
-        animateParticles(state, palette);
-
-        const agents = [
-            { label: 'PLAN', x: 0.2, y: 0.35, color: palette.primary },
-            { label: 'TOOL', x: 0.5, y: 0.22, color: palette.tertiary },
-            { label: 'ACT', x: 0.78, y: 0.35, color: palette.primary },
-            { label: 'CHECK', x: 0.5, y: 0.7, color: palette.tertiary }
-        ];
-
-        ctx.lineWidth = 1.8;
-        for (let i = 0; i < agents.length; i += 1) {
-            const a = agents[i];
-            const b = agents[(i + 1) % agents.length];
-            ctx.strokeStyle = `${palette.outline}`;
-            ctx.beginPath();
-            ctx.moveTo(width * a.x, height * a.y);
-            ctx.lineTo(width * b.x, height * b.y);
-            ctx.stroke();
-        }
-
-        agents.forEach((agent, idx) => {
-            const x = width * agent.x + Math.sin(t * 1.4 + idx) * 4;
-            const y = height * agent.y + Math.cos(t * 1.1 + idx) * 4;
-            ctx.beginPath();
-            ctx.arc(x, y, 14, 0, Math.PI * 2);
-            ctx.fillStyle = `${agent.color}55`;
-            ctx.fill();
-            ctx.strokeStyle = `${agent.color}dd`;
-            ctx.stroke();
-
-            ctx.font = '600 8px ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace';
-            ctx.fillStyle = `${palette.ink}d9`;
-            ctx.fillText(agent.label, x - 11, y + 3);
-        });
-
-        const tokenY = height * (0.5 + Math.sin(t * 1.8) * 0.08);
-        const tokenX = width * (0.18 + ((t * 0.18) % 0.64));
-        ctx.beginPath();
-        ctx.arc(tokenX, tokenY, 4, 0, Math.PI * 2);
-        ctx.fillStyle = palette.tertiary;
-        ctx.fill();
-    }
-
-    function drawDoReMi(state, t, palette) {
-        const { ctx, width, height } = state;
-        drawBackdrop(state, palette);
-
-        const outline = `${palette.ink}dd`;
-        const sketch = (v) => v + Math.sin(t * 2.2 + v * 0.09) * 0.9;
-        const botX = width * 0.53;
-        const botY = height * (0.46 + Math.sin(t * 1.5) * 0.018);
-
-        ctx.lineCap = 'round';
-        ctx.lineJoin = 'round';
-        ctx.strokeStyle = outline;
-        ctx.fillStyle = `${palette.primary}20`;
-        ctx.lineWidth = 2.2;
-
-        // Head shell
-        ctx.beginPath();
-        ctx.roundRect(botX - 54, botY - 52, 108, 72, 22);
-        ctx.fill();
-        ctx.stroke();
-
-        // Ear cups
-        ctx.beginPath();
-        ctx.arc(botX - 62, botY - 15, 15, Math.PI * 0.5, Math.PI * 1.5);
-        ctx.stroke();
-        ctx.beginPath();
-        ctx.arc(botX + 62, botY - 15, 15, Math.PI * -0.5, Math.PI * 0.5);
-        ctx.stroke();
-
-        // Antenna
-        ctx.beginPath();
-        ctx.moveTo(botX + 44, botY - 52);
-        ctx.lineTo(botX + 58, botY - 78);
-        ctx.stroke();
-        const heartX = botX + 60;
-        const heartY = botY - 80;
-        const heartPulse = 1 + Math.sin(t * 3.1) * 0.08;
-        ctx.save();
-        ctx.translate(heartX, heartY);
-        ctx.scale(heartPulse, heartPulse);
-        ctx.beginPath();
-        ctx.moveTo(0, 3);
-        ctx.bezierCurveTo(-6, -3, -5, -10, 0, -6);
-        ctx.bezierCurveTo(5, -10, 6, -3, 0, 3);
-        ctx.fillStyle = palette.tertiary;
-        ctx.fill();
-        ctx.restore();
-
-        // Face panel
-        ctx.fillStyle = `${palette.tertiary}2e`;
-        ctx.beginPath();
-        ctx.roundRect(botX - 38, botY - 34, 76, 43, 12);
-        ctx.fill();
-
-        // Eyes + smile (cute expression)
-        ctx.fillStyle = outline;
-        ctx.beginPath();
-        ctx.arc(botX - 17, botY - 14, 6.2, 0, Math.PI * 2);
-        ctx.arc(botX + 17, botY - 14, 6.2, 0, Math.PI * 2);
-        ctx.fill();
-        ctx.fillStyle = `${palette.primaryFixed || '#ffffff'}cc`;
-        ctx.beginPath();
-        ctx.arc(botX - 19, botY - 16, 2.1, 0, Math.PI * 2);
-        ctx.arc(botX + 15, botY - 16, 2.1, 0, Math.PI * 2);
-        ctx.fill();
-        ctx.beginPath();
-        ctx.arc(botX, botY - 1, 10, 0.2, Math.PI - 0.2);
-        ctx.stroke();
-        ctx.fillStyle = `${palette.tertiary}88`;
-        ctx.beginPath();
-        ctx.arc(botX - 27, botY - 2, 4.4, 0, Math.PI * 2);
-        ctx.arc(botX + 27, botY - 2, 4.4, 0, Math.PI * 2);
-        ctx.fill();
-
-        // Body
-        ctx.fillStyle = `${palette.primary}18`;
-        ctx.strokeStyle = outline;
-        ctx.beginPath();
-        ctx.roundRect(botX - 32, botY + 24, 64, 48, 14);
-        ctx.fill();
-        ctx.stroke();
-        ctx.beginPath();
-        ctx.moveTo(botX - 18, botY + 24);
-        ctx.lineTo(botX - 38, botY + 54);
-        ctx.moveTo(botX + 18, botY + 24);
-        ctx.lineTo(botX + 38, botY + 54);
-        ctx.stroke();
-
-        // Piano strip
-        const keyY = height * 0.75;
-        const keyW = width * 0.067;
-        for (let i = 0; i < 9; i += 1) {
-            const keyX = width * 0.2 + i * keyW;
-            const hit = 0.5 + Math.sin(t * 2.4 + i * 0.7) * 0.5;
-            ctx.fillStyle = i % 2 === 0 ? `${palette.ink}70` : `${palette.primary}${Math.floor(110 + hit * 90).toString(16).padStart(2, '0')}`;
-            ctx.fillRect(keyX, keyY, keyW - 2, height * 0.17);
-        }
-
-        // Floating music notes (left side, sketchy)
-        const notes = [
-            { x: width * 0.17, y: height * 0.34, s: 1.0, p: 0 },
-            { x: width * 0.12, y: height * 0.46, s: 0.85, p: 1.3 },
-            { x: width * 0.24, y: height * 0.52, s: 1.2, p: 2.2 }
-        ];
-        ctx.strokeStyle = `${palette.tertiary}dd`;
-        ctx.fillStyle = `${palette.tertiary}dd`;
-        notes.forEach((n) => {
-            const nx = sketch(n.x);
-            const ny = sketch(n.y + Math.sin(t * 1.8 + n.p) * 6);
-            const r = 4 * n.s;
-            ctx.beginPath();
-            ctx.arc(nx, ny, r, 0, Math.PI * 2);
-            ctx.fill();
-            ctx.beginPath();
-            ctx.moveTo(nx + r * 0.9, ny - r * 0.2);
-            ctx.lineTo(nx + r * 0.9, ny - 18 * n.s);
-            ctx.stroke();
-            ctx.beginPath();
-            ctx.moveTo(nx + r * 0.9, ny - 18 * n.s);
-            ctx.lineTo(nx + 10 * n.s, ny - 14 * n.s);
-            ctx.stroke();
-        });
-    }
-
-    function drawCog(state, t, palette) {
-        const { ctx, width, height } = state;
-        drawBackdrop(state, palette);
-
-        const bars = [0.32, 0.48, 0.41, 0.62, 0.56, 0.72];
-        const barW = width * 0.09;
-        bars.forEach((base, i) => {
-            const h = height * (base + Math.sin(t * 1.25 + i * 0.7) * 0.06);
-            const x = width * 0.1 + i * (barW + width * 0.04);
-            const y = height * 0.88 - h;
-            ctx.beginPath();
-            ctx.rect(x, y, barW, h);
-            ctx.fillStyle = i % 2 === 0 ? `${palette.primary}cc` : `${palette.tertiary}cc`;
-            ctx.fill();
-        });
-
-        ctx.strokeStyle = `${palette.ink}cc`;
-        ctx.lineWidth = 2;
-        ctx.beginPath();
-        for (let x = 0; x <= width; x += 4) {
-            const y = height * 0.3 + Math.sin(x * 0.045 + t * 1.5) * height * 0.09;
-            if (x === 0) ctx.moveTo(x, y);
-            else ctx.lineTo(x, y);
-        }
-        ctx.stroke();
-
-        animateParticles(state, palette);
-    }
-
-    function drawByKind(state, t, palette) {
-        switch (state.kind) {
-            case 'rag':
-                drawRag(state, t, palette);
-                break;
-            case 'graphrag':
-                drawGraphRag(state, t, palette);
-                break;
-            case 'mage':
-                drawMage(state, t, palette);
-                break;
-            case 'doremi':
-                drawDoReMi(state, t, palette);
-                break;
-            case 'cog':
-                drawCog(state, t, palette);
-                break;
-            default:
-                drawBackdrop(state, palette);
-        }
-    }
-
-    cards.forEach((card) => {
-        const canvas = card.querySelector('.project-visual-canvas');
-        if (!canvas) return;
-        const ctx = canvas.getContext('2d');
-        if (!ctx) return;
-        const state = {
-            kind: card.dataset.projectVisual || 'default',
-            canvas,
-            ctx,
-            width: 0,
-            height: 0,
-            particles: [],
-            resizeObserver: null
-        };
-        ensureSize(state);
-        if ('ResizeObserver' in window) {
-            state.resizeObserver = new ResizeObserver(() => ensureSize(state));
-            state.resizeObserver.observe(canvas);
-        }
-        states.push(state);
-    });
-
-    if (!states.length) return;
-
-    const render = (t) => {
-        const palette = getPalette();
-        states.forEach((state) => {
-            ensureSize(state);
-            drawByKind(state, t, palette);
-        });
-    };
-
-    const step = (now) => {
-        const t = now * 0.001;
-        render(t);
-        animationFrame = window.requestAnimationFrame(step);
-    };
-
-    if (prefersReducedMotion.matches) {
-        render(0);
-    } else {
-        animationFrame = window.requestAnimationFrame(step);
-    }
-
-    prefersReducedMotion.addEventListener('change', (event) => {
-        if (event.matches) {
-            if (animationFrame !== null) {
-                window.cancelAnimationFrame(animationFrame);
-                animationFrame = null;
-            }
-            render(0);
-            return;
-        }
-        if (animationFrame === null) {
-            animationFrame = window.requestAnimationFrame(step);
-        }
-    });
-
-    const htmlClassObserver = new MutationObserver(() => {
-        if (prefersReducedMotion.matches) render(0);
-    });
-    htmlClassObserver.observe(document.documentElement, { attributes: true, attributeFilter: ['class'] });
-}
 
 function initArtTechSection() {
     const canvas = document.getElementById('art-tech-canvas');

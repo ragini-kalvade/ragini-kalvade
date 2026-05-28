@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="description" content="Ragini Kalvade - Software Engineer specializing in full-stack development, machine learning, and distributed systems." />
+    <meta name="description" content="Ragini Kalvade — AI Systems Engineer building RAG pipelines, distributed systems, and applied ML tools." />
     <meta name="keywords" content="Ragini Kalvade, Software Engineer, Computer Science, Full Stack Developer, Machine Learning, UIC" />
     <meta name="author" content="Ragini Kalvade" />
     <title>RK | Ragini Kalvade Portfolio</title>
@@ -27,38 +27,38 @@
                         "surface-container-lowest": "#060e20",
                         "outline": "#909097",
                         "secondary-fixed-dim": "#bcc7de",
-                        "primary": "#7bd0ff",
+                        "primary": "#c084fc",
                         "on-background": "#dae2fd",
                         "on-surface": "#dae2fd",
                         "surface-container-high": "#222a3d",
                         "primary-fixed": "#c4e7ff",
                         "on-secondary-container": "#aeb9d0",
                         "surface-container-highest": "#2d3449",
-                        "on-primary-container": "#008abb",
+                        "on-primary-container": "#a855f7",
                         "surface-variant": "#2d3449",
                         "on-tertiary": "#003919",
                         "outline-variant": "#45464d",
-                        "tertiary-fixed-dim": "#4de082",
+                        "tertiary-fixed-dim": "#7bd9e8",
                         "secondary": "#bcc7de",
                         "background": "#0b1326",
                         "on-surface-variant": "#c6c6cd",
                         "secondary-container": "#3e495d",
                         "primary-container": "#001a27",
-                        "primary-fixed-dim": "#7bd0ff",
+                        "primary-fixed-dim": "#c084fc",
                         "surface-dim": "#0b1326",
-                        "on-primary": "#00354a",
-                        "surface-tint": "#7bd0ff",
+                        "on-primary": "#0f0a1a",
+                        "surface-tint": "#c084fc",
                         "secondary-fixed": "#d8e3fb",
                         "tertiary-fixed": "#6dfe9c",
                         "on-primary-fixed": "#001e2c",
                         "on-tertiary-fixed-variant": "#005227",
                         "surface": "#0b1326",
                         "tertiary-container": "#001d0a",
-                        "inverse-primary": "#00668a",
+                        "inverse-primary": "#9333ea",
                         "on-tertiary-fixed": "#00210c",
                         "on-secondary": "#263143",
                         "on-primary-fixed-variant": "#004c69",
-                        "tertiary": "#4de082",
+                        "tertiary": "#7bd9e8",
                         "on-tertiary-container": "#00954b",
                         "surface-container": "#171f33",
                         "on-secondary-fixed": "#111c2d",
@@ -81,6 +81,14 @@
     </script>
 
     <style>
+        :root {
+            --accent-primary: #c084fc;
+            --accent-secondary: #7bd9e8;
+            --accent-brutal: #c084fc;
+            --border-brutal: 2px;
+            --shadow-brutal: 4px 4px 0;
+        }
+
         html { scroll-behavior: smooth; }
         body {
             background-color: #0b1326;
@@ -95,19 +103,47 @@
             height: 100%;
             pointer-events: none;
             z-index: 5;
-            opacity: 0.70;
+            opacity: 0.52;
             mix-blend-mode: screen;
+        }
+
+        body::before {
+            content: "";
+            position: fixed;
+            inset: 0;
+            z-index: 4;
+            pointer-events: none;
+            background:
+                repeating-linear-gradient(
+                    0deg,
+                    rgba(255, 255, 255, 0.018) 0px,
+                    rgba(255, 255, 255, 0.018) 1px,
+                    transparent 1px,
+                    transparent 3px
+                );
+            opacity: 0.35;
+        }
+
+        body::after {
+            content: "";
+            position: fixed;
+            inset: 0;
+            z-index: 4;
+            pointer-events: none;
+            background:
+                radial-gradient(ellipse 85% 70% at 50% 42%, transparent 35%, rgba(3, 8, 18, 0.55) 100%),
+                linear-gradient(180deg, rgba(6, 14, 32, 0.35) 0%, transparent 28%, transparent 72%, rgba(6, 14, 32, 0.5) 100%);
         }
         .headline-font { font-family: 'Space Grotesk', sans-serif; }
         .mono-accent { font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace; }
 
         .hero-gradient {
-            background: radial-gradient(circle at 50% 50%, rgba(123, 208, 255, 0.08) 0%, rgba(11, 19, 38, 0) 70%);
+            background: radial-gradient(circle at 50% 50%, rgba(192, 132, 252, 0.06) 0%, rgba(11, 19, 38, 0) 70%);
         }
         .data-grid-bg {
             background-image:
-                linear-gradient(to right, rgba(69, 70, 77, 0.12) 1px, transparent 1px),
-                linear-gradient(to bottom, rgba(69, 70, 77, 0.12) 1px, transparent 1px);
+                linear-gradient(to right, rgba(69, 70, 77, 0.09) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(69, 70, 77, 0.09) 1px, transparent 1px);
             background-size: 40px 40px;
         }
         .glass-card {
@@ -115,9 +151,105 @@
             backdrop-filter: blur(24px);
         }
 
+        .glass-panel {
+            background: rgba(23, 31, 51, 0.72);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            box-shadow: inset 0 1px 0 rgba(192, 132, 252, 0.06);
+        }
+
+        .brutal-border {
+            border: var(--border-brutal) solid rgba(144, 144, 151, 0.35);
+        }
+
+        .brutal-border-l {
+            border-left: 4px solid var(--accent-brutal);
+        }
+
+        .brutal-chip {
+            display: inline-block;
+            padding: 0.2rem 0.45rem;
+            font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+            font-size: 10px;
+            font-weight: 500;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            color: rgba(198, 198, 205, 0.92);
+            background: rgba(45, 52, 73, 0.85);
+            border: var(--border-brutal) solid rgba(144, 144, 151, 0.28);
+            border-radius: 0.125rem;
+        }
+
+        .hud-frame {
+            position: relative;
+            border: var(--border-brutal) solid rgba(144, 144, 151, 0.4);
+            transition: border-color 220ms ease, box-shadow 220ms ease;
+        }
+
+        .hud-frame::before,
+        .hud-frame::after {
+            content: "";
+            position: absolute;
+            width: 14px;
+            height: 14px;
+            pointer-events: none;
+            z-index: 3;
+        }
+
+        .hud-frame::before {
+            top: 8px;
+            left: 8px;
+            border-top: 2px solid rgba(192, 132, 252, 0.55);
+            border-left: 2px solid rgba(192, 132, 252, 0.55);
+        }
+
+        .hud-frame::after {
+            bottom: 8px;
+            right: 8px;
+            border-bottom: 2px solid rgba(123, 217, 232, 0.45);
+            border-right: 2px solid rgba(123, 217, 232, 0.45);
+        }
+
+        .neon-hover {
+            transition: transform 220ms ease, box-shadow 220ms ease, border-color 220ms ease;
+        }
+
+        .section-label {
+            display: inline-block;
+            border-left: 4px solid var(--accent-brutal);
+            padding-left: 0.75rem;
+        }
+
+        .hero-badge-brutal {
+            border-left-width: 4px;
+            border-left-color: var(--accent-primary);
+            border-radius: 0.25rem;
+            box-shadow: none;
+        }
+
+        .cta-brutal {
+            transition: transform 180ms ease, box-shadow 180ms ease;
+        }
+
+        .cta-brutal:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 8px 24px -8px rgba(192, 132, 252, 0.45);
+        }
+
+        .cta-brutal:focus-visible {
+            outline: 2px solid var(--accent-brutal);
+            outline-offset: 3px;
+        }
+
+        #top-nav.nav-brutal {
+            border-bottom-width: 2px;
+            border-bottom-color: rgba(144, 144, 151, 0.35);
+        }
+
         section[id] { scroll-margin-top: 80px; }
 
-        .rotating-words { position: relative; display: inline-block; min-width: 320px; }
+        .rotating-words { position: relative; display: inline-block; min-width: 0; max-width: 100%; }
+        @media (min-width: 640px) { .rotating-words { min-width: 280px; } }
         .rotating-word {
             position: absolute; left: 0; top: 0;
             opacity: 0; transform: translateY(12px);
@@ -145,8 +277,419 @@
         .exp-panel { display: none; }
         .exp-panel.active { display: block; animation: fadeIn .4s ease; }
 
-        .nav-link.active { color: #7bd0ff; border-bottom-color: #7bd0ff; }
-        .project-visual-canvas { display: block; }
+        .nav-link.active {
+            color: var(--accent-primary);
+            border-bottom-color: var(--accent-primary);
+            box-shadow: 0 3px 0 -1px rgba(192, 132, 252, 0.35);
+        }
+
+        a:focus-visible,
+        button:focus-visible {
+            outline: 2px solid var(--accent-primary);
+            outline-offset: 3px;
+        }
+
+        .impact-strip {
+            border-top: 1px solid rgba(144, 144, 151, 0.15);
+            border-bottom: 1px solid rgba(144, 144, 151, 0.15);
+            background: rgba(19, 27, 46, 0.6);
+        }
+
+        .impact-module {
+            padding: 1rem 1.25rem;
+            border: 1px solid rgba(144, 144, 151, 0.2);
+            border-radius: 0.25rem;
+            background: rgba(23, 31, 51, 0.65);
+            transition: border-color 200ms ease, box-shadow 200ms ease;
+        }
+
+        .impact-module:hover {
+            border-color: rgba(192, 132, 252, 0.45);
+            box-shadow: 0 0 0 1px rgba(192, 132, 252, 0.12);
+        }
+
+        .impact-module .impact-value {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #e9d5ff;
+        }
+
+        .impact-module .impact-label {
+            font-size: 0.75rem;
+            color: rgba(198, 198, 205, 0.85);
+            margin-top: 0.35rem;
+            line-height: 1.4;
+        }
+
+        .project-visual {
+            margin: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            background: #131b2e;
+        }
+
+        .project-visual-svg {
+            flex: 1;
+            width: 100%;
+            min-height: 100px;
+            padding: 0.75rem 0.5rem 0.25rem;
+        }
+
+        .project-visual-node {
+            fill: rgba(45, 52, 73, 0.9);
+            stroke: rgba(192, 132, 252, 0.55);
+            stroke-width: 1;
+        }
+
+        .project-visual-label {
+            fill: rgba(218, 226, 253, 0.88);
+            font-size: 7px;
+            font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+        }
+
+        .project-visual-edge {
+            stroke: rgba(192, 132, 252, 0.5);
+            stroke-width: 1.2;
+        }
+
+        @media (prefers-reduced-motion: no-preference) {
+            .project-visual-edge {
+                animation: lineShimmer 4s ease-in-out infinite;
+            }
+        }
+
+        @keyframes lineShimmer {
+            0%, 100% { stroke-opacity: 0.35; }
+            50% { stroke-opacity: 0.85; }
+        }
+
+        .project-visual-caption {
+            padding: 0.35rem 0.75rem 0.5rem;
+            font-size: 9px;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+            color: rgba(198, 198, 205, 0.75);
+            border-top: 1px solid rgba(144, 144, 151, 0.15);
+        }
+
+        #projects.projects-atmosphere {
+            position: relative;
+            overflow: hidden;
+        }
+
+        #projects.projects-atmosphere::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background-image:
+                linear-gradient(to right, rgba(69, 70, 77, 0.1) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(69, 70, 77, 0.1) 1px, transparent 1px);
+            background-size: 40px 40px;
+            opacity: 0.32;
+            pointer-events: none;
+        }
+
+        #projects.projects-atmosphere::after {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background:
+                radial-gradient(circle at 20% 15%, rgba(192, 132, 252, 0.05), transparent 42%),
+                radial-gradient(circle at 85% 75%, rgba(123, 217, 232, 0.04), transparent 40%);
+            pointer-events: none;
+        }
+
+        #projects .max-w-7xl {
+            position: relative;
+            z-index: 1;
+        }
+
+        .archive-grid {
+            align-items: stretch;
+        }
+
+        .project-card {
+            display: flex;
+            flex-direction: column;
+            min-width: 0;
+            height: 100%;
+            overflow: hidden;
+            border-radius: 0.25rem;
+            border: 1px solid rgba(144, 144, 151, 0.2);
+            transition: transform 220ms ease, box-shadow 220ms ease, border-color 220ms ease;
+        }
+
+        .project-card:hover {
+            transform: translateY(-2px);
+            border-color: rgba(192, 132, 252, 0.45);
+            box-shadow: 0 8px 28px -12px rgba(192, 132, 252, 0.35);
+        }
+
+        .project-card-visual {
+            position: relative;
+            aspect-ratio: 16 / 10;
+            overflow: hidden;
+            background: #131b2e;
+            border-bottom: 1px solid rgba(144, 144, 151, 0.15);
+        }
+
+        .project-card-visual-explore {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 140px;
+        }
+
+        .project-card-body {
+            position: relative;
+            padding: 1.25rem 1.35rem 1.4rem;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .project-card-body::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, var(--accent-primary), var(--accent-secondary));
+        }
+
+        .project-card-meta {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 0.5rem 0.75rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .project-card-number {
+            font-size: 10px;
+            font-weight: 700;
+            letter-spacing: 0.14em;
+            color: #1e1033;
+            background: var(--accent-primary);
+            padding: 0.15rem 0.45rem;
+            border-radius: 0.125rem;
+        }
+
+        .project-card-category {
+            font-size: 9px;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            color: var(--accent-secondary);
+        }
+
+        .project-card-body h3 {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1.15rem;
+            font-weight: 700;
+            margin-bottom: 0.45rem;
+            transition: color 180ms ease;
+        }
+
+        .project-card:hover .project-card-body h3 {
+            color: var(--accent-primary);
+        }
+
+        .project-card-outcome {
+            font-size: 0.875rem;
+            font-weight: 300;
+            line-height: 1.55;
+            color: rgba(198, 198, 205, 0.92);
+            margin-bottom: 0.65rem;
+        }
+
+        .project-card-bullets {
+            list-style: none;
+            padding: 0;
+            margin: 0 0 0.75rem;
+            font-size: 0.8125rem;
+            line-height: 1.5;
+            color: rgba(198, 198, 205, 0.88);
+        }
+
+        .project-card-bullets li {
+            position: relative;
+            padding-left: 1rem;
+            margin-bottom: 0.35rem;
+        }
+
+        .project-card-bullets li::before {
+            content: "▸";
+            position: absolute;
+            left: 0;
+            color: var(--accent-secondary);
+            font-size: 0.7rem;
+        }
+
+        .project-card-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.4rem;
+            margin-top: auto;
+        }
+
+        .project-card-links {
+            margin-top: 0.85rem;
+        }
+
+        .project-card-links-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.75rem 1.25rem;
+            align-items: center;
+        }
+
+        .project-card-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.35rem;
+            min-height: 44px;
+            padding: 0.35rem 0;
+            font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+            font-size: 11px;
+            font-weight: 500;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--accent-primary);
+            transition: gap 180ms ease, color 180ms ease;
+        }
+
+        .project-card-link::before {
+            content: "// ";
+            color: rgba(123, 217, 232, 0.75);
+        }
+
+        .project-card-link:hover {
+            gap: 0.55rem;
+            color: #e9d5ff;
+        }
+
+        .project-card-explore-icon {
+            position: absolute;
+            inset: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1;
+        }
+
+        .project-card-explore-icon i {
+            font-size: 4rem;
+            color: rgba(192, 132, 252, 0.5);
+            transition: color 220ms ease;
+        }
+
+        .project-card:hover .project-card-explore-icon i {
+            color: var(--accent-primary);
+        }
+
+        .hero-content-block { order: 1; }
+        .hero-globe-block { order: 2; }
+
+        .hero-cta-stack {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+            width: 100%;
+            max-width: 20rem;
+        }
+
+        @media (min-width: 640px) {
+            .hero-cta-stack {
+                flex-direction: row;
+                flex-wrap: wrap;
+                max-width: none;
+            }
+        }
+
+        .hero-tagline-secondary {
+            font-size: 0.8rem;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: rgba(198, 198, 205, 0.65);
+        }
+
+        #signal-globe-wrap {
+            position: relative;
+        }
+
+        .globe-hud-ring {
+            z-index: 1;
+        }
+
+        #globe-labels {
+            z-index: 4;
+        }
+
+        .globe-hud-ring {
+            position: absolute;
+            inset: 50%;
+            border-radius: 50%;
+            border: 1px solid rgba(192, 132, 252, 0.35);
+            pointer-events: none;
+            transform: translate(-50%, -50%);
+            box-shadow:
+                0 0 24px -8px rgba(192, 132, 252, 0.45),
+                inset 0 0 20px -12px rgba(123, 208, 255, 0.2);
+        }
+
+        .globe-hud-ring--mid {
+            width: 96%;
+            height: 96%;
+            border-color: rgba(123, 208, 255, 0.4);
+            border-width: 2px;
+            animation: globeHudSpin 32s linear infinite reverse;
+        }
+
+        .globe-hud-ring--inner {
+            width: 84%;
+            height: 84%;
+            border-color: rgba(77, 224, 130, 0.35);
+            border-width: 1px;
+            box-shadow: 0 0 32px -10px rgba(77, 224, 130, 0.35);
+        }
+
+        @keyframes globeHudSpin {
+            from { transform: translate(-50%, -50%) rotate(0deg); }
+            to { transform: translate(-50%, -50%) rotate(360deg); }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            .globe-hud-ring--mid {
+                animation: none;
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            .project-card,
+            .project-card:hover,
+            .neon-hover,
+            .cta-brutal,
+            .cta-brutal:hover {
+                transform: none;
+                transition: none;
+            }
+
+            .project-card:hover {
+                box-shadow: none;
+            }
+
+            .project-visual-edge {
+                animation: none;
+            }
+
+            .rotating-word {
+                transition: none;
+            }
+        }
 
         .archive-reveal-item {
             opacity: 0;
@@ -245,6 +788,16 @@
         @keyframes artTitleShimmer {
             0% { background-position: 0% 50%; }
             100% { background-position: 200% 50%; }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            .art-title {
+                animation: none;
+                color: #dce8ff;
+                background: none;
+                -webkit-background-clip: unset;
+                background-clip: unset;
+            }
         }
 
         .art-subtitle {
@@ -559,7 +1112,7 @@
 <canvas id="network-bg" aria-hidden="true"></canvas>
 
 <!-- Top Nav -->
-<nav id="top-nav" class="fixed top-0 w-full z-50 bg-slate-950/70 backdrop-blur-xl shadow-2xl shadow-blue-900/20 border-b border-outline-variant/10">
+<nav id="top-nav" class="nav-brutal fixed top-0 w-full z-50 bg-slate-950/70 backdrop-blur-xl shadow-2xl shadow-blue-900/20 border-b-2 border-outline-variant/30">
     <div class="flex justify-between items-center px-6 md:px-8 py-4 max-w-7xl mx-auto">
         <a href="#home" class="text-xl font-bold tracking-tighter text-slate-50 headline-font">RK SYSTEMS</a>
 
@@ -602,27 +1155,30 @@
 <main class="relative">
     <!-- HERO -->
     <section id="home" class="relative min-h-screen flex flex-col justify-center items-center px-6 pt-20 overflow-hidden">
-        <div class="absolute inset-0 data-grid-bg opacity-30 pointer-events-none"></div>
+        <div class="absolute inset-0 data-grid-bg opacity-28 pointer-events-none"></div>
         <div class="absolute inset-0 hero-gradient pointer-events-none"></div>
-        <div class="absolute top-1/4 right-0 w-96 h-96 bg-primary/5 rounded-full blur-[120px]"></div>
-        <div class="absolute bottom-1/4 left-0 w-80 h-80 bg-tertiary/5 rounded-full blur-[100px]"></div>
+        <div class="absolute top-1/4 right-0 w-96 h-96 bg-primary/4 rounded-full blur-[120px]"></div>
+        <div class="absolute bottom-1/4 left-0 w-80 h-80 bg-tertiary/4 rounded-full blur-[100px]"></div>
 
         <div class="max-w-7xl w-full z-10 flex flex-col lg:flex-row items-center gap-12 lg:gap-16">
-            <div class="flex-1 text-center lg:text-left space-y-8">
-                <div class="inline-flex items-center gap-2 px-3 py-1 bg-surface-container-highest rounded-full border-l-2 border-tertiary">
-                    <span class="w-2 h-2 rounded-full bg-tertiary animate-pulse"></span>
-                    <span class="mono-accent text-xs font-medium text-tertiary tracking-widest uppercase">System Active · v2.0.4</span>
+            <div class="hero-content-block flex-1 text-center lg:text-left space-y-6">
+                <div class="hero-badge-brutal inline-flex items-center gap-2 px-3 py-1 bg-surface-container-highest rounded-lg border-l-4 border-primary">
+                    <span class="w-2 h-2 rounded-full bg-primary opacity-80"></span>
+                    <span class="mono-accent text-xs font-medium text-tertiary tracking-widest uppercase">System Active · AI / ML / Distributed Systems</span>
                 </div>
 
-                <h1 class="headline-font text-5xl md:text-6xl lg:text-7xl font-bold tracking-tighter text-on-background leading-[1.05]">
-                    Ragini Kalvade:
-                    <br />
-                    <span class="text-transparent bg-clip-text bg-gradient-to-r from-primary to-on-primary-container">The Ordinary Computer Scientist</span>
-                </h1>
-
-                <p class="text-lg md:text-xl text-on-surface-variant max-w-2xl font-light leading-relaxed mx-auto lg:mx-0">
-                    Bridging scalable systems and predictive intelligence
-                </p>
+                <div class="space-y-2">
+                    <h1 class="headline-font text-5xl md:text-6xl lg:text-7xl font-bold tracking-tighter text-on-background leading-[1.05]">
+                        Ragini Kalvade
+                    </h1>
+                    <p class="headline-font text-2xl md:text-3xl font-semibold text-primary">
+                        AI Systems Engineer
+                    </p>
+                    <p class="text-lg md:text-xl text-on-surface-variant max-w-2xl font-light leading-relaxed mx-auto lg:mx-0">
+                        Building RAG, distributed systems, and applied ML tools.
+                    </p>
+                    <p class="hero-tagline-secondary mono-accent mx-auto lg:mx-0">The Ordinary Computer Scientist</p>
+                </div>
 
                 <p class="text-base md:text-lg text-on-surface-variant font-light">
                     <span class="mono-accent text-primary">&gt;</span> I&nbsp;
@@ -634,29 +1190,31 @@
                     </span>
                 </p>
 
-                <div class="flex flex-wrap gap-4 pt-4 justify-center lg:justify-start">
-                    <a href="#projects" class="px-8 py-4 bg-gradient-to-br from-primary to-on-primary-container text-on-primary font-semibold rounded-lg hover:scale-[1.02] transition-transform shadow-xl shadow-primary/10 inline-flex items-center gap-2">
-                        View My Work
-                        <span class="material-symbols-outlined text-base">arrow_forward</span>
+                <div class="hero-cta-stack pt-2 justify-center lg:justify-start">
+                    <a href="#projects" class="cta-brutal px-8 py-4 bg-gradient-to-br from-primary to-on-primary-container text-on-primary font-semibold rounded-lg shadow-lg shadow-primary/15 inline-flex items-center justify-center gap-2">
+                        View Projects
+                        <span class="material-symbols-outlined text-base" aria-hidden="true">arrow_forward</span>
                     </a>
-                    <a href="#contact" class="px-8 py-4 bg-surface-container-highest text-on-surface border border-outline-variant/15 font-semibold rounded-lg hover:bg-surface-container-high transition-colors inline-flex items-center gap-2">
-                        Let's Connect
+                    <a href="media/Resume.pdf" download class="px-8 py-4 bg-surface-container-highest text-on-surface border border-outline-variant/15 font-semibold rounded-lg hover:bg-surface-container-high transition-colors inline-flex items-center justify-center gap-2">
+                        <span class="material-symbols-outlined text-base" aria-hidden="true">download</span>
+                        Download Resume
                     </a>
-                    <a href="media/Resume.pdf" download class="px-8 py-4 bg-surface-container-highest text-on-surface border border-outline-variant/15 font-semibold rounded-lg hover:bg-surface-container-high transition-colors inline-flex items-center gap-2">
-                        <span class="material-symbols-outlined text-base">download</span>
-                        Resume
+                    <a href="#contact" class="px-8 py-4 bg-surface-container-highest text-on-surface border border-outline-variant/15 font-semibold rounded-lg hover:bg-surface-container-high transition-colors inline-flex items-center justify-center gap-2">
+                        Contact
                     </a>
                 </div>
             </div>
 
             <!-- Interactive Tech Signal Globe -->
-            <div class="w-full max-w-[560px] lg:w-[560px] xl:w-[620px] xl:max-w-[620px] shrink-0 relative">
-                <div class="absolute -inset-10 bg-gradient-to-r from-primary/10 to-tertiary/10 rounded-full blur-3xl opacity-60 pointer-events-none"></div>
+            <div class="hero-globe-block w-full max-w-[560px] lg:w-[560px] xl:w-[620px] xl:max-w-[620px] shrink-0 relative">
+                <div class="absolute -inset-12 bg-gradient-to-r from-primary/15 via-purple-500/10 to-tertiary/15 rounded-full blur-3xl opacity-70 pointer-events-none"></div>
                 <div id="signal-globe-wrap" class="relative aspect-square cursor-grab active:cursor-grabbing select-none">
-                    <canvas id="signal-globe" class="block w-full h-full"></canvas>
+                    <div class="globe-hud-ring globe-hud-ring--mid" aria-hidden="true"></div>
+                    <div class="globe-hud-ring globe-hud-ring--inner" aria-hidden="true"></div>
+                    <canvas id="signal-globe" class="relative z-[2] block w-full h-full"></canvas>
                     <div id="globe-labels" class="absolute inset-0 pointer-events-none overflow-hidden"></div>
                     <div class="absolute top-3 left-3 flex items-center gap-2 pointer-events-none">
-                        <span class="w-1.5 h-1.5 rounded-full bg-tertiary animate-pulse"></span>
+                        <span class="w-1.5 h-1.5 rounded-full bg-primary opacity-80"></span>
                         <span class="mono-accent text-[10px] text-tertiary tracking-widest uppercase">Live_Signal</span>
                     </div>
                     <div class="absolute bottom-3 right-3 mono-accent text-[10px] text-outline tracking-widest uppercase pointer-events-none">
@@ -667,25 +1225,43 @@
         </div>
     </section>
 
+    <!-- IMPACT -->
+    <section class="impact-strip py-10 px-6" aria-label="Impact metrics">
+        <div class="max-w-7xl mx-auto grid grid-cols-1 sm:grid-cols-3 gap-4">
+            <div class="impact-module">
+                <div class="impact-value mono-accent">4 days → 2 minutes</div>
+                <div class="impact-label">KYC latency reduction in trade-finance automation</div>
+            </div>
+            <div class="impact-module">
+                <div class="impact-value mono-accent">40+</div>
+                <div class="impact-label">Research participants supported across motion-tracking studies</div>
+            </div>
+            <div class="impact-module">
+                <div class="impact-value mono-accent">500+</div>
+                <div class="impact-label">Papers processed in incremental RAG pipeline workloads</div>
+            </div>
+        </div>
+    </section>
+
     <!-- ABOUT -->
     <section id="about" class="py-24 px-6 bg-surface-container-low">
         <div class="max-w-7xl mx-auto">
             <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
                 <div class="lg:col-span-5">
-                    <span class="mono-accent text-tertiary text-xs tracking-widest uppercase">// About</span>
+                    <span class="section-label mono-accent text-tertiary text-xs tracking-widest uppercase">// About</span>
                     <h2 class="headline-font text-4xl md:text-5xl font-bold tracking-tight mt-3 mb-6">
-                        Engineering as an <br />
-                        <span class="text-primary">Ecosystem</span>.
+                        AI systems across <br />
+                        <span class="text-primary">research & production</span>.
                     </h2>
-                    <div class="w-24 h-1 bg-tertiary rounded-full mb-8"></div>
+                    <div class="w-24 h-1 bg-primary/60 rounded-full mb-8"></div>
                 </div>
                 <div class="lg:col-span-7">
                     <div class="space-y-6 text-lg text-on-surface-variant font-light leading-relaxed">
                         <p>
-                            I'm a Computer Science graduate student at <span class="text-on-surface font-medium">University of Illinois Chicago</span>, researching at the Fall Prevention Lab and previously shipping distributed trade-finance systems at <span class="text-on-surface font-medium">Deutsche Bank</span>. I don't just build applications; I engineer <span class="text-on-surface font-medium">resilient systems</span> where every line of code is a node in a larger network of intelligence.
+                            I build AI and distributed systems across RAG pipelines, motion-tracking research tools, and trade-finance platforms. My work spans cloud deployment, backend engineering, ML workflows, and human-centered computing.
                         </p>
                         <p>
-                            From predictive modeling to microservices, my work focuses on <span class="text-on-surface font-medium">structural integrity</span> and scalability. I view technical challenges as puzzles of efficiency where the goal is to minimize friction and maximize the flow of information across the stack.
+                            I like systems that survive real constraints: latency, partial failure, messy data, unclear users, and deployment friction.
                         </p>
                     </div>
                 </div>
@@ -693,20 +1269,20 @@
 
             <!-- Metrics / Bento -->
             <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mt-20">
-                <div class="bg-surface-container rounded-xl p-8 border border-outline-variant/15 hover:bg-surface-container-high transition-colors">
-                    <span class="mono-accent text-tertiary text-sm block mb-4">01 // ARCHITECTURE</span>
+                <div class="bg-surface-container rounded-xl p-8 border border-outline-variant/15 hover:border-primary/25 transition-colors">
+                    <span class="mono-accent text-tertiary text-sm block mb-4">01 // SYSTEMS</span>
                     <h3 class="headline-font text-2xl font-bold mb-3">Distributed Core</h3>
-                    <p class="text-on-surface-variant text-sm">Building high-throughput systems with Java, Spring Boot and Kafka — reduced trade-processing latency from 4 days to 2 minutes.</p>
+                    <p class="text-on-surface-variant text-sm">Built high-throughput trade-finance systems with Java, Spring Boot, Kafka, and async processing, reducing KYC latency from days to minutes.</p>
                 </div>
-                <div class="bg-surface-container rounded-xl p-8 border border-outline-variant/15 hover:bg-surface-container-high transition-colors">
-                    <span class="mono-accent text-primary text-sm block mb-4">02 // INTELLIGENCE</span>
-                    <h3 class="headline-font text-2xl font-bold mb-3">Neural Synapse</h3>
-                    <p class="text-on-surface-variant text-sm">Training and deploying PyTorch models — GPU fault-tolerant LLM training, RAG pipelines, and NLP stance detection.</p>
+                <div class="bg-surface-container rounded-xl p-8 border border-outline-variant/15 hover:border-primary/25 transition-colors">
+                    <span class="mono-accent text-primary text-sm block mb-4">02 // AI</span>
+                    <h3 class="headline-font text-2xl font-bold mb-3">Retrieval &amp; Prediction</h3>
+                    <p class="text-on-surface-variant text-sm">Built RAG, GraphRAG, ML, and NLP systems across document retrieval, model training, and structured evaluation workflows.</p>
                 </div>
-                <div class="bg-surface-container rounded-xl p-8 border border-outline-variant/15 hover:bg-surface-container-high transition-colors">
-                    <span class="mono-accent text-on-secondary-container text-sm block mb-4">03 // VISUALIZATION</span>
-                    <h3 class="headline-font text-2xl font-bold mb-3">Precision UI</h3>
-                    <p class="text-on-surface-variant text-sm">Crafting data-rich interfaces in React — from cognitive-rehab training games to real-time monitoring dashboards.</p>
+                <div class="bg-surface-container rounded-xl p-8 border border-outline-variant/15 hover:border-primary/25 transition-colors">
+                    <span class="mono-accent text-tertiary text-sm block mb-4">03 // INTERACTION</span>
+                    <h3 class="headline-font text-2xl font-bold mb-3">Human-Centered Tools</h3>
+                    <p class="text-on-surface-variant text-sm">Built browser-based research tools, motion-tracking games, and interactive interfaces for cognitive and physical therapy studies.</p>
                 </div>
             </div>
 
@@ -1046,11 +1622,12 @@
         </div>
     </section>
 
+
     <!-- EXPERIENCE -->
     <section id="experience" class="py-24 px-6 bg-surface-container-low">
         <div class="max-w-7xl mx-auto">
             <div class="mb-12">
-                <span class="mono-accent text-tertiary text-xs tracking-widest uppercase">// Timeline</span>
+                <span class="section-label mono-accent text-tertiary text-xs tracking-widest uppercase">// Timeline</span>
                 <h2 class="headline-font text-4xl md:text-5xl font-bold tracking-tight mt-3">Experience</h2>
                 <p class="text-on-surface-variant mt-2 font-light">Where I've shipped code and research.</p>
             </div>
@@ -1079,15 +1656,15 @@
                     <div class="exp-panel active bg-surface-container rounded-xl p-8 border border-outline-variant/15" id="exp-uic">
                         <div class="flex flex-wrap items-start justify-between gap-4 mb-4">
                             <div>
-                                <h3 class="headline-font text-2xl font-bold">Research Developer</h3>
+                                <h3 class="headline-font text-2xl font-bold">Graduate Research Assistant / Research Developer</h3>
                                 <p class="text-primary mono-accent text-sm mt-1">@ UIC Fall Prevention Lab</p>
                             </div>
                             <span class="mono-accent text-xs text-outline tracking-widest uppercase">Chicago, IL · Jan 2025 — Present</span>
                         </div>
                         <ul class="space-y-3 text-on-surface-variant font-light">
-                            <li class="flex gap-3"><span class="text-tertiary mono-accent mt-1">▸</span>Developed a web-based training platform to support at-home cognitive and motor rehabilitation for older adults.</li>
-                            <li class="flex gap-3"><span class="text-tertiary mono-accent mt-1">▸</span>Designed and implemented a Stroop-style game tailored for individuals with mild cognitive impairment.</li>
-                            <li class="flex gap-3"><span class="text-tertiary mono-accent mt-1">▸</span>Led a reliability study for COG-Games under Dr. Tanvi Bhatt and Dr. Shuaijie Wang, contributing to evidence-based game design.</li>
+                            <li class="flex gap-3"><span class="text-tertiary mono-accent mt-1">▸</span>Developed browser-based cognitive and motor rehabilitation tools using JavaScript, MediaPipe, and AWS-hosted workflows.</li>
+                            <li class="flex gap-3"><span class="text-tertiary mono-accent mt-1">▸</span>Built session telemetry and structured scoring workflows for motion-tracking research studies.</li>
+                            <li class="flex gap-3"><span class="text-tertiary mono-accent mt-1">▸</span>Supported usability and reliability studies across participant sessions under faculty supervision.</li>
                         </ul>
                         <div class="flex flex-wrap gap-2 mt-6">
                             <span class="px-2 py-1 bg-surface-container-highest text-[10px] mono-accent rounded border border-outline-variant/10 text-outline uppercase">AWS</span>
@@ -1103,15 +1680,15 @@
                     <div class="exp-panel bg-surface-container rounded-xl p-8 border border-outline-variant/15" id="exp-db">
                         <div class="flex flex-wrap items-start justify-between gap-4 mb-4">
                             <div>
-                                <h3 class="headline-font text-2xl font-bold">Senior Analyst</h3>
-                                <p class="text-primary mono-accent text-sm mt-1">@ Corporate Bank Technology</p>
+                                <h3 class="headline-font text-2xl font-bold">Junior Engineer, Corporate Bank Technology</h3>
+                                <p class="text-primary mono-accent text-sm mt-1">@ Deutsche Bank</p>
                             </div>
                             <span class="mono-accent text-xs text-outline tracking-widest uppercase">Pune, India · Jul 2022 — Jul 2024</span>
                         </div>
                         <ul class="space-y-3 text-on-surface-variant font-light">
-                            <li class="flex gap-3"><span class="text-tertiary mono-accent mt-1">▸</span>Junior Developer in documentary trade finance for global corporate bank operations.</li>
-                            <li class="flex gap-3"><span class="text-tertiary mono-accent mt-1">▸</span>Maintained document templates and digital signature seals for Letters of Credit and Bank Guarantees, ensuring compliance with international trade standards.</li>
-                            <li class="flex gap-3"><span class="text-tertiary mono-accent mt-1">▸</span>Built distributed systems for secure trade processing — reduced latency from 4 days to 2 minutes using async pipelines.</li>
+                            <li class="flex gap-3"><span class="text-tertiary mono-accent mt-1">▸</span>Built distributed trade-finance services using Java, Spring Boot, Kafka, and async processing.</li>
+                            <li class="flex gap-3"><span class="text-tertiary mono-accent mt-1">▸</span>Reduced KYC and trade-validation workflows from multi-day manual cycles to minutes through automated screening pipelines.</li>
+                            <li class="flex gap-3"><span class="text-tertiary mono-accent mt-1">▸</span>Improved observability and release workflows using GCP, Jenkins, Docker, Elasticsearch, and Kibana.</li>
                         </ul>
                         <div class="flex flex-wrap gap-2 mt-6">
                             <span class="px-2 py-1 bg-surface-container-highest text-[10px] mono-accent rounded border border-outline-variant/10 text-outline uppercase">Java</span>
@@ -1124,14 +1701,14 @@
                         <div class="mt-8 pt-8 border-t border-outline-variant/10">
                             <div class="flex flex-wrap items-start justify-between gap-4 mb-4">
                                 <div>
-                                    <h3 class="headline-font text-xl font-bold">Summer Intern, Technology Data &amp; Innovation</h3>
+                                    <h3 class="headline-font text-xl font-bold">Summer Intern, Risk, Finance, and Treasury Technology</h3>
                                     <p class="text-primary mono-accent text-sm mt-1">@ Deutsche Bank</p>
                                 </div>
                                 <span class="mono-accent text-xs text-outline tracking-widest uppercase">Remote · May 2021 — Jul 2021</span>
                             </div>
                             <ul class="space-y-3 text-on-surface-variant font-light">
-                                <li class="flex gap-3"><span class="text-tertiary mono-accent mt-1">▸</span>Enhanced system performance, implemented CI/CD pipelines, and contributed to React monitoring dashboards.</li>
-                                <li class="flex gap-3"><span class="text-tertiary mono-accent mt-1">▸</span>Validated ELK stack integration into the fintech framework, cutting log query time by 50%.</li>
+                                <li class="flex gap-3"><span class="text-tertiary mono-accent mt-1">▸</span>Built ELK-stack proof of concept for unified log search and monitoring.</li>
+                                <li class="flex gap-3"><span class="text-tertiary mono-accent mt-1">▸</span>Reduced manual investigation effort through Kibana dashboards and searchable trade-failure events.</li>
                             </ul>
                             <div class="flex flex-wrap gap-2 mt-6">
                                 <span class="px-2 py-1 bg-surface-container-highest text-[10px] mono-accent rounded border border-outline-variant/10 text-outline uppercase">React</span>
@@ -1147,11 +1724,11 @@
     </section>
 
     <!-- PROJECTS -->
-    <section id="projects" class="py-24 px-6 bg-surface">
+    <section id="projects" class="projects-atmosphere py-24 px-6 bg-surface">
         <div class="max-w-7xl mx-auto">
             <div class="flex justify-between items-end mb-16 flex-wrap gap-4">
                 <div>
-                    <span class="mono-accent text-tertiary text-xs tracking-widest uppercase">// Archive</span>
+                    <span class="section-label mono-accent text-tertiary text-xs tracking-widest uppercase">// Archive</span>
                     <h2 class="headline-font text-4xl md:text-5xl font-bold tracking-tight mt-3">Projects</h2>
                     <p class="text-on-surface-variant mt-2 font-light">A selection of recent engineering endeavors.</p>
                 </div>
@@ -1160,136 +1737,7 @@
                 </a>
             </div>
 
-            <div class="archive-grid grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                <!-- Project 1 -->
-                <article class="group block">
-                    <div data-project-visual="rag" class="relative overflow-hidden rounded-xl aspect-video mb-6 bg-surface-container-low border border-outline-variant/15">
-                        <canvas class="project-visual-canvas w-full h-full" aria-hidden="true"></canvas>
-                        <div class="absolute inset-0 bg-gradient-to-t from-background via-background/40 to-transparent"></div>
-                        <span class="absolute top-3 left-3 mono-accent text-[10px] px-2 py-1 rounded bg-background/80 backdrop-blur text-tertiary border border-tertiary/30 tracking-widest uppercase">01</span>
-                    </div>
-                    <h3 class="headline-font text-xl font-bold mb-2 group-hover:text-primary transition-colors">Cloud-Native Incremental RAG Pipeline</h3>
-                    <p class="text-on-surface-variant text-sm font-light line-clamp-2">Large-scale document ingestion and retrieval pipeline with incremental reprocessing, fault-tolerant checkpoints, and cloud deployment on AWS.</p>
-                    <div class="flex flex-wrap gap-2 mt-4">
-                        <span class="px-2 py-1 bg-surface-container-highest text-[10px] mono-accent rounded border border-outline-variant/10 text-outline uppercase">AWS</span>
-                        <span class="px-2 py-1 bg-surface-container-highest text-[10px] mono-accent rounded border border-outline-variant/10 text-outline uppercase">Spark EMR</span>
-                        <span class="px-2 py-1 bg-surface-container-highest text-[10px] mono-accent rounded border border-outline-variant/10 text-outline uppercase">Delta Lake</span>
-                        <span class="px-2 py-1 bg-surface-container-highest text-[10px] mono-accent rounded border border-outline-variant/10 text-outline uppercase">RAG</span>
-                        <span class="px-2 py-1 bg-surface-container-highest text-[10px] mono-accent rounded border border-outline-variant/10 text-outline uppercase">Lucene</span>
-                    </div>
-                    <div class="flex flex-col items-start gap-2 mt-4">
-                        <a href="https://github.com/rkalv/incremental-spark-rag-pipeline" target="_blank" rel="noopener" class="inline-flex items-center gap-2 text-primary font-medium mono-accent text-xs tracking-widest uppercase hover:gap-3 transition-all">
-                            View GitHub Repo <span class="material-symbols-outlined text-base">arrow_forward</span>
-                        </a>
-                        <a href="https://youtu.be/Nf04b2GoBq4" target="_blank" rel="noopener" class="inline-flex items-center gap-2 text-primary font-medium mono-accent text-xs tracking-widest uppercase hover:gap-3 transition-all">
-                            View Cloud Demo <span class="material-symbols-outlined text-base">arrow_forward</span>
-                        </a>
-                    </div>
-                </article>
-
-                <!-- Project 2 -->
-                <article class="group block">
-                    <div data-project-visual="graphrag" class="relative overflow-hidden rounded-xl aspect-video mb-6 bg-surface-container-low border border-outline-variant/15">
-                        <canvas class="project-visual-canvas w-full h-full" aria-hidden="true"></canvas>
-                        <div class="absolute inset-0 bg-gradient-to-t from-background via-background/40 to-transparent"></div>
-                        <span class="absolute top-3 left-3 mono-accent text-[10px] px-2 py-1 rounded bg-background/80 backdrop-blur text-tertiary border border-tertiary/30 tracking-widest uppercase">02</span>
-                    </div>
-                    <h3 class="headline-font text-xl font-bold mb-2 group-hover:text-primary transition-colors">Flink-Neo4j GraphRAG Pipeline</h3>
-                    <p class="text-on-surface-variant text-sm font-light line-clamp-2">Streaming GraphRAG system that combines Apache Flink, Neo4j, and Kubernetes to enable low-latency, relationship-aware retrieval.</p>
-                    <div class="flex flex-wrap gap-2 mt-4">
-                        <span class="px-2 py-1 bg-surface-container-highest text-[10px] mono-accent rounded border border-outline-variant/10 text-outline uppercase">Flink</span>
-                        <span class="px-2 py-1 bg-surface-container-highest text-[10px] mono-accent rounded border border-outline-variant/10 text-outline uppercase">Neo4j</span>
-                        <span class="px-2 py-1 bg-surface-container-highest text-[10px] mono-accent rounded border border-outline-variant/10 text-outline uppercase">GraphRAG</span>
-                        <span class="px-2 py-1 bg-surface-container-highest text-[10px] mono-accent rounded border border-outline-variant/10 text-outline uppercase">EKS</span>
-                        <span class="px-2 py-1 bg-surface-container-highest text-[10px] mono-accent rounded border border-outline-variant/10 text-outline uppercase">Kubernetes</span>
-                        <span class="px-2 py-1 bg-surface-container-highest text-[10px] mono-accent rounded border border-outline-variant/10 text-outline uppercase">Streaming</span>
-                    </div>
-                    <div class="flex flex-col items-start gap-2 mt-4">
-                        <a href="https://github.com/rkalv/MSR-Research-GraphRAG-Cloud-Pipeline" target="_blank" rel="noopener" class="inline-flex items-center gap-2 text-primary font-medium mono-accent text-xs tracking-widest uppercase hover:gap-3 transition-all">
-                            View GitHub Repo <span class="material-symbols-outlined text-base">arrow_forward</span>
-                        </a>
-                        <a href="https://youtu.be/Xj0raJIpaqg" target="_blank" rel="noopener" class="inline-flex items-center gap-2 text-primary font-medium mono-accent text-xs tracking-widest uppercase hover:gap-3 transition-all">
-                            View Cloud Demo <span class="material-symbols-outlined text-base">arrow_forward</span>
-                        </a>
-                    </div>
-                </article>
-
-                <!-- Project 3 -->
-                <a href="https://github.com/ragini-kalvade/MAGE" target="_blank" rel="noopener" class="group cursor-pointer block">
-                    <div data-project-visual="mage" class="relative overflow-hidden rounded-xl aspect-video mb-6 bg-surface-container-low border border-outline-variant/15">
-                        <canvas class="project-visual-canvas w-full h-full" aria-hidden="true"></canvas>
-                        <div class="absolute inset-0 bg-gradient-to-t from-background via-background/40 to-transparent"></div>
-                        <span class="absolute top-3 left-3 mono-accent text-[10px] px-2 py-1 rounded bg-background/80 backdrop-blur text-tertiary border border-tertiary/30 tracking-widest uppercase">03</span>
-                    </div>
-                    <h3 class="headline-font text-xl font-bold mb-2 group-hover:text-primary transition-colors">MAGE</h3>
-                    <p class="text-on-surface-variant text-sm font-light line-clamp-2">Agentic AI system focused on multi-step orchestration, reasoning, and tool-driven execution across complex workflows.</p>
-                    <div class="flex flex-wrap gap-2 mt-4">
-                        <span class="px-2 py-1 bg-surface-container-highest text-[10px] mono-accent rounded border border-outline-variant/10 text-outline uppercase">Agentic AI</span>
-                        <span class="px-2 py-1 bg-surface-container-highest text-[10px] mono-accent rounded border border-outline-variant/10 text-outline uppercase">LLMs</span>
-                        <span class="px-2 py-1 bg-surface-container-highest text-[10px] mono-accent rounded border border-outline-variant/10 text-outline uppercase">Orchestration</span>
-                        <span class="px-2 py-1 bg-surface-container-highest text-[10px] mono-accent rounded border border-outline-variant/10 text-outline uppercase">Tool Use</span>
-                        <span class="px-2 py-1 bg-surface-container-highest text-[10px] mono-accent rounded border border-outline-variant/10 text-outline uppercase">Automation</span>
-                    </div>
-                    <div class="inline-flex items-center gap-2 text-primary font-medium mt-4 mono-accent text-xs tracking-widest uppercase">
-                        View GitHub Repo <span class="material-symbols-outlined text-base">arrow_forward</span>
-                    </div>
-                </a>
-
-                <!-- Project 4 -->
-                <a href="https://dl.acm.org/doi/10.1145/3776734.3794611" target="_blank" rel="noopener" class="group cursor-pointer block">
-                    <div data-project-visual="doremi" class="relative overflow-hidden rounded-xl aspect-video mb-6 bg-surface-container-low border border-outline-variant/15">
-                        <canvas class="project-visual-canvas w-full h-full" aria-hidden="true"></canvas>
-                        <div class="absolute inset-0 bg-gradient-to-t from-background via-background/40 to-transparent"></div>
-                        <span class="absolute top-3 left-3 mono-accent text-[10px] px-2 py-1 rounded bg-background/80 backdrop-blur text-tertiary border border-tertiary/30 tracking-widest uppercase">04</span>
-                    </div>
-                    <h3 class="headline-font text-xl font-bold mb-2 group-hover:text-primary transition-colors">DoReMi</h3>
-                    <p class="text-on-surface-variant text-sm font-light line-clamp-2">Human-centered piano tutor robot using expressive feedback and structured evaluation to support beginner piano practice..</p>
-                    <div class="flex flex-wrap gap-2 mt-4">
-                        <span class="px-2 py-1 bg-surface-container-highest text-[10px] mono-accent rounded border border-outline-variant/10 text-outline uppercase">HRI</span>
-                        <span class="px-2 py-1 bg-surface-container-highest text-[10px] mono-accent rounded border border-outline-variant/10 text-outline uppercase">Robotics</span>
-                        <span class="px-2 py-1 bg-surface-container-highest text-[10px] mono-accent rounded border border-outline-variant/10 text-outline uppercase">UX Research</span>
-                        <span class="px-2 py-1 bg-surface-container-highest text-[10px] mono-accent rounded border border-outline-variant/10 text-outline uppercase">Misty</span>
-                        <span class="px-2 py-1 bg-surface-container-highest text-[10px] mono-accent rounded border border-outline-variant/10 text-outline uppercase">Published</span>
-                    </div>
-                    <div class="inline-flex items-center gap-2 text-primary font-medium mt-4 mono-accent text-xs tracking-widest uppercase">
-                        Read Publication <span class="material-symbols-outlined text-base">arrow_forward</span>
-                    </div>
-                </a>
-
-                <!-- Project 5 -->
-                <a href="https://s3.us-east-2.amazonaws.com/www.fratsforfalls.com/menu.html" target="_blank" rel="noopener" class="group cursor-pointer block">
-                    <div data-project-visual="cog" class="relative overflow-hidden rounded-xl aspect-video mb-6 bg-surface-container-low border border-outline-variant/15">
-                        <canvas class="project-visual-canvas w-full h-full" aria-hidden="true"></canvas>
-                        <div class="absolute inset-0 bg-gradient-to-t from-background via-background/40 to-transparent"></div>
-                        <span class="absolute top-3 left-3 mono-accent text-[10px] px-2 py-1 rounded bg-background/80 backdrop-blur text-tertiary border border-tertiary/30 tracking-widest uppercase">05</span>
-                    </div>
-                    <h3 class="headline-font text-xl font-bold mb-2 group-hover:text-primary transition-colors">Cog Games Analytics</h3>
-                    <p class="text-on-surface-variant text-sm font-light line-clamp-2">Analytics and visualization system for motion-tracking game studies, built to interpret participant performance, usability, and behavioral trends.</p>
-                    <div class="flex flex-wrap gap-2 mt-4">
-                        <span class="px-2 py-1 bg-surface-container-highest text-[10px] mono-accent rounded border border-outline-variant/10 text-outline uppercase">Data Visualization</span>
-                        <span class="px-2 py-1 bg-surface-container-highest text-[10px] mono-accent rounded border border-outline-variant/10 text-outline uppercase">Analytics</span>
-                        <span class="px-2 py-1 bg-surface-container-highest text-[10px] mono-accent rounded border border-outline-variant/10 text-outline uppercase">Research</span>
-                        <span class="px-2 py-1 bg-surface-container-highest text-[10px] mono-accent rounded border border-outline-variant/10 text-outline uppercase">Motion Tracking</span>
-                        <span class="px-2 py-1 bg-surface-container-highest text-[10px] mono-accent rounded border border-outline-variant/10 text-outline uppercase">UX Metrics</span>
-                    </div>
-                    <div class="inline-flex items-center gap-2 text-primary font-medium mt-4 mono-accent text-xs tracking-widest uppercase">
-                        View GitHub Repo<span class="material-symbols-outlined text-base">arrow_forward</span>
-                    </div>
-                </a>
-
-                <!-- GitHub card -->
-                <a href="https://github.com/ragini-kalvade" target="_blank" rel="noopener" class="group cursor-pointer block">
-                    <div class="relative overflow-hidden rounded-xl aspect-video mb-6 bg-gradient-to-br from-surface-container-high to-surface-container border border-outline-variant/15 flex items-center justify-center">
-                        <i class="fab fa-github text-7xl text-primary/60 group-hover:text-primary group-hover:scale-110 transition-all duration-500"></i>
-                        <span class="absolute top-3 left-3 mono-accent text-[10px] px-2 py-1 rounded bg-background/80 backdrop-blur text-tertiary border border-tertiary/30 tracking-widest uppercase">+</span>
-                    </div>
-                    <h3 class="headline-font text-xl font-bold mb-2 group-hover:text-primary transition-colors">Explore My GitHub</h3>
-                    <p class="text-on-surface-variant text-sm font-light line-clamp-2">Discover more projects, open source contributions, and coding experiments.</p>
-                    <div class="inline-flex items-center gap-2 text-primary font-medium mt-4 mono-accent text-xs tracking-widest uppercase">
-                        Visit Profile <span class="material-symbols-outlined text-base">arrow_forward</span>
-                    </div>
-                </a>
-            </div>
+            <div id="projects-grid" class="archive-grid grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"></div>
         </div>
     </section>
 
@@ -1300,14 +1748,14 @@
 
         <div class="max-w-5xl mx-auto relative z-10">
             <div class="text-center mb-16">
-                <span class="mono-accent text-tertiary text-xs tracking-widest uppercase">// Transmission</span>
-                <h2 class="headline-font text-4xl md:text-6xl font-bold tracking-tight mt-3">Let's Collaborate.</h2>
+                <span class="section-label mono-accent text-tertiary text-xs tracking-widest uppercase">// Transmission</span>
+                <h2 class="headline-font text-4xl md:text-6xl font-bold tracking-tight mt-3">Contact</h2>
                 <p class="text-on-surface-variant mt-4 font-light max-w-2xl mx-auto">
-                    I'm always excited to work on innovative projects and connect with fellow developers, researchers, and tech enthusiasts. Whether you have an idea brewing or want to discuss potential collaborations — I'd love to hear from you.
+                    I'm open to software engineering, AI/ML systems, backend, distributed systems, and research engineering roles.
                 </p>
             </div>
 
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
                 <a href="mailto:raginikalvade@gmail.com?subject=Let's Collaborate!" class="group bg-surface-container rounded-xl p-8 border border-outline-variant/15 hover:border-primary/40 transition-all flex items-center gap-5">
                     <div class="w-14 h-14 rounded-lg bg-primary/10 flex items-center justify-center border border-primary/30 group-hover:bg-primary/20 transition-colors">
                         <i class="fas fa-envelope text-primary text-xl"></i>
@@ -1329,15 +1777,27 @@
                     </div>
                     <span class="material-symbols-outlined text-outline group-hover:text-primary group-hover:translate-x-1 transition-all">arrow_forward</span>
                 </a>
+
+                <a href="https://github.com/ragini-kalvade" target="_blank" rel="noopener" class="group bg-surface-container rounded-xl p-8 border border-outline-variant/15 hover:border-primary/40 transition-all flex items-center gap-5">
+                    <div class="w-14 h-14 rounded-lg bg-primary/10 flex items-center justify-center border border-primary/30 group-hover:bg-primary/20 transition-colors">
+                        <i class="fab fa-github text-primary text-xl"></i>
+                    </div>
+                    <div class="flex-1">
+                        <div class="mono-accent text-[10px] text-outline tracking-widest uppercase mb-1">GitHub</div>
+                        <div class="headline-font font-semibold text-on-surface group-hover:text-primary transition-colors">ragini-kalvade</div>
+                    </div>
+                    <span class="material-symbols-outlined text-outline group-hover:text-primary group-hover:translate-x-1 transition-all">arrow_forward</span>
+                </a>
             </div>
 
             <div class="mt-12 text-center">
                 <p class="mono-accent text-xs text-outline tracking-widest uppercase mb-4">// What I'm interested in</p>
                 <div class="flex flex-wrap justify-center gap-3">
-                    <span class="px-4 py-2 bg-surface-container rounded-full border border-outline-variant/15 text-sm text-on-surface-variant">Full-stack development</span>
-                    <span class="px-4 py-2 bg-surface-container rounded-full border border-outline-variant/15 text-sm text-on-surface-variant">Open source contributions</span>
-                    <span class="px-4 py-2 bg-surface-container rounded-full border border-outline-variant/15 text-sm text-on-surface-variant">Tech meetups &amp; hackathons</span>
-                    <span class="px-4 py-2 bg-surface-container rounded-full border border-outline-variant/15 text-sm text-on-surface-variant">Innovative web applications</span>
+                    <span class="px-4 py-2 bg-surface-container rounded-full border border-outline-variant/15 text-sm text-on-surface-variant">AI systems</span>
+                    <span class="px-4 py-2 bg-surface-container rounded-full border border-outline-variant/15 text-sm text-on-surface-variant">Backend platforms</span>
+                    <span class="px-4 py-2 bg-surface-container rounded-full border border-outline-variant/15 text-sm text-on-surface-variant">Retrieval systems</span>
+                    <span class="px-4 py-2 bg-surface-container rounded-full border border-outline-variant/15 text-sm text-on-surface-variant">Research engineering</span>
+                    <span class="px-4 py-2 bg-surface-container rounded-full border border-outline-variant/15 text-sm text-on-surface-variant">Human-centered computing</span>
                 </div>
             </div>
         </div>
@@ -1357,7 +1817,7 @@
         </div>
         <div id="visitor-count" class="visitor-count mono-accent" aria-live="polite">Visits ...</div>
         <div class="flex items-center gap-2">
-            <span class="w-2 h-2 rounded-full bg-tertiary shadow-[0_0_8px_rgba(77,224,130,0.5)] animate-pulse"></span>
+            <span class="w-2 h-2 rounded-full bg-primary opacity-70"></span>
             <span class="text-slate-500 mono-accent text-[10px] tracking-widest uppercase">Server_Ready</span>
         </div>
     </div>

@@ -15,6 +15,7 @@ function initGlobe(canvas) {
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
 
     const PRIMARY = 0x7bd0ff;
+    const ACCENT = 0xc084fc;
     const TERTIARY = 0x4de082;
     const BG = 0x0b1326;
     const RADIUS = 1;
@@ -29,13 +30,42 @@ function initGlobe(canvas) {
     globe.add(inner);
 
     const wireMesh = new THREE.LineSegments(
-        new THREE.WireframeGeometry(new THREE.IcosahedronGeometry(RADIUS, 3)),
-        new THREE.LineBasicMaterial({ color: PRIMARY, transparent: true, opacity: 0.08 })
+        new THREE.WireframeGeometry(new THREE.IcosahedronGeometry(RADIUS, 4)),
+        new THREE.LineBasicMaterial({ color: PRIMARY, transparent: true, opacity: 0.2 })
     );
     globe.add(wireMesh);
 
+    const wireAccent = new THREE.LineSegments(
+        new THREE.WireframeGeometry(new THREE.IcosahedronGeometry(RADIUS * 1.012, 2)),
+        new THREE.LineBasicMaterial({ color: ACCENT, transparent: true, opacity: 0.12 })
+    );
+    globe.add(wireAccent);
+
+    function addOrbitRing(radius, color, opacity, tiltX = 0, tiltZ = 0) {
+        const ring = new THREE.Mesh(
+            new THREE.RingGeometry(radius * 0.992, radius * 1.008, 128),
+            new THREE.MeshBasicMaterial({
+                color,
+                transparent: true,
+                opacity,
+                side: THREE.DoubleSide,
+                depthWrite: false,
+            })
+        );
+        ring.rotation.x = Math.PI / 2 + tiltX;
+        ring.rotation.z = tiltZ;
+        globe.add(ring);
+        return ring;
+    }
+
+    const hudRings = [
+        addOrbitRing(RADIUS * 1.06, ACCENT, 0.38, 0.12, 0),
+        addOrbitRing(RADIUS * 1.1, PRIMARY, 0.28, -0.18, 0.42),
+        addOrbitRing(RADIUS * 1.14, TERTIARY, 0.22, 0.08, -0.35),
+    ];
+
     const dotTexture = makeCircleTexture();
-    const dotsCount = 3500;
+    const dotsCount = 4800;
     const dotsPositions = new Float32Array(dotsCount * 3);
     for (let i = 0; i < dotsCount; i++) {
         const u = Math.random();
@@ -50,10 +80,10 @@ function initGlobe(canvas) {
     dotsGeom.setAttribute('position', new THREE.BufferAttribute(dotsPositions, 3));
     const dotsMat = new THREE.PointsMaterial({
         color: PRIMARY,
-        size: 0.022,
+        size: 0.028,
         map: dotTexture,
         transparent: true,
-        opacity: 0.5,
+        opacity: 0.72,
         depthWrite: false,
         sizeAttenuation: true,
         alphaTest: 0.05,
@@ -63,11 +93,14 @@ function initGlobe(canvas) {
     loadCountryBorders(globe, PRIMARY, RADIUS);
 
     const atmosphere = new THREE.Mesh(
-        new THREE.SphereGeometry(RADIUS * 1.08, 48, 32),
+        new THREE.SphereGeometry(RADIUS * 1.1, 48, 32),
         new THREE.ShaderMaterial({
             transparent: true,
             side: THREE.BackSide,
-            uniforms: { uColor: { value: new THREE.Color(PRIMARY) } },
+            uniforms: {
+                uPrimary: { value: new THREE.Color(PRIMARY) },
+                uAccent: { value: new THREE.Color(ACCENT) },
+            },
             vertexShader: `
                 varying vec3 vNormal;
                 void main() {
@@ -77,10 +110,12 @@ function initGlobe(canvas) {
             `,
             fragmentShader: `
                 varying vec3 vNormal;
-                uniform vec3 uColor;
+                uniform vec3 uPrimary;
+                uniform vec3 uAccent;
                 void main() {
-                    float intensity = pow(0.75 - dot(vNormal, vec3(0.0, 0.0, 1.0)), 3.0);
-                    gl_FragColor = vec4(uColor, 1.0) * intensity;
+                    float rim = pow(0.72 - dot(vNormal, vec3(0.0, 0.0, 1.0)), 2.6);
+                    vec3 glow = mix(uPrimary, uAccent, 0.45);
+                    gl_FragColor = vec4(glow, 1.0) * rim * 1.15;
                 }
             `,
         })
@@ -170,23 +205,23 @@ function initGlobe(canvas) {
         const pos = latLonToVec3(c.lat, c.lon, RADIUS * 1.002);
 
         const dot = new THREE.Mesh(
-            new THREE.SphereGeometry(0.024, 14, 14),
+            new THREE.SphereGeometry(0.028, 14, 14),
             new THREE.MeshBasicMaterial({ color: TERTIARY })
         );
         dot.position.copy(pos);
         markedGroup.add(dot);
 
         const ring = new THREE.Mesh(
-            new THREE.RingGeometry(0.034, 0.046, 32),
-            new THREE.MeshBasicMaterial({ color: TERTIARY, transparent: true, opacity: 0.8, side: THREE.DoubleSide })
+            new THREE.RingGeometry(0.038, 0.052, 32),
+            new THREE.MeshBasicMaterial({ color: TERTIARY, transparent: true, opacity: 0.95, side: THREE.DoubleSide })
         );
         ring.position.copy(pos);
         ring.lookAt(pos.clone().multiplyScalar(2));
         markedGroup.add(ring);
 
         const halo = new THREE.Mesh(
-            new THREE.RingGeometry(0.05, 0.12, 48),
-            new THREE.MeshBasicMaterial({ color: TERTIARY, transparent: true, opacity: 0.25, side: THREE.DoubleSide })
+            new THREE.RingGeometry(0.055, 0.14, 48),
+            new THREE.MeshBasicMaterial({ color: ACCENT, transparent: true, opacity: 0.32, side: THREE.DoubleSide })
         );
         halo.position.copy(pos);
         halo.lookAt(pos.clone().multiplyScalar(2));
@@ -510,6 +545,9 @@ function initGlobe(canvas) {
 
         globe.rotation.y = rotY;
         globe.rotation.x = rotX;
+        hudRings.forEach((ring, i) => {
+            ring.rotation.y += dt * (0.08 + i * 0.04) * (i % 2 === 0 ? 1 : -1);
+        });
         globe.updateMatrixWorld(true);
 
         // Pulse the marked-city rings + halos; active city glows brighter
@@ -648,7 +686,7 @@ async function loadCountryBorders(globe, color, radius) {
         const mat = new THREE.LineBasicMaterial({
             color,
             transparent: true,
-            opacity: 0.38,
+            opacity: 0.52,
             depthWrite: false,
         });
 
