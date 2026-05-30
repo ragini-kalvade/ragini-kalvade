@@ -11,11 +11,16 @@ const PROJECTS = [
             'Gathered category-aware evidence from nine external APIs plus Tavily search with graceful degradation.'
         ],
         tech: ['Python', 'FastAPI', 'LangGraph', 'OpenRouter', 'Multi-Agent'],
+        accent: '#00ff9d',
+        icon: 'trending_up',
+        status: 'CORE_SYS: STABLE',
+        arch: 'AGENTIC',
         links: {
             github: 'https://github.com/ragini-kalvade/AI-Prophets-Forecasting404',
             demo: 'https://youtu.be/i8Kv7EjxVyQ'
         },
         visualType: 'forecast',
+        visualImage: 'media/forecast-multi-agent.png',
         visualDescription: 'Abstract multi-agent diagram showing event input, parallel evidence and model pipelines, judge arbitration, and final prediction output.',
         visualCaption: 'Multi-agent prediction with evidence fusion and judge calibration'
     },
@@ -29,11 +34,16 @@ const PROJECTS = [
             'Modeled relationships in Neo4j to improve graph-aware retrieval.'
         ],
         tech: ['Flink', 'Neo4j', 'GraphRAG', 'EKS', 'Kubernetes'],
+        accent: '#d07bff',
+        icon: 'account_tree',
+        status: 'CORE_SYS: LIVE',
+        arch: 'STREAMING',
         links: {
             github: 'https://github.com/rkalv/MSR-Research-GraphRAG-Cloud-Pipeline',
             demo: 'https://youtu.be/Xj0raJIpaqg'
         },
         visualType: 'graphrag',
+        visualImage: 'media/graphrag-architecture.png',
         visualDescription: 'Abstract streaming graph diagram showing Flink processing entity streams into Neo4j graph nodes for relationship-aware retrieval.',
         visualCaption: 'Streaming graph updates for relationship-aware retrieval'
     },
@@ -47,6 +57,10 @@ const PROJECTS = [
             'Modeled snapshot markers, node state, and message flow for system-level experimentation.'
         ],
         tech: ['Akka', 'Scala', 'Actors', 'Distributed Systems'],
+        accent: '#7bd0ff',
+        icon: 'hub',
+        status: 'CORE_SYS: ACTIVE',
+        arch: 'DISTRIBUTED',
         links: {
             github: 'https://github.com/rkalv/distributed-sys-simulator'
         },
@@ -64,11 +78,16 @@ const PROJECTS = [
             'Built retrieval infrastructure across embeddings, indexing, and AWS-backed storage.'
         ],
         tech: ['AWS', 'Spark', 'EMR', 'Delta Lake', 'RAG', 'Lucene'],
+        accent: '#f59e0b',
+        icon: 'cloud_sync',
+        status: 'CORE_SYS: DEPLOYED',
+        arch: 'ML-PIPELINE',
         links: {
             github: 'https://github.com/rkalv/incremental-spark-rag-pipeline',
             demo: 'https://youtu.be/Nf04b2GoBq4'
         },
         visualType: 'rag',
+        visualImage: 'media/rag-pipeline.png',
         visualDescription: 'Abstract system diagram showing documents flowing through change detection, chunking, embeddings, indexing, and retrieval nodes.',
         visualCaption: 'Incremental document ingestion and retrieval pipeline'
     },
@@ -82,10 +101,15 @@ const PROJECTS = [
             'Used robot expressions, lights, and structured evaluation to support learning.'
         ],
         tech: ['HRI', 'Robotics', 'UX Research', 'Misty'],
+        accent: '#ff6b9d',
+        icon: 'piano',
+        status: 'CORE_SYS: PUBLISHED',
+        arch: 'HRI',
         links: {
             publication: 'https://dl.acm.org/doi/10.1145/3776734.3794611'
         },
         visualType: 'doremi',
+        visualImage: 'media/doremi-drawing.png',
         visualDescription: 'Abstract human-robot interaction diagram showing piano input flowing into feedback logic and robot cues.',
         visualCaption: 'Human-robot feedback system for piano practice'
     }
@@ -107,11 +131,27 @@ function escapeHtml(text) {
         .replace(/"/g, '&quot;');
 }
 
-function ProjectVisualCanvas({ type, visualDescription, visualCaption }) {
-    const nodes = DIAGRAM_NODES[type] || ['Input', 'Process', 'Output'];
+function ProjectVisualCanvas({ type, visualImage, visualDescription, visualCaption }) {
     const figure = document.createElement('figure');
     figure.className = 'project-visual';
 
+    if (visualImage) {
+        const img = document.createElement('img');
+        img.src = visualImage;
+        img.alt = visualDescription;
+        img.className = 'project-visual-img';
+        img.loading = 'lazy';
+        img.decoding = 'async';
+        figure.appendChild(img);
+
+        const caption = document.createElement('figcaption');
+        caption.className = 'project-visual-caption mono-accent';
+        caption.textContent = visualCaption;
+        figure.appendChild(caption);
+        return figure;
+    }
+
+    const nodes = DIAGRAM_NODES[type] || ['Input', 'Process', 'Output'];
     const svgNs = 'http://www.w3.org/2000/svg';
     const svg = document.createElementNS(svgNs, 'svg');
     svg.setAttribute('class', 'project-visual-svg');
@@ -179,23 +219,30 @@ function ProjectVisualCanvas({ type, visualDescription, visualCaption }) {
     return figure;
 }
 
-function buildProjectLinks(project) {
+function hexToRgb(hex) {
+    const value = String(hex).replace('#', '');
+    const n = parseInt(value, 16);
+    if (Number.isNaN(n)) return '123, 208, 255';
+    return `${(n >> 16) & 255}, ${(n >> 8) & 255}, ${n & 255}`;
+}
+
+function buildRkLinks(project) {
     const links = project.links || {};
     const items = [];
     if (links.github) {
-        items.push({ href: links.github, label: 'GitHub', aria: `GitHub repository for ${project.title}` });
+        items.push({ href: links.github, label: 'GITHUB', aria: `GitHub repository for ${project.title}` });
     }
     if (links.demo) {
-        items.push({ href: links.demo, label: 'Demo', aria: `Demo video for ${project.title}` });
+        items.push({ href: links.demo, label: 'DEMO', aria: `Demo video for ${project.title}` });
     }
     if (links.publication) {
-        items.push({ href: links.publication, label: 'Publication', aria: `Publication for ${project.title}` });
+        items.push({ href: links.publication, label: 'PUBLICATION', aria: `Publication for ${project.title}` });
     }
     if (links.caseStudy) {
-        items.push({ href: links.caseStudy, label: 'Case Study', aria: `Case study for ${project.title}` });
+        items.push({ href: links.caseStudy, label: 'CASE STUDY', aria: `Case study for ${project.title}` });
     }
     return items.map(({ href, label, aria }) =>
-        `<a href="${href}" target="_blank" rel="noopener" class="project-card-link" aria-label="${escapeHtml(aria)}">${label} <span class="material-symbols-outlined text-base" aria-hidden="true">arrow_forward</span></a>`
+        `<a href="${href}" target="_blank" rel="noopener" class="rk-link" aria-label="${escapeHtml(aria)}">// ${label} →</a>`
     ).join('');
 }
 
@@ -205,57 +252,60 @@ function renderProjects() {
 
     grid.innerHTML = '';
 
-    PROJECTS.forEach((project) => {
+    PROJECTS.forEach((project, index) => {
+        const accent = project.accent || '#7bd0ff';
         const article = document.createElement('article');
-        article.className = 'project-card group';
-
-        const visualWrap = document.createElement('div');
-        visualWrap.className = 'project-card-visual hud-frame';
-        visualWrap.appendChild(ProjectVisualCanvas({
-            type: project.visualType,
-            visualDescription: project.visualDescription,
-            visualCaption: project.visualCaption
-        }));
-        article.appendChild(visualWrap);
-
-        const body = document.createElement('div');
-        body.className = 'project-card-body glass-panel';
-        body.innerHTML = `
-            <div class="project-card-meta">
-                <span class="project-card-number mono-accent">${escapeHtml(project.number)}</span>
-                <span class="project-card-category mono-accent">${escapeHtml(project.category)}</span>
-            </div>
-            <h3>${escapeHtml(project.title)}</h3>
-            <p class="project-card-outcome">${escapeHtml(project.outcome)}</p>
-            <ul class="project-card-bullets">
-                ${project.bullets.map((b) => `<li>${escapeHtml(b)}</li>`).join('')}
-            </ul>
-            <div class="project-card-tags">
-                ${project.tech.map((t) => `<span class="brutal-chip">${escapeHtml(t)}</span>`).join('')}
-            </div>
-            <div class="project-card-links project-card-links-row">
-                ${buildProjectLinks(project)}
+        article.className = 'rk-card project-card group';
+        article.style.setProperty('--rk-accent', accent);
+        article.style.setProperty('--rk-accent-rgb', hexToRgb(accent));
+        article.style.setProperty('--rk-status-delay', `${(index * 0.7).toFixed(1)}s`);
+        article.innerHTML = `
+            <div class="rk-corner rk-corner-tl" aria-hidden="true"></div>
+            <div class="rk-corner rk-corner-br" aria-hidden="true"></div>
+            <div class="rk-card-inner">
+                <div class="rk-node-row">
+                    <span class="rk-node-id">NODE_ID: ${escapeHtml(project.number)}</span>
+                    <span class="rk-entry-tag">ENTRY_VERIFIED</span>
+                </div>
+                <div class="rk-title-row">
+                    <p class="rk-title">${escapeHtml(project.title)}</p>
+                    <span class="material-symbols-outlined rk-icon" aria-hidden="true">${escapeHtml(project.icon || 'terminal')}</span>
+                </div>
+                <p class="rk-desc">${escapeHtml(project.outcome)}</p>
+                <div class="rk-footer">
+                    <span class="rk-status-badge">${escapeHtml(project.status || 'CORE_SYS: ACTIVE')}</span>
+                    <span class="rk-arch-badge">ARCH: ${escapeHtml(project.arch || 'SYSTEM')}</span>
+                </div>
+                <div class="rk-links">${buildRkLinks(project)}</div>
             </div>
         `;
-        article.appendChild(body);
         grid.appendChild(article);
     });
 
     const explore = document.createElement('article');
-    explore.className = 'project-card group project-card-explore';
+    explore.className = 'rk-card project-card group rk-card-explore';
+    explore.style.setProperty('--rk-accent', '#3d6ec9');
+    explore.style.setProperty('--rk-accent-rgb', hexToRgb('#3d6ec9'));
+    explore.style.setProperty('--rk-status-delay', `${(PROJECTS.length * 0.7).toFixed(1)}s`);
     explore.innerHTML = `
-        <div class="project-card-visual hud-frame project-card-visual-explore">
-            <div class="project-card-explore-icon" aria-hidden="true"><i class="fab fa-github"></i></div>
-        </div>
-        <div class="project-card-body glass-panel">
-            <div class="project-card-meta">
-                <span class="project-card-number mono-accent">+</span>
-                <span class="project-card-category mono-accent">Open Source</span>
+        <div class="rk-corner rk-corner-tl" aria-hidden="true"></div>
+        <div class="rk-corner rk-corner-br" aria-hidden="true"></div>
+        <div class="rk-card-inner">
+            <div class="rk-node-row">
+                <span class="rk-node-id">NODE_ID: +</span>
+                <span class="rk-entry-tag">ENTRY_OPEN</span>
             </div>
-            <h3>Explore My GitHub</h3>
-            <p class="project-card-outcome">More engineering work, experiments, and research repositories.</p>
-            <div class="project-card-links project-card-links-row">
-                <a href="https://github.com/ragini-kalvade" target="_blank" rel="noopener" class="project-card-link" aria-label="View Ragini Kalvade GitHub profile">GitHub <span class="material-symbols-outlined text-base" aria-hidden="true">arrow_forward</span></a>
+            <div class="rk-title-row">
+                <p class="rk-title">Explore My GitHub<span class="rk-cursor" aria-hidden="true"></span></p>
+                <i class="fab fa-github rk-icon rk-icon-fa" aria-hidden="true"></i>
+            </div>
+            <p class="rk-desc">More engineering work, experiments, and research repositories.</p>
+            <div class="rk-footer">
+                <span class="rk-status-badge">CORE_SYS: OPEN</span>
+                <span class="rk-arch-badge">ARCH: SOURCE</span>
+            </div>
+            <div class="rk-links">
+                <a href="https://github.com/ragini-kalvade" target="_blank" rel="noopener" class="rk-link" aria-label="View Ragini Kalvade GitHub profile">// GITHUB →</a>
             </div>
         </div>
     `;
@@ -264,14 +314,139 @@ function renderProjects() {
 
 document.addEventListener('DOMContentLoaded', () => {
     renderProjects();
+    initThemeToggle();
+    initScrollPerformance();
+    initSmoothScroll();
     initArchiveStaggerReveal();
+    initSectionReveal();
+    initImpactCounters();
     initMobileMenu();
     initActiveNav();
     initRotatingWords();
     initSkillTabs();
     initExperienceTabs();
-    initArtTechFiveModes();
+    initArtTechModes();
 });
+
+const THEME_STORAGE_KEY = 'rk-theme';
+
+function getActiveTheme() {
+    return document.documentElement.classList.contains('dark') ? 'dark' : 'light';
+}
+
+function applyTheme(theme) {
+    const isDark = theme === 'dark';
+    document.documentElement.classList.toggle('dark', isDark);
+    localStorage.setItem(THEME_STORAGE_KEY, theme);
+    document.dispatchEvent(new CustomEvent('themechange', { detail: { theme } }));
+    syncThemeToggleUI();
+}
+
+function syncThemeToggleUI() {
+    const isDark = getActiveTheme() === 'dark';
+    document.querySelectorAll('#theme-toggle, #theme-toggle-mobile').forEach((button) => {
+        const icon = button.querySelector('.material-symbols-outlined');
+        button.setAttribute('aria-label', isDark ? 'Switch to light mode' : 'Switch to dark mode');
+        button.setAttribute('aria-pressed', isDark ? 'true' : 'false');
+        if (icon) icon.textContent = isDark ? 'light_mode' : 'dark_mode';
+    });
+}
+
+function initThemeToggle() {
+    const buttons = document.querySelectorAll('#theme-toggle, #theme-toggle-mobile');
+    if (!buttons.length) return;
+
+    syncThemeToggleUI();
+
+    buttons.forEach((button) => {
+        button.addEventListener('click', () => {
+            applyTheme(getActiveTheme() === 'dark' ? 'light' : 'dark');
+        });
+    });
+
+    window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (event) => {
+        if (!localStorage.getItem(THEME_STORAGE_KEY)) {
+            applyTheme(event.matches ? 'dark' : 'light');
+        }
+    });
+}
+
+function easeOutQuint(t) {
+    return 1 - (1 - t) ** 5;
+}
+
+function getScrollOffset() {
+    const nav = document.getElementById('top-nav');
+    return (nav ? nav.getBoundingClientRect().height : 72) + 12;
+}
+
+function initScrollPerformance() {
+    let idleTimer = null;
+    const root = document.documentElement;
+
+    const setScrolling = (active) => {
+        root.classList.toggle('is-scrolling', active);
+        root.dataset.scrolling = active ? 'true' : 'false';
+    };
+
+    window.addEventListener('scroll', () => {
+        setScrolling(true);
+        clearTimeout(idleTimer);
+        idleTimer = setTimeout(() => setScrolling(false), 140);
+    }, { passive: true });
+}
+
+function initSmoothScroll() {
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+    if (prefersReducedMotion.matches) return;
+
+    document.documentElement.classList.add('smooth-scroll-enabled');
+
+    let scrollFrame = null;
+
+    const scrollToY = (targetY) => {
+        if (scrollFrame) cancelAnimationFrame(scrollFrame);
+
+        const startY = window.scrollY;
+        const distance = targetY - startY;
+        if (Math.abs(distance) < 2) return;
+
+        const duration = Math.min(1100, Math.max(520, Math.abs(distance) * 0.55));
+        const startTime = performance.now();
+
+        const step = (now) => {
+            const progress = Math.min(1, (now - startTime) / duration);
+            window.scrollTo(0, startY + distance * easeOutQuint(progress));
+            if (progress < 1) {
+                scrollFrame = requestAnimationFrame(step);
+            } else {
+                scrollFrame = null;
+            }
+        };
+
+        scrollFrame = requestAnimationFrame(step);
+    };
+
+    document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
+        anchor.addEventListener('click', (event) => {
+            const hash = anchor.getAttribute('href');
+            if (!hash || hash === '#') return;
+
+            const target = document.querySelector(hash);
+            if (!target) return;
+
+            event.preventDefault();
+            const targetY = target.getBoundingClientRect().top + window.scrollY - getScrollOffset();
+            scrollToY(Math.max(0, targetY));
+
+            if (history.replaceState) {
+                history.replaceState(null, '', hash);
+            } else {
+                window.location.hash = hash;
+            }
+        });
+    });
+}
 
 function initMobileMenu() {
     const toggle = document.getElementById('mobile-menu-toggle');
@@ -306,7 +481,7 @@ function initActiveNav() {
     };
 
     const onScroll = () => {
-        const y = window.scrollY + 120;
+        const y = window.scrollY + getScrollOffset();
         let current = sections[0].id;
         for (const s of sections) {
             if (s.offsetTop <= y) current = s.id;
@@ -341,36 +516,144 @@ function initRotatingWords() {
 function initSkillTabs() {
     const tabs = document.querySelectorAll('.skill-tab');
     const panels = document.querySelectorAll('.skill-panel');
+    const section = document.getElementById('skills');
+    const tabList = document.getElementById('skillTabs');
+    const tabScroller = document.querySelector('.skill-tabs-scroll');
+    const panelsWrap = document.querySelector('.skill-panels-wrap');
     if (!tabs.length || !panels.length) return;
 
     const activeClasses = ['bg-primary/10', 'text-primary', 'border-primary/30'];
     const idleClasses = ['bg-surface-container-highest', 'text-on-surface-variant', 'border-outline-variant/15'];
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+    const keys = Array.from(tabs).map(t => t.dataset.tab);
+    const AUTO_INTERVAL_MS = 1300;
+    const MANUAL_PAUSE_MS = 8000;
 
-    const activate = key => {
+    let idx = 0;
+    let autoTimer = null;
+    let paused = false;
+    let sectionVisible = false;
+    let manualPauseTimer = null;
+    let touchResumeTimer = null;
+
+    const activate = (key, { scrollTab = true } = {}) => {
         tabs.forEach(t => {
             const on = t.dataset.tab === key;
             activeClasses.forEach(c => t.classList.toggle(c, on));
             idleClasses.forEach(c => t.classList.toggle(c, !on));
+            t.setAttribute('aria-selected', on ? 'true' : 'false');
+            t.tabIndex = on ? 0 : -1;
         });
         panels.forEach(p => {
-            p.classList.toggle('active', p.id === `panel-${key}`);
+            const on = p.id === `panel-${key}`;
+            p.classList.toggle('active', on);
+            p.hidden = !on;
         });
+
+        const activeTab = Array.from(tabs).find(t => t.dataset.tab === key);
+        const scrollContainer = tabScroller || tabList;
+        if (scrollTab && activeTab && scrollContainer) {
+            const listRect = scrollContainer.getBoundingClientRect();
+            const tabRect = activeTab.getBoundingClientRect();
+            const delta = (tabRect.left + tabRect.width / 2) - (listRect.left + listRect.width / 2);
+            scrollContainer.scrollTo({
+                left: scrollContainer.scrollLeft + delta,
+                behavior: prefersReducedMotion.matches ? 'auto' : 'smooth'
+            });
+        }
     };
 
-    tabs.forEach(t => t.addEventListener('click', () => activate(t.dataset.tab)));
+    const stopAuto = () => {
+        if (!autoTimer) return;
+        clearInterval(autoTimer);
+        autoTimer = null;
+    };
 
-    let idx = 0;
-    const keys = Array.from(tabs).map(t => t.dataset.tab);
-    let autoTimer = setInterval(() => {
-        idx = (idx + 1) % keys.length;
-        activate(keys[idx]);
-    }, 5000);
+    const startAuto = () => {
+        if (autoTimer || paused || !sectionVisible || prefersReducedMotion.matches) return;
+        autoTimer = setInterval(() => {
+            idx = (idx + 1) % keys.length;
+            activate(keys[idx]);
+        }, AUTO_INTERVAL_MS);
+    };
 
-    const wrapper = document.getElementById('skillTabs');
-    if (wrapper) {
-        wrapper.addEventListener('mouseenter', () => clearInterval(autoTimer));
-        wrapper.addEventListener('click', () => clearInterval(autoTimer));
+    const pauseAuto = () => {
+        paused = true;
+        stopAuto();
+    };
+
+    const resumeAuto = () => {
+        paused = false;
+        startAuto();
+    };
+
+    const pauseAutoTemporarily = (ms = MANUAL_PAUSE_MS) => {
+        pauseAuto();
+        clearTimeout(manualPauseTimer);
+        manualPauseTimer = setTimeout(resumeAuto, ms);
+    };
+
+    tabs.forEach(t => {
+        t.setAttribute('role', 'tab');
+        t.addEventListener('click', () => {
+            idx = keys.indexOf(t.dataset.tab);
+            activate(t.dataset.tab, { scrollTab: false });
+            pauseAutoTemporarily();
+        });
+    });
+
+    if (tabList) {
+        tabList.setAttribute('role', 'tablist');
+        tabList.setAttribute('aria-label', 'Skill categories');
     }
+    if (panelsWrap) {
+        panelsWrap.setAttribute('aria-live', 'polite');
+    }
+
+    if (section && 'IntersectionObserver' in window) {
+        const observer = new IntersectionObserver((entries) => {
+            sectionVisible = entries.some(entry => entry.isIntersecting);
+            if (sectionVisible) startAuto();
+            else stopAuto();
+        }, { threshold: 0.2, rootMargin: '0px 0px -8% 0px' });
+        observer.observe(section);
+    } else {
+        sectionVisible = true;
+        startAuto();
+    }
+
+    const pauseTargets = [tabScroller, panelsWrap].filter(Boolean);
+    pauseTargets.forEach((pauseTarget) => {
+        pauseTarget.addEventListener('mouseenter', pauseAuto);
+        pauseTarget.addEventListener('mouseleave', () => {
+            clearTimeout(manualPauseTimer);
+            resumeAuto();
+        });
+        pauseTarget.addEventListener('focusin', pauseAuto);
+        pauseTarget.addEventListener('focusout', (event) => {
+            if (!pauseTargets.some(el => el.contains(event.relatedTarget))) {
+                clearTimeout(manualPauseTimer);
+                resumeAuto();
+            }
+        });
+        pauseTarget.addEventListener('touchstart', () => {
+            pauseAuto();
+            clearTimeout(touchResumeTimer);
+            clearTimeout(manualPauseTimer);
+        }, { passive: true });
+        pauseTarget.addEventListener('touchend', () => {
+            clearTimeout(touchResumeTimer);
+            touchResumeTimer = setTimeout(resumeAuto, MANUAL_PAUSE_MS);
+        }, { passive: true });
+    });
+
+    panels.forEach((p, i) => {
+        p.setAttribute('role', 'tabpanel');
+        p.id = p.id || `panel-${keys[i]}`;
+        p.hidden = !p.classList.contains('active');
+    });
+
+    activate(keys[idx]);
 }
 
 function initExperienceTabs() {
@@ -406,404 +689,166 @@ function initArchiveStaggerReveal() {
     if (!archiveItems.length) return;
 
     const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
-    const baseDelay = 110;
-
-    archiveItems.forEach((item, index) => {
-        item.classList.add('archive-reveal-item');
-        item.style.setProperty('--archive-reveal-delay', `${index * baseDelay}ms`);
-    });
-
-    const revealAll = () => {
-        archiveItems.forEach(item => item.classList.add('archive-reveal-visible'));
+    const revealItem = (item) => {
+        if (item.classList.contains('archive-reveal-visible')) return;
+        item.classList.add('archive-reveal-visible');
+        item.addEventListener('animationend', (event) => {
+            if (event.animationName !== 'rkCardIn') return;
+            item.style.willChange = 'auto';
+        }, { once: true });
     };
 
+    archiveItems.forEach((item) => {
+        item.classList.add('archive-reveal-item');
+    });
+
     if (prefersReducedMotion.matches || !('IntersectionObserver' in window)) {
-        revealAll();
+        archiveItems.forEach(revealItem);
         return;
     }
 
-    const observer = new IntersectionObserver((entries, obs) => {
-        entries.forEach(entry => {
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
             if (!entry.isIntersecting) return;
-            revealAll();
-            obs.unobserve(entry.target);
+            revealItem(entry.target);
+            observer.unobserve(entry.target);
         });
     }, {
         root: null,
-        threshold: 0.2,
-        rootMargin: '0px 0px -8% 0px'
+        threshold: 0.18,
+        rootMargin: '0px 0px -6% 0px'
     });
 
-    observer.observe(archiveSection);
+    archiveItems.forEach((item) => observer.observe(item));
 }
 
+const SECTION_REVEAL_CLASSES = ['reveal-scanline', 'reveal-trace', 'reveal-flicker', 'reveal-pulse'];
 
-function initArtTechSection() {
-    const canvas = document.getElementById('art-tech-canvas');
-    const video = document.getElementById('art-tech-video');
-    const tryItButton = document.getElementById('art-tech-camera-btn');
-    const demoModeButton = document.getElementById('art-tech-demo-btn');
-    const statusNode = document.getElementById('art-tech-status');
-    const styleButtons = Array.from(document.querySelectorAll('[data-art-style]'));
-    if (!canvas || !video || !tryItButton || !demoModeButton || !statusNode || !styleButtons.length) return;
+function easeOutCubic(t) {
+    return 1 - (1 - t) ** 3;
+}
 
-    const context = canvas.getContext('2d', { alpha: false });
-    if (!context) return;
+function initSectionReveal() {
+    const sections = Array.from(document.querySelectorAll('main section[id]'));
+    if (!sections.length) return;
 
     const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
-    const offscreenCanvas = document.createElement('canvas');
-    const offscreenContext = offscreenCanvas.getContext('2d', { willReadFrequently: true });
-    const state = {
-        pointerX: 0.5,
-        pointerY: 0.5,
-        smoothX: 0.5,
-        smoothY: 0.5,
-        width: 0,
-        height: 0,
-        devicePixelRatio: 1,
-        style: 'constellation',
-        mode: 'demo',
-        particles: [],
-        animationFrame: null,
-        cameraStream: null,
-        prevLuma: null,
-        hasTrackerSignal: false
-    };
+    if (prefersReducedMotion.matches || !('IntersectionObserver' in window)) return;
 
-    const stylePalette = {
-        constellation: {
-            bgA: '#050a18',
-            bgB: '#080d20',
-            stroke: '#7bd0ff',
-            accent: '#4de082',
-            glow: 'rgba(123, 208, 255, 0.9)'
-        },
-        ribbon: {
-            bgA: '#0b0820',
-            bgB: '#040816',
-            stroke: '#9ab6ff',
-            accent: '#7bd0ff',
-            glow: 'rgba(154, 182, 255, 0.9)'
-        },
-        pulse: {
-            bgA: '#081811',
-            bgB: '#05100d',
-            stroke: '#8cf4c8',
-            accent: '#7bd0ff',
-            glow: 'rgba(140, 244, 200, 0.9)'
+    const targets = sections.map((section, index) => {
+        const label = section.querySelector('.section-label');
+        const heading = section.querySelector('.art-title, h2.headline-font');
+        const el = label || heading;
+        if (!el) return null;
+        const block = el.closest('.text-center, .flex, div') || el.parentElement;
+        const target = block && block.contains(el) ? block : el;
+        target.classList.add('section-reveal-target');
+        if (!target.classList.contains('section-header-block')) {
+            target.classList.add('section-header-block');
         }
-    };
+        return { section, target, index, isContact: section.id === 'contact' };
+    }).filter(Boolean);
 
-    const particleCount = prefersReducedMotion.matches ? 42 : 110;
-    state.particles = Array.from({ length: particleCount }, () => ({
-        x: Math.random(),
-        y: Math.random(),
-        vx: (Math.random() - 0.5) * 0.003,
-        vy: (Math.random() - 0.5) * 0.003,
-        size: 0.8 + Math.random() * 2.3
-    }));
-
-    function updateStatus(text) {
-        statusNode.textContent = text;
-    }
-
-    function updateStyleButtons() {
-        styleButtons.forEach((button) => {
-            button.classList.toggle('is-active', button.dataset.artStyle === state.style);
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+            if (!entry.isIntersecting) return;
+            const item = targets.find((t) => t.target === entry.target);
+            if (!item || item.revealed) return;
+            item.revealed = true;
+            const revealClass = SECTION_REVEAL_CLASSES[item.index % SECTION_REVEAL_CLASSES.length];
+            item.target.classList.add(revealClass);
+            if (item.isContact) item.target.classList.add('reveal-transmission');
+            observer.unobserve(entry.target);
         });
-    }
+    }, { threshold: 0.25, rootMargin: '-10% 0px -5% 0px' });
 
-    function resizeCanvas() {
-        const rect = canvas.getBoundingClientRect();
-        const width = Math.max(1, Math.floor(rect.width));
-        const height = Math.max(1, Math.floor(rect.height));
-        const devicePixelRatio = Math.min(window.devicePixelRatio || 1, 2);
-        state.width = width;
-        state.height = height;
-        state.devicePixelRatio = devicePixelRatio;
-        canvas.width = Math.floor(width * devicePixelRatio);
-        canvas.height = Math.floor(height * devicePixelRatio);
-        context.setTransform(devicePixelRatio, 0, 0, devicePixelRatio, 0, 0);
-    }
-
-    function stopCamera() {
-        if (!state.cameraStream) return;
-        state.cameraStream.getTracks().forEach((track) => track.stop());
-        state.cameraStream = null;
-        state.prevLuma = null;
-        state.hasTrackerSignal = false;
-    }
-
-    function enableDemoMode(message) {
-        state.mode = 'demo';
-        if (message) updateStatus(message);
-        else updateStatus('Demo mode active');
-    }
-
-    function readMotionFromVideo() {
-        if (!offscreenContext || video.readyState < 2 || state.mode !== 'camera') return;
-
-        const sampleWidth = 84;
-        const sampleHeight = 60;
-        if (offscreenCanvas.width !== sampleWidth || offscreenCanvas.height !== sampleHeight) {
-            offscreenCanvas.width = sampleWidth;
-            offscreenCanvas.height = sampleHeight;
-            state.prevLuma = null;
-        }
-
-        offscreenContext.drawImage(video, 0, 0, sampleWidth, sampleHeight);
-        const frame = offscreenContext.getImageData(0, 0, sampleWidth, sampleHeight).data;
-        if (!state.prevLuma) {
-            state.prevLuma = new Uint8ClampedArray(sampleWidth * sampleHeight);
-            for (let i = 0; i < sampleWidth * sampleHeight; i += 1) {
-                state.prevLuma[i] = (frame[i * 4] + frame[i * 4 + 1] + frame[i * 4 + 2]) / 3;
-            }
-            return;
-        }
-
-        let sumX = 0;
-        let sumY = 0;
-        let count = 0;
-        const threshold = 22;
-
-        for (let y = 0; y < sampleHeight; y += 1) {
-            for (let x = 0; x < sampleWidth; x += 1) {
-                const index = y * sampleWidth + x;
-                const luma = (frame[index * 4] + frame[index * 4 + 1] + frame[index * 4 + 2]) / 3;
-                const delta = Math.abs(luma - state.prevLuma[index]);
-                if (delta > threshold) {
-                    sumX += x;
-                    sumY += y;
-                    count += 1;
-                }
-                state.prevLuma[index] = luma;
-            }
-        }
-
-        if (count > 20) {
-            state.pointerX = 1 - (sumX / count) / sampleWidth;
-            state.pointerY = (sumY / count) / sampleHeight;
-            state.hasTrackerSignal = true;
-            updateStatus('Camera live · move your hand');
-        } else if (state.hasTrackerSignal) {
-            updateStatus('Camera live · searching for motion');
-        }
-    }
-
-    async function enableCameraMode() {
-        if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
-            enableDemoMode('Camera unavailable · using demo mode');
-            return;
-        }
-
-        try {
-            const stream = await navigator.mediaDevices.getUserMedia({
-                video: {
-                    facingMode: 'user',
-                    width: { ideal: 960 },
-                    height: { ideal: 540 }
-                },
-                audio: false
-            });
-
-            stopCamera();
-            state.cameraStream = stream;
-            video.srcObject = stream;
-            await video.play();
-            state.mode = 'camera';
-            state.prevLuma = null;
-            state.hasTrackerSignal = false;
-            updateStatus('Camera enabled · calibrating');
-        } catch (error) {
-            console.warn('[art-tech] camera permission denied or unavailable:', error);
-            enableDemoMode('Camera denied · fallback demo mode');
-        }
-    }
-
-    function drawBackdrop(time, palette) {
-        const gradient = context.createLinearGradient(0, 0, state.width, state.height);
-        gradient.addColorStop(0, palette.bgA);
-        gradient.addColorStop(1, palette.bgB);
-        context.fillStyle = gradient;
-        context.fillRect(0, 0, state.width, state.height);
-
-        const pulseRadius = Math.max(120, Math.min(state.width, state.height) * (0.18 + Math.sin(time * 1.3) * 0.04));
-        context.save();
-        context.globalCompositeOperation = 'screen';
-        const glow = context.createRadialGradient(
-            state.smoothX * state.width,
-            state.smoothY * state.height,
-            0,
-            state.smoothX * state.width,
-            state.smoothY * state.height,
-            pulseRadius * 2.2
-        );
-        glow.addColorStop(0, `${palette.accent}6b`);
-        glow.addColorStop(1, 'rgba(0,0,0,0)');
-        context.fillStyle = glow;
-        context.fillRect(0, 0, state.width, state.height);
-        context.restore();
-    }
-
-    function drawParticles(time, palette) {
-        const targetX = state.smoothX;
-        const targetY = state.smoothY;
-
-        state.particles.forEach((particle, index) => {
-            const dx = targetX - particle.x;
-            const dy = targetY - particle.y;
-            const distance = Math.max(0.0005, Math.hypot(dx, dy));
-            const attraction = 0.00018 + (state.style === 'pulse' ? 0.0002 : 0.00012);
-            const swirl = state.style === 'ribbon' ? 0.00022 : 0.00008;
-
-            particle.vx += (dx / distance) * attraction + Math.sin(time + index * 0.2) * swirl * 0.4;
-            particle.vy += (dy / distance) * attraction + Math.cos(time + index * 0.2) * swirl * 0.4;
-            particle.vx *= 0.985;
-            particle.vy *= 0.985;
-            particle.x += particle.vx;
-            particle.y += particle.vy;
-
-            if (particle.x < 0 || particle.x > 1) {
-                particle.vx *= -0.9;
-                particle.x = Math.min(1, Math.max(0, particle.x));
-            }
-            if (particle.y < 0 || particle.y > 1) {
-                particle.vy *= -0.9;
-                particle.y = Math.min(1, Math.max(0, particle.y));
-            }
-        });
-
-        context.save();
-        context.globalCompositeOperation = 'screen';
-        for (let i = 0; i < state.particles.length; i += 1) {
-            const particle = state.particles[i];
-            const px = particle.x * state.width;
-            const py = particle.y * state.height;
-            const glowSize = particle.size * (state.style === 'pulse' ? 2.2 : 1.6);
-
-            context.beginPath();
-            context.arc(px, py, glowSize, 0, Math.PI * 2);
-            context.fillStyle = i % 3 === 0 ? `${palette.accent}99` : `${palette.stroke}88`;
-            context.fill();
-
-            if (i % 4 === 0) {
-                const other = state.particles[(i + 7) % state.particles.length];
-                const ox = other.x * state.width;
-                const oy = other.y * state.height;
-                const lineDistance = Math.hypot(px - ox, py - oy);
-                if (lineDistance < Math.min(state.width, state.height) * 0.22) {
-                    context.beginPath();
-                    context.strokeStyle = `${palette.stroke}44`;
-                    context.lineWidth = 1;
-                    context.moveTo(px, py);
-                    context.lineTo(ox, oy);
-                    context.stroke();
-                }
-            }
-        }
-        context.restore();
-
-        if (state.style === 'ribbon') {
-            context.save();
-            context.strokeStyle = `${palette.stroke}66`;
-            context.lineWidth = 2.4;
-            context.beginPath();
-            for (let i = 0; i <= 48; i += 1) {
-                const x = (i / 48) * state.width;
-                const y = state.smoothY * state.height + Math.sin(i * 0.35 + time * 2.2) * 18;
-                if (i === 0) context.moveTo(x, y);
-                else context.lineTo(x, y);
-            }
-            context.stroke();
-            context.restore();
-        }
-    }
-
-    function drawPointerOrb(palette) {
-        const x = state.smoothX * state.width;
-        const y = state.smoothY * state.height;
-
-        context.save();
-        context.shadowColor = palette.glow;
-        context.shadowBlur = 24;
-        context.fillStyle = palette.accent;
-        context.beginPath();
-        context.arc(x, y, 5.8, 0, Math.PI * 2);
-        context.fill();
-        context.restore();
-    }
-
-    function animate(now) {
-        const time = now * 0.001;
-        const palette = stylePalette[state.style] || stylePalette.constellation;
-
-        if (state.mode === 'camera') {
-            readMotionFromVideo();
-        } else {
-            state.pointerX = 0.5 + Math.sin(time * 0.78) * 0.22;
-            state.pointerY = 0.5 + Math.cos(time * 1.05) * 0.2;
-        }
-
-        state.smoothX += (state.pointerX - state.smoothX) * 0.12;
-        state.smoothY += (state.pointerY - state.smoothY) * 0.12;
-
-        drawBackdrop(time, palette);
-        drawParticles(time, palette);
-        drawPointerOrb(palette);
-
-        state.animationFrame = window.requestAnimationFrame(animate);
-    }
-
-    styleButtons.forEach((button) => {
-        button.addEventListener('click', () => {
-            state.style = button.dataset.artStyle || 'constellation';
-            updateStyleButtons();
-        });
-    });
-
-    canvas.addEventListener('pointermove', (event) => {
-        const bounds = canvas.getBoundingClientRect();
-        if (!bounds.width || !bounds.height) return;
-        state.pointerX = (event.clientX - bounds.left) / bounds.width;
-        state.pointerY = (event.clientY - bounds.top) / bounds.height;
-    });
-
-    tryItButton.addEventListener('click', () => {
-        enableCameraMode();
-    });
-
-    demoModeButton.addEventListener('click', () => {
-        stopCamera();
-        enableDemoMode('Demo mode active');
-    });
-
-    window.addEventListener('resize', resizeCanvas);
-    window.addEventListener('pagehide', stopCamera);
-    window.addEventListener('beforeunload', stopCamera);
-
-    prefersReducedMotion.addEventListener('change', () => {
-        if (prefersReducedMotion.matches) {
-            state.particles.splice(42);
-        } else if (state.particles.length < 100) {
-            const extras = Array.from({ length: 68 }, () => ({
-                x: Math.random(),
-                y: Math.random(),
-                vx: (Math.random() - 0.5) * 0.003,
-                vy: (Math.random() - 0.5) * 0.003,
-                size: 0.8 + Math.random() * 2.3
-            }));
-            state.particles.push(...extras);
-        }
-    });
-
-    resizeCanvas();
-    updateStyleButtons();
-    if (state.animationFrame === null) {
-        state.animationFrame = window.requestAnimationFrame(animate);
-    }
+    targets.forEach((item) => observer.observe(item.target));
 }
 
-function initArtTechFiveModes() {
+function initImpactCounters() {
+    const strip = document.querySelector('.impact-strip');
+    const counters = Array.from(document.querySelectorAll('.impact-value[data-counter]'));
+    if (!strip || !counters.length) return;
+
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+
+    const setFinalValues = () => {
+        counters.forEach((el) => {
+            const type = el.dataset.counter;
+            if (type === 'range') {
+                el.textContent = el.dataset.final || '4 days → 2 minutes';
+            } else {
+                const target = Number(el.dataset.target) || 0;
+                const suffix = el.dataset.suffix || '';
+                el.textContent = `${target}${suffix}`;
+            }
+        });
+    };
+
+    if (prefersReducedMotion.matches) {
+        setFinalValues();
+        return;
+    }
+
+    let animated = false;
+    const runAnimation = () => {
+        if (animated) return;
+        animated = true;
+        strip.classList.add('impact-strip--emphasis');
+        const duration = 1200;
+        const start = performance.now();
+
+        const tick = (now) => {
+            const t = Math.min(1, (now - start) / duration);
+            const eased = easeOutCubic(t);
+            counters.forEach((el) => {
+                const type = el.dataset.counter;
+                if (type === 'range') {
+                    const from = Number(el.dataset.from) || 4;
+                    const to = Number(el.dataset.to) || 2;
+                    const current = Math.round(from + (to - from) * eased);
+                    el.textContent = `${current} days → 2 minutes`;
+                } else {
+                    const target = Number(el.dataset.target) || 0;
+                    const suffix = el.dataset.suffix || '';
+                    el.textContent = `${Math.round(target * eased)}${suffix}`;
+                }
+            });
+            if (t < 1) requestAnimationFrame(tick);
+            else setFinalValues();
+        };
+        requestAnimationFrame(tick);
+    };
+
+    if (!('IntersectionObserver' in window)) {
+        runAnimation();
+        return;
+    }
+
+    const observer = new IntersectionObserver((entries) => {
+        if (entries.some((e) => e.isIntersecting)) {
+            runAnimation();
+            observer.disconnect();
+        }
+    }, { threshold: 0.35, rootMargin: '0px' });
+    observer.observe(strip);
+
+    requestAnimationFrame(() => {
+        const rect = strip.getBoundingClientRect();
+        if (rect.top < window.innerHeight * 0.9 && rect.bottom > 0) runAnimation();
+    });
+}
+
+const CONSTELLATION_PREFIXES = ['Sol', 'Kha', 'Ara', 'Vel', 'Mira', 'Nex', 'Oru'];
+const CONSTELLATION_SUFFIXES = ['nis', 'dra', 'ix', 'oth', 'ra', 'on', 'ae'];
+
+function generateConstellationName() {
+    const pre = CONSTELLATION_PREFIXES[Math.floor(Math.random() * CONSTELLATION_PREFIXES.length)];
+    const suf = CONSTELLATION_SUFFIXES[Math.floor(Math.random() * CONSTELLATION_SUFFIXES.length)];
+    return `${pre}${suf}`;
+}
+
+function initArtTechModes() {
     const artSection = document.getElementById('art-tech');
     const video = document.getElementById('art-tech-video');
     const canvas = document.getElementById('art-tech-canvas');
@@ -814,6 +859,7 @@ function initArtTechFiveModes() {
     const gPill = document.getElementById('art-gpill');
     const fPill = document.getElementById('art-fpill');
     const saveButton = document.getElementById('art-save-btn');
+    const exportSvgButton = document.getElementById('art-export-svg-btn');
     const demoToggleButton = document.getElementById('art-demo-toggle-btn');
     const previewToggleButton = document.getElementById('art-preview-toggle-btn');
     const fullscreenButton = document.getElementById('art-fullscreen-btn');
@@ -833,13 +879,55 @@ function initArtTechFiveModes() {
         [5, 9], [9, 10], [10, 11], [11, 12], [9, 13], [13, 14], [14, 15], [15, 16],
         [13, 17], [17, 18], [18, 19], [19, 20], [0, 17]
     ];
-    const BG = { wave: '#00050f', circuit: '#021a0a', ascii: '#050a00', glass: '#0d0608' };
-    const CHARS = '@#B%8&WM*oahkbdpqwmZO0QLCJUYXzcvunxrjft/\\|()1{}[]?-_+~<>i!lI;:,"^`. ';
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+
+    function getArtCanvasPalette() {
+        const dark = document.documentElement.classList.contains('dark');
+        if (dark) {
+            return {
+                bg: { constellation: '#050a18', mycelium: '#050a12', fracture: '#0a0c14' },
+                constellation: {
+                    grad: ['#050a18', '#080d20'],
+                    star: '123, 208, 255',
+                    lineAlpha: 0.35,
+                    pending: '77, 224, 130',
+                    label: '200, 230, 255'
+                },
+                mycelium: { branch: '220, 240, 230', composite: 'multiply' },
+                fracture: {
+                    base: '#1a1d28',
+                    overlay: '26, 29, 40',
+                    glow: ['#1a0533', '#f59e0b', '#f87171'],
+                    scratch: '0, 0, 0'
+                },
+                transition: '8, 12, 24'
+            };
+        }
+        return {
+            bg: { constellation: '#eef6ff', mycelium: '#f0faf4', fracture: '#faf5ef' },
+            constellation: {
+                grad: ['#eef6ff', '#f8fbff'],
+                star: '8, 145, 178',
+                lineAlpha: 0.42,
+                pending: '5, 150, 105',
+                label: '30, 41, 59'
+            },
+            mycelium: { branch: '5, 150, 105', composite: 'source-over' },
+            fracture: {
+                base: '#f8fafc',
+                overlay: '241, 245, 249',
+                glow: ['#ede9fe', '#fcd34d', '#fca5a5'],
+                scratch: '15, 23, 42'
+            },
+            transition: '255, 255, 255'
+        };
+    }
 
     let width = 0;
     let height = 0;
-    let mode = 'wave';
+    let mode = 'constellation';
     let lastLandmarks = null;
+    let lastGesture = '';
     let frame = 0;
     let fpsCount = 0;
     let lastFpsTime = Date.now();
@@ -852,35 +940,49 @@ function initArtTechFiveModes() {
     let demoMode = true;
     let previewEnabled = false;
     let modeTransitionAlpha = 0;
+    let lastFrameTime = performance.now();
 
-    const circuitLines = [];
-    const shadowTrail = [];
-    let voronoiImage = null;
-    let lastGlassSeed = '';
+    const stars = [];
+    const constellations = [];
+    const dwellTrackers = TIPS.map(() => ({ stillSince: 0, lastX: 0, lastY: 0 }));
+    let pendingCluster = null;
+
+    const branches = [];
+    const landmarkHistory = [];
+    let stillnessFrames = 0;
+    const MAX_BRANCHES = prefersReducedMotion.matches ? 400 : 1000;
+
+    const crackCells = new Map();
+    const fractureStrokes = [];
+    let fractureGlowCanvas = null;
+    let demoPressureAngle = 0;
 
     function resize() {
         width = stage.clientWidth;
         height = stage.clientHeight;
         canvas.width = width;
         canvas.height = height;
-        voronoiImage = null;
-        lastGlassSeed = '';
+        fractureGlowCanvas = null;
     }
 
     function setMode(nextMode) {
         if (mode !== nextMode) {
             modeTransitionAlpha = 0.28;
+            lastGesture = '';
         }
         mode = nextMode;
         artSection.dataset.artTheme = nextMode;
         modeButtons.forEach((button) => {
             button.classList.toggle('is-active', button.dataset.artMode === nextMode);
         });
+        if (exportSvgButton) {
+            exportSvgButton.disabled = mode !== 'constellation';
+            exportSvgButton.style.opacity = mode === 'constellation' ? '1' : '0.45';
+        }
     }
 
     function refreshPreviewVisibility() {
-        const show = cameraActive && previewEnabled;
-        video.classList.toggle('is-live', show);
+        video.classList.toggle('is-live', cameraActive && previewEnabled);
     }
 
     function updateDemoToggleUI() {
@@ -910,367 +1012,381 @@ function initArtTechFiveModes() {
         return { x: xAt(landmarks, i), y: yAt(landmarks, i) };
     }
 
-    function fingertipPoints(landmarks) {
-        return TIPS.map((i) => point(landmarks, i));
-    }
-
     function classifyGesture(landmarks) {
         const extension = [8, 12, 16, 20].map((tip, i) => landmarks[tip].y < landmarks[[6, 10, 14, 18][i]].y);
         const raised = extension.filter(Boolean).length;
         const pinch = Math.hypot(landmarks[4].x - landmarks[8].x, landmarks[4].y - landmarks[8].y) < 0.07;
         if (pinch) return 'pinch';
         if (raised === 0) return 'fist';
-        if (raised === 1 && extension[0]) return 'point';
-        if (raised === 2 && extension[0] && extension[1]) return 'peace';
         if (raised === 4) return 'open hand';
         return 'hand';
     }
 
-    function drawWave(time) {
-        const landmarks = lastLandmarks;
-        for (let wave = 0; wave < 5; wave += 1) {
-            let centerX = width / 2;
-            let centerY = height / 2;
-            let amplitude = height * 0.12;
-            const frequency = 2 + wave;
-            if (landmarks) {
-                const tip = point(landmarks, TIPS[wave]);
-                centerX = tip.x;
-                centerY = tip.y;
-                amplitude = height * 0.08 + Math.hypot(landmarks[TIPS[wave]].x - 0.5, landmarks[TIPS[wave]].y - 0.5) * height * 0.18;
+    function getDemoFingertips(time) {
+        return TIPS.map((_, i) => ({
+            x: width * (0.5 + Math.sin(time * 0.35 + i * 1.2) * 0.28),
+            y: height * (0.5 + Math.cos(time * 0.42 + i * 0.9) * 0.26),
+            finger: i
+        }));
+    }
+
+    function plantStar(x, y, finger) {
+        stars.push({ x, y, finger, born: performance.now(), r: 1.2 + Math.random() * 1.8 });
+    }
+
+    function distance(a, b) {
+        return Math.hypot(a.x - b.x, a.y - b.y);
+    }
+
+    function findCluster(candidateStars) {
+        if (candidateStars.length < 3) return null;
+        const cluster = [];
+        candidateStars.forEach((s) => {
+            const near = candidateStars.filter((o) => o !== s && distance(s, o) < 80);
+            if (near.length >= 2) cluster.push(s);
+        });
+        const unique = [...new Set(cluster)];
+        if (unique.length < 3) return null;
+        const cx = unique.reduce((a, s) => a + s.x, 0) / unique.length;
+        const cy = unique.reduce((a, s) => a + s.y, 0) / unique.length;
+        return { stars: unique, cx, cy };
+    }
+
+    function lockConstellation(cluster) {
+        const name = generateConstellationName();
+        constellations.push({
+            name,
+            stars: cluster.stars.map((s) => ({ x: s.x, y: s.y })),
+            cx: cluster.cx,
+            cy: cluster.cy
+        });
+        cluster.stars.forEach((s) => {
+            const idx = stars.indexOf(s);
+            if (idx >= 0) stars.splice(idx, 1);
+        });
+        pendingCluster = null;
+    }
+
+    function updateConstellationLogic(landmarks, dt) {
+        const now = performance.now();
+        const tips = landmarks
+            ? TIPS.map((ti, fi) => ({ ...point(landmarks, ti), finger: fi }))
+            : getDemoFingertips(frame * 0.016);
+
+        tips.forEach((tip, fi) => {
+            const tracker = dwellTrackers[fi];
+            const speed = Math.hypot(tip.x - tracker.lastX, tip.y - tracker.lastY) / Math.max(dt, 1);
+            if (speed < 0.35) {
+                if (!tracker.stillSince) tracker.stillSince = now;
+                if (now - tracker.stillSince > 300) {
+                    const tooClose = stars.some((s) => distance(s, tip) < 12);
+                    if (!tooClose) plantStar(tip.x, tip.y, fi);
+                    tracker.stillSince = now;
+                }
+            } else {
+                tracker.stillSince = 0;
             }
-            const hue = 190 + wave * 30 + time * 15;
-            context.strokeStyle = `hsla(${hue},85%,65%,0.7)`;
-            context.lineWidth = 1.5;
-            context.beginPath();
-            for (let x = 0; x < width; x += 2) {
-                const phase = (x / width) * Math.PI * 2 * frequency + time * (1.5 + wave * 0.3);
-                const deltaX = (x - centerX) / width;
-                const envelope = Math.exp(-deltaX * deltaX * 4);
-                const y = centerY + Math.sin(phase) * amplitude * envelope;
-                if (x === 0) context.moveTo(x, y);
-                else context.lineTo(x, y);
-            }
-            context.stroke();
+            tracker.lastX = tip.x;
+            tracker.lastY = tip.y;
+        });
+
+        const mature = stars.filter((s) => now - s.born > 1000);
+        const cluster = findCluster(mature.length >= 3 ? mature : stars);
+        if (cluster && !pendingCluster) pendingCluster = cluster;
+
+        const gesture = landmarks ? classifyGesture(landmarks) : '';
+        if (gesture === 'pinch' && lastGesture !== 'pinch') {
+            const target = pendingCluster || findCluster(stars);
+            if (target) lockConstellation(target);
         }
-        if (landmarks) {
-            CONN.forEach(([a, b]) => {
-                context.strokeStyle = 'rgba(100,200,255,0.1)';
-                context.lineWidth = 0.8;
-                context.beginPath();
-                context.moveTo(xAt(landmarks, a), yAt(landmarks, a));
-                context.lineTo(xAt(landmarks, b), yAt(landmarks, b));
-                context.stroke();
-            });
-            fingertipPoints(landmarks).forEach((p, i) => {
-                const hue = 190 + i * 30 + time * 15;
-                context.beginPath();
-                context.arc(p.x, p.y, 5, 0, Math.PI * 2);
-                context.fillStyle = `hsla(${hue},90%,70%,0.9)`;
-                context.fill();
-                context.beginPath();
-                context.arc(p.x, p.y, 12, 0, Math.PI * 2);
-                context.strokeStyle = `hsla(${hue},90%,70%,0.25)`;
-                context.lineWidth = 1.5;
-                context.stroke();
-            });
+        if (gesture === 'fist' && lastGesture !== 'fist') {
+            stars.length = 0;
+            pendingCluster = null;
+        }
+        lastGesture = gesture;
+    }
+
+    function drawConstellation() {
+        const theme = getArtCanvasPalette().constellation;
+        const grad = context.createLinearGradient(0, 0, width, height);
+        grad.addColorStop(0, theme.grad[0]);
+        grad.addColorStop(1, theme.grad[1]);
+        context.fillStyle = grad;
+        context.fillRect(0, 0, width, height);
+
+        const drawStar = (s, alpha, sizeMul) => {
+            context.beginPath();
+            context.arc(s.x, s.y, (s.r || 2) * sizeMul, 0, Math.PI * 2);
+            context.fillStyle = `rgba(${theme.star}, ${alpha})`;
+            context.fill();
+            context.beginPath();
+            context.arc(s.x, s.y, (s.r || 2) * sizeMul * 2.5, 0, Math.PI * 2);
+            context.fillStyle = `rgba(${theme.star}, ${alpha * 0.2})`;
+            context.fill();
+        };
+
+        constellations.forEach((c) => {
+            const pts = c.stars;
+            for (let i = 0; i < pts.length; i += 1) {
+                for (let j = i + 1; j < pts.length; j += 1) {
+                    context.beginPath();
+                    context.moveTo(pts[i].x, pts[i].y);
+                    context.lineTo(pts[j].x, pts[j].y);
+                    context.strokeStyle = `rgba(${theme.star}, ${theme.lineAlpha})`;
+                    context.lineWidth = 0.8;
+                    context.stroke();
+                }
+            }
+            pts.forEach((s) => drawStar(s, 0.85, 1));
+            context.font = 'small-caps 11px ui-monospace, monospace';
+            context.fillStyle = `rgba(${theme.label}, 0.9)`;
+            context.textAlign = 'center';
+            context.fillText(c.name, c.cx, c.cy - 10);
+        });
+
+        if (pendingCluster) {
+            const pts = pendingCluster.stars;
+            for (let i = 0; i < pts.length; i += 1) {
+                for (let j = i + 1; j < pts.length; j += 1) {
+                    context.beginPath();
+                    context.moveTo(pts[i].x, pts[i].y);
+                    context.lineTo(pts[j].x, pts[j].y);
+                    context.strokeStyle = `rgba(${theme.pending}, 0.25)`;
+                    context.lineWidth = 0.6;
+                    context.stroke();
+                }
+            }
+        }
+
+        stars.forEach((s) => {
+            const age = (performance.now() - s.born) / 1000;
+            drawStar(s, Math.min(0.9, 0.3 + age * 0.4), 1);
+        });
+    }
+
+    function palmAngle(landmarks) {
+        const wrist = point(landmarks, 0);
+        const mid = point(landmarks, 9);
+        return Math.atan2(mid.y - wrist.y, mid.x - wrist.x);
+    }
+
+    function averageLandmarkMotion(landmarks) {
+        const pts = Array.from({ length: 21 }, (_, i) => point(landmarks, i));
+        landmarkHistory.push(pts);
+        if (landmarkHistory.length > 8) landmarkHistory.shift();
+        if (landmarkHistory.length < 2) return 999;
+        let sum = 0;
+        const prev = landmarkHistory[landmarkHistory.length - 2];
+        pts.forEach((p, i) => { sum += Math.hypot(p.x - prev[i].x, p.y - prev[i].y); });
+        return sum / 21;
+    }
+
+    function growBranch(x, y, angle, length, life, parentId, sparse) {
+        if (branches.length >= MAX_BRANCHES) branches.shift();
+        const grow = sparse ? 1.5 : 2.5;
+        const nx = x + Math.cos(angle) * grow;
+        const ny = y + Math.sin(angle) * grow;
+        branches.push({ x0: x, y0: y, x1: nx, y1: ny, angle, life: 0, maxLife: life, parentId, sparse });
+        if (length > grow && Math.random() < (sparse ? 0.12 : 0.2)) {
+            growBranch(nx, ny, angle + (Math.random() < 0.5 ? 0.26 : -0.26), length - grow, life * 0.85, branches.length - 1, sparse);
+        }
+        return { x: nx, y: ny, angle };
+    }
+
+    function updateMyceliumLogic(landmarks) {
+        if (!landmarks) {
+            stillnessFrames += 1;
+            if (stillnessFrames % 2 === 0) {
+                const t = frame * 0.016;
+                for (let i = 0; i < 8; i += 1) {
+                    const x = width * (0.5 + Math.sin(t + i) * 0.3);
+                    const y = height * (0.5 + Math.cos(t * 0.8 + i) * 0.3);
+                    growBranch(x, y, t + i, 120, 140, -1, false);
+                }
+            }
             return;
         }
-        for (let wave = 0; wave < 5; wave += 1) {
-            const hue = 190 + wave * 30 + time * 15;
-            context.strokeStyle = `hsla(${hue},80%,60%,0.5)`;
-            context.lineWidth = 1.2;
-            context.beginPath();
-            for (let x = 0; x < width; x += 2) {
-                const y = height / 2 + Math.sin((x / width) * Math.PI * 2 * (2 + wave) + time * (1.2 + wave * 0.25)) * height * (0.06 + wave * 0.02);
-                if (x === 0) context.moveTo(x, y);
-                else context.lineTo(x, y);
-            }
-            context.stroke();
+
+        const motion = averageLandmarkMotion(landmarks);
+        const sparse = motion > 8 || motion < 0.01;
+        if (motion > 4.5) {
+            branches.length = 0;
+            landmarkHistory.length = 0;
+            stillnessFrames = 0;
+            return;
+        }
+        stillnessFrames += 1;
+        const baseAngle = palmAngle(landmarks);
+        for (let i = 0; i < 21; i += 1) {
+            const p = point(landmarks, i);
+            const fork = (i % 5) * 0.12;
+            growBranch(p.x, p.y, baseAngle + fork + (Math.random() - 0.5) * 0.4, 100 + Math.random() * 80, 120 + Math.random() * 60, i, sparse);
         }
     }
 
-    function drawCircuit(time) {
-        const landmarks = lastLandmarks;
-        const nodes = landmarks
-            ? fingertipPoints(landmarks)
-            : Array.from({ length: 5 }, (_, i) => {
-                const angle = time * 0.3 + i * Math.PI * 2 / 5;
-                return { x: width / 2 + Math.cos(angle) * width * 0.28, y: height / 2 + Math.sin(angle) * height * 0.28 };
-            });
-
-        if (landmarks && Math.random() < 0.15) {
-            const a = nodes[Math.floor(Math.random() * nodes.length)];
-            const b = nodes[Math.floor(Math.random() * nodes.length)];
-            circuitLines.push({ x1: a.x, y1: a.y, x2: b.x, y2: a.y, x3: b.x, y3: b.y, life: 1, hue: 120 + Math.random() * 60 });
-        }
-        circuitLines.forEach((line) => {
-            line.life -= 0.008;
-            context.strokeStyle = `hsla(${line.hue},90%,55%,${line.life * 0.6})`;
-            context.lineWidth = 1;
+    function drawMycelium() {
+        const theme = getArtCanvasPalette();
+        context.fillStyle = theme.bg.mycelium;
+        context.fillRect(0, 0, width, height);
+        context.save();
+        context.globalCompositeOperation = theme.mycelium.composite;
+        branches.forEach((b) => {
+            b.life += 1;
+            const t = b.life / b.maxLife;
+            if (t > 1) return;
+            const alpha = (1 - t) * (b.sparse ? 0.35 : 0.65);
+            context.strokeStyle = `rgba(${theme.mycelium.branch}, ${alpha})`;
+            context.lineWidth = 0.8;
             context.beginPath();
-            context.moveTo(line.x1, line.y1);
-            context.lineTo(line.x2, line.y2);
-            context.lineTo(line.x3, line.y3);
+            context.moveTo(b.x0, b.y0);
+            context.lineTo(b.x1, b.y1);
             context.stroke();
         });
-        for (let i = circuitLines.length - 1; i >= 0; i -= 1) {
-            if (circuitLines[i].life <= 0) circuitLines.splice(i, 1);
+        context.restore();
+        for (let i = branches.length - 1; i >= 0; i -= 1) {
+            if (branches[i].life > branches[i].maxLife) branches.splice(i, 1);
         }
+    }
 
+    function cellKey(x, y) {
+        const step = 14;
+        return `${Math.floor(x / step)},${Math.floor(y / step)}`;
+    }
+
+    function crackAt(x, y, energy, axisAngle) {
+        const key = cellKey(x, y);
+        const existing = crackCells.get(key) || { crack: 0, heal: 0 };
+        existing.crack = Math.min(1, existing.crack + energy * 0.15);
+        existing.heal = 0;
+        crackCells.set(key, existing);
+        fractureStrokes.push({
+            x, y, angle: axisAngle, life: 1, width: 1 + energy * 3, secondary: false
+        });
+        if (Math.random() < 0.4) {
+            fractureStrokes.push({
+                x, y, angle: axisAngle + (Math.random() < 0.5 ? 1.05 : -1.05), life: 0.8, width: 0.8, secondary: true
+            });
+        }
+    }
+
+    function ensureFractureGlow() {
+        if (fractureGlowCanvas && fractureGlowCanvas.width === width) return;
+        fractureGlowCanvas = document.createElement('canvas');
+        fractureGlowCanvas.width = width;
+        fractureGlowCanvas.height = height;
+        const gctx = fractureGlowCanvas.getContext('2d');
+        const glow = getArtCanvasPalette().fracture.glow;
+        const g = gctx.createLinearGradient(0, 0, width, height);
+        g.addColorStop(0, glow[0]);
+        g.addColorStop(0.5, glow[1]);
+        g.addColorStop(1, glow[2]);
+        gctx.fillStyle = g;
+        gctx.fillRect(0, 0, width, height);
+    }
+
+    function updateFractureLogic(landmarks) {
+        ensureFractureGlow();
+        let axisAngle = -Math.PI / 2;
         if (landmarks) {
-            CONN.forEach(([a, b]) => {
-                const pA = point(landmarks, a);
-                const pB = point(landmarks, b);
-                context.strokeStyle = 'rgba(110,231,183,0.18)';
-                context.lineWidth = 0.8;
-                context.beginPath();
-                context.moveTo(pA.x, pA.y);
-                context.lineTo(pB.x, pA.y);
-                context.lineTo(pB.x, pB.y);
-                context.stroke();
-            });
-        }
-        for (let i = 0; i < nodes.length; i += 1) {
-            for (let j = i + 1; j < nodes.length; j += 1) {
-                const a = nodes[i];
-                const b = nodes[j];
-                context.strokeStyle = 'rgba(110,231,183,0.22)';
-                context.lineWidth = 1;
-                context.setLineDash([4, 6]);
-                context.beginPath();
-                context.moveTo(a.x, a.y);
-                context.lineTo(b.x, a.y);
-                context.lineTo(b.x, b.y);
-                context.stroke();
-                context.setLineDash([]);
+            const wrist = point(landmarks, 0);
+            const mid = point(landmarks, 9);
+            axisAngle = Math.atan2(mid.y - wrist.y, mid.x - wrist.x);
+            const gesture = classifyGesture(landmarks);
+            if (gesture === 'open hand') {
+                crackCells.forEach((cell) => {
+                    cell.heal += 0.008;
+                    cell.crack = Math.max(0, cell.crack - 0.012);
+                });
             }
-        }
-        nodes.forEach((node, i) => {
-            const pulse = Math.sin(time * 3 + i) * 3;
-            context.beginPath();
-            context.arc(node.x, node.y, 6 + pulse, 0, Math.PI * 2);
-            context.fillStyle = '#6ee7b7';
-            context.fill();
-            context.beginPath();
-            context.arc(node.x, node.y, 12 + pulse, 0, Math.PI * 2);
-            context.strokeStyle = 'rgba(110,231,183,0.4)';
-            context.lineWidth = 1.5;
-            context.stroke();
-            context.beginPath();
-            context.arc(node.x, node.y, 20 + pulse, 0, Math.PI * 2);
-            context.strokeStyle = 'rgba(110,231,183,0.12)';
-            context.lineWidth = 1;
-            context.stroke();
-            context.fillStyle = '#6ee7b7';
-            context.font = '9px monospace';
-            context.fillText(`0${i + 1}`, node.x + 14, node.y - 10);
-        });
-        context.strokeStyle = 'rgba(110,231,183,0.06)';
-        context.lineWidth = 0.5;
-        for (let x = 0; x < width; x += 24) {
-            context.beginPath();
-            context.moveTo(x, 0);
-            context.lineTo(x, height);
-            context.stroke();
-        }
-        for (let y = 0; y < height; y += 24) {
-            context.beginPath();
-            context.moveTo(0, y);
-            context.lineTo(width, y);
-            context.stroke();
-        }
-    }
-
-    function drawAscii(time) {
-        const landmarks = lastLandmarks;
-        const charWidth = 9;
-        const charHeight = 11;
-        const columns = Math.floor(width / charWidth);
-        const rows = Math.floor(height / charHeight);
-        context.font = `${charHeight - 1}px monospace`;
-        for (let row = 0; row < rows; row += 1) {
-            for (let col = 0; col < columns; col += 1) {
-                const px = col / columns;
-                const py = row / rows;
-                let value = 0;
-                if (landmarks) {
-                    TIPS.forEach((tipIndex) => {
-                        const dx = px - landmarks[tipIndex].x;
-                        const dy = py - landmarks[tipIndex].y;
-                        value += Math.exp(-(dx * dx + dy * dy) * 18) * 1.2;
-                    });
-                    CONN.forEach(([a, b]) => {
-                        const ax = 1 - landmarks[a].x;
-                        const ay = landmarks[a].y;
-                        const bx = 1 - landmarks[b].x;
-                        const by = landmarks[b].y;
-                        const ratio = Math.max(0, Math.min(1, ((px - ax) * (bx - ax) + (py - ay) * (by - ay)) / ((bx - ax) ** 2 + (by - ay) ** 2 + 1e-9)));
-                        const distance = Math.hypot(px - (ax + ratio * (bx - ax)), py - (ay + ratio * (by - ay)));
-                        value += Math.exp(-distance * distance * 80) * 0.5;
-                    });
-                } else {
-                    value = Math.abs(Math.sin(px * 8 + time) * Math.sin(py * 6 + time * 0.7));
-                }
-                value = Math.min(1, value);
-                const charIndex = Math.floor((1 - value) * (CHARS.length - 1));
-                const char = CHARS[charIndex];
-                if (char === ' ') continue;
-                context.fillStyle = `hsla(140,70%,${Math.floor(30 + value * 50)}%,${0.5 + value * 0.5})`;
-                context.fillText(char, col * charWidth, row * charHeight + charHeight);
-            }
-        }
-    }
-
-    function drawGlass(time) {
-        const landmarks = lastLandmarks;
-        const seeds = landmarks
-            ? Array.from({ length: 21 }, (_, i) => ({ x: xAt(landmarks, i), y: yAt(landmarks, i), h: (i * 37 + time * 8) % 360, seedIndex: i }))
-            : Array.from({ length: 9 }, (_, i) => {
-                const angle = time * 0.2 + i * Math.PI * 2 / 9;
-                const radius = width * 0.2 + Math.sin(time * 0.5 + i) * width * 0.1;
-                return { x: width / 2 + Math.cos(angle) * radius, y: height / 2 + Math.sin(angle) * radius, h: i * 40, seedIndex: i };
-            });
-
-        const seedKey = seeds.map((seed) => `${Math.round(seed.x / 8)},${Math.round(seed.y / 8)}`).join('|');
-        if (seedKey !== lastGlassSeed) {
-            lastGlassSeed = seedKey;
-            const step = 10;
-            const tmpCanvas = document.createElement('canvas');
-            tmpCanvas.width = width;
-            tmpCanvas.height = height;
-            const tmpContext = tmpCanvas.getContext('2d');
-            if (!tmpContext) return;
-            for (let y = 0; y < height; y += step) {
-                for (let x = 0; x < width; x += step) {
-                    let bestDistance = Infinity;
-                    let bestSeed = seeds[0];
-                    seeds.forEach((seed) => {
-                        const distance = (x - seed.x) ** 2 + (y - seed.y) ** 2;
-                        if (distance < bestDistance) {
-                            bestDistance = distance;
-                            bestSeed = seed;
-                        }
-                    });
-                    const isTip = TIPS.includes(bestSeed.seedIndex);
-                    tmpContext.fillStyle = `hsla(${bestSeed.h},75%,${isTip ? 65 : 45}%,0.82)`;
-                    tmpContext.fillRect(x, y, step, step);
+            if (gesture === 'pinch' && lastGesture !== 'pinch') {
+                const px = (xAt(landmarks, 4) + xAt(landmarks, 8)) / 2;
+                const py = (yAt(landmarks, 4) + yAt(landmarks, 8)) / 2;
+                for (let a = 0; a < Math.PI * 2; a += Math.PI / 6) {
+                    crackAt(px, py, 1.2, a);
                 }
             }
-            tmpContext.strokeStyle = 'rgba(5,2,8,0.9)';
-            tmpContext.lineWidth = 2;
-            for (let y = 0; y < height; y += step) {
-                tmpContext.beginPath();
-                tmpContext.moveTo(0, y);
-                tmpContext.lineTo(width, y);
-                tmpContext.stroke();
-            }
-            for (let x = 0; x < width; x += step) {
-                tmpContext.beginPath();
-                tmpContext.moveTo(x, 0);
-                tmpContext.lineTo(x, height);
-                tmpContext.stroke();
-            }
-            voronoiImage = tmpCanvas;
-        }
-        if (voronoiImage) context.drawImage(voronoiImage, 0, 0);
-        const glow = context.createRadialGradient(width / 2, height / 2, 0, width / 2, height / 2, width * 0.5);
-        glow.addColorStop(0, 'rgba(255,240,200,0.06)');
-        glow.addColorStop(1, 'rgba(255,240,200,0)');
-        context.fillStyle = glow;
-        context.fillRect(0, 0, width, height);
-    }
-
-    function drawHandSilhouette(points, alpha) {
-        context.fillStyle = `rgba(5,2,1,${alpha})`;
-        context.strokeStyle = `rgba(5,2,1,${alpha})`;
-        CONN.forEach(([a, b]) => {
-            context.lineWidth = 10;
-            context.lineCap = 'round';
-            context.beginPath();
-            context.moveTo(points[a].x, points[a].y);
-            context.lineTo(points[b].x, points[b].y);
-            context.stroke();
-        });
-        [0, 5, 9, 13, 17].forEach((i) => {
-            context.beginPath();
-            context.arc(points[i].x, points[i].y, 8, 0, Math.PI * 2);
-            context.fill();
-        });
-    }
-
-    function drawShadow(time) {
-        const landmarks = lastLandmarks;
-        const warmBg = context.createLinearGradient(0, 0, width, height);
-        warmBg.addColorStop(0, '#2a0e00');
-        warmBg.addColorStop(1, '#0d0300');
-        context.fillStyle = warmBg;
-        context.fillRect(0, 0, width, height);
-        context.fillStyle = 'rgba(255,130,40,0.05)';
-        context.beginPath();
-        context.ellipse(width / 2, height * 0.52, width * 0.32, height * 0.4, 0, 0, Math.PI * 2);
-        context.fill();
-
-        if (landmarks) {
-            const allPoints = Array.from({ length: 21 }, (_, i) => ({ x: xAt(landmarks, i), y: yAt(landmarks, i) }));
-            shadowTrail.push(allPoints.map((p) => ({ ...p })));
-            if (shadowTrail.length > 6) shadowTrail.shift();
-            shadowTrail.forEach((trailFrame, frameIndex) => drawHandSilhouette(trailFrame, ((frameIndex + 1) / shadowTrail.length) * 0.108));
-            drawHandSilhouette(allPoints, 0.95);
-            TIPS.forEach((tip, i) => {
-                const p = point(landmarks, tip);
-                context.beginPath();
-                context.arc(p.x, p.y, 4, 0, Math.PI * 2);
-                context.fillStyle = `rgba(255,${100 + i * 20},20,0.7)`;
-                context.fill();
+            lastGesture = gesture;
+            const wristZ = landmarks[0].z || 0;
+            TIPS.forEach((ti) => {
+                const p = point(landmarks, ti);
+                const z = (landmarks[ti].z || 0) - wristZ;
+                const energy = Math.max(0, Math.min(1, 0.5 - z * 3));
+                if (energy > 0.15) crackAt(p.x, p.y, energy, axisAngle);
             });
-            const base = point(landmarks, 0);
-            context.beginPath();
-            context.ellipse(base.x, base.y + 8, 18, 6, 0, 0, Math.PI * 2);
-            context.fillStyle = 'rgba(0,0,0,0.5)';
-            context.fill();
         } else {
-            const idlePoints = Array.from({ length: 21 }, (_, i) => {
-                const finger = Math.floor(i / 4);
-                const segment = i % 4;
-                const baseX = width / 2 + (finger - 2) * 35;
-                const baseY = height * 0.7;
-                return { x: baseX + Math.sin(time * 0.8 + finger) * 10, y: baseY - segment * 45 - Math.sin(time * 0.6 + finger + segment) * 8 };
-            });
-            drawHandSilhouette(idlePoints, 0.7);
+            demoPressureAngle += 0.04;
+            const px = width / 2 + Math.cos(demoPressureAngle) * width * 0.25;
+            const py = height / 2 + Math.sin(demoPressureAngle * 0.7) * height * 0.2;
+            crackAt(px, py, 0.5, demoPressureAngle);
         }
 
-        context.fillStyle = 'rgba(255,100,20,0.35)';
-        context.beginPath();
-        context.ellipse(width / 2, height * 0.92, width * 0.45, height * 0.06, 0, 0, Math.PI * 2);
-        context.fill();
-        context.fillStyle = 'rgba(255,100,20,0.12)';
-        context.beginPath();
-        context.ellipse(width / 2, height * 0.92, width * 0.55, height * 0.1, 0, 0, Math.PI * 2);
-        context.fill();
+        fractureStrokes.forEach((stroke) => {
+            stroke.life -= 0.006;
+            const len = 8 * stroke.life;
+            const x2 = stroke.x + Math.cos(stroke.angle) * len;
+            const y2 = stroke.y + Math.sin(stroke.angle) * len;
+            const scratch = getArtCanvasPalette().fracture.scratch;
+            context.save();
+            context.globalCompositeOperation = 'destination-out';
+            context.strokeStyle = `rgba(${scratch}, ${0.15 + stroke.life * 0.25})`;
+            context.lineWidth = stroke.width;
+            context.beginPath();
+            context.moveTo(stroke.x, stroke.y);
+            context.lineTo(x2, y2);
+            context.stroke();
+            context.restore();
+            stroke.x = x2;
+            stroke.y = y2;
+        });
+        for (let i = fractureStrokes.length - 1; i >= 0; i -= 1) {
+            if (fractureStrokes[i].life <= 0) fractureStrokes.splice(i, 1);
+        }
     }
 
-    function drawFrame() {
+    function drawFracture() {
+        const theme = getArtCanvasPalette().fracture;
+        context.fillStyle = theme.base;
+        context.fillRect(0, 0, width, height);
+        if (fractureGlowCanvas) context.drawImage(fractureGlowCanvas, 0, 0);
+        updateFractureLogic(lastLandmarks);
+        context.fillStyle = `rgba(${theme.overlay}, 0.35)`;
+        context.fillRect(0, 0, width, height);
+    }
+
+    function updateGesturePill() {
+        let gesture = lastLandmarks
+            ? classifyGesture(lastLandmarks)
+            : (cameraActive ? 'waiting for motion' : (demoMode ? 'canvas idle' : 'raise a hand'));
+        if (mode === 'constellation' && gesture === 'pinch') gesture = 'pinch · lock';
+        if (mode === 'constellation' && gesture === 'fist') gesture = 'fist · clear';
+        if (mode === 'fracture' && gesture === 'open hand') gesture = 'open hand · heal';
+        gPill.textContent = gesture;
+        gPill.classList.toggle('is-live', Boolean(lastLandmarks));
+    }
+
+    function drawFrame(now) {
+        const dt = Math.min(64, now - lastFrameTime);
+        lastFrameTime = now;
         frame += 1;
         const time = frame * 0.016;
-        context.fillStyle = BG[mode];
-        if (mode === 'wave' || mode === 'ascii') {
-            context.fillRect(0, 0, width, height);
-        } else if (mode === 'circuit') {
-            context.fillStyle = 'rgba(2,26,10,0.25)';
-            context.fillRect(0, 0, width, height);
-        } else if (mode === 'glass') {
-            context.fillStyle = 'rgba(13,6,8,0.4)';
-            context.fillRect(0, 0, width, height);
+
+        const canvasTheme = getArtCanvasPalette();
+        context.fillStyle = canvasTheme.bg[mode] || canvasTheme.bg.constellation;
+        context.fillRect(0, 0, width, height);
+
+        if (mode === 'constellation') {
+            updateConstellationLogic(lastLandmarks, dt);
+            drawConstellation();
+        } else if (mode === 'mycelium') {
+            updateMyceliumLogic(lastLandmarks);
+            drawMycelium();
+        } else if (mode === 'fracture') {
+            drawFracture();
         }
 
-        if (mode === 'wave') drawWave(time);
-        else if (mode === 'circuit') drawCircuit(time);
-        else if (mode === 'ascii') drawAscii(time);
-        else if (mode === 'glass') drawGlass(time);
-
         if (modeTransitionAlpha > 0.002) {
-            context.fillStyle = `rgba(8, 12, 24, ${modeTransitionAlpha})`;
+            const transition = getArtCanvasPalette().transition;
+            context.fillStyle = `rgba(${transition}, ${modeTransitionAlpha})`;
             context.fillRect(0, 0, width, height);
             modeTransitionAlpha *= 0.86;
         } else {
@@ -1280,28 +1396,56 @@ function initArtTechFiveModes() {
         animationFrameId = window.requestAnimationFrame(drawFrame);
     }
 
+    function serializeConstellationSvg() {
+        const pad = 20;
+        const w = width + pad * 2;
+        const h = height + pad * 2;
+        let svg = `<svg xmlns="http://www.w3.org/2000/svg" width="${w}" height="${h}" viewBox="0 0 ${w} ${h}">`;
+        svg += `<rect width="100%" height="100%" fill="#050a18"/>`;
+        constellations.forEach((c) => {
+            const pts = c.stars;
+            for (let i = 0; i < pts.length; i += 1) {
+                for (let j = i + 1; j < pts.length; j += 1) {
+                    svg += `<line x1="${pts[i].x + pad}" y1="${pts[i].y + pad}" x2="${pts[j].x + pad}" y2="${pts[j].y + pad}" stroke="#7bd0ff" stroke-opacity="0.4" stroke-width="1"/>`;
+                }
+            }
+            pts.forEach((s) => {
+                svg += `<circle cx="${s.x + pad}" cy="${s.y + pad}" r="3" fill="#7bd0ff"/>`;
+            });
+            svg += `<text x="${c.cx + pad}" y="${c.cy + pad - 8}" fill="#dae2fd" font-family="monospace" font-size="11" text-anchor="middle">${c.name}</text>`;
+        });
+        stars.forEach((s) => {
+            svg += `<circle cx="${s.x + pad}" cy="${s.y + pad}" r="2" fill="#7bd0ff" opacity="0.7"/>`;
+        });
+        svg += '</svg>';
+        return svg;
+    }
+
+    function exportConstellationSvg() {
+        if (mode !== 'constellation') return;
+        const blob = new Blob([serializeConstellationSvg()], { type: 'image/svg+xml' });
+        const url = URL.createObjectURL(blob);
+        const anchor = document.createElement('a');
+        anchor.href = url;
+        anchor.download = `constellation-map-${Date.now()}.svg`;
+        anchor.click();
+        URL.revokeObjectURL(url);
+    }
+
     function saveFrame() {
         const output = document.createElement('canvas');
         output.width = width;
         output.height = height;
         const outContext = output.getContext('2d');
         if (!outContext) return;
-
         outContext.drawImage(canvas, 0, 0);
-
         const footerHeight = 28;
         outContext.fillStyle = 'rgba(0,0,0,0.55)';
         outContext.fillRect(0, height - footerHeight, width, footerHeight);
         outContext.font = '500 12px system-ui, sans-serif';
         outContext.textBaseline = 'middle';
         outContext.fillStyle = 'rgba(255,255,255,0.35)';
-        outContext.fillText('created with hand art', 14, height - footerHeight / 2);
-
-        const handle = '@Ragini Kalvade';
-        const handleWidth = outContext.measureText(handle).width;
-        outContext.fillStyle = 'rgba(255,255,255,0.7)';
-        outContext.fillText(handle, width - handleWidth - 14, height - footerHeight / 2);
-
+        outContext.fillText(`created with hand art · ${mode}`, 14, height - footerHeight / 2);
         const anchor = document.createElement('a');
         anchor.href = output.toDataURL('image/png');
         anchor.download = `hand-art-${mode}-${Date.now()}.png`;
@@ -1325,16 +1469,8 @@ function initArtTechFiveModes() {
         refreshPreviewVisibility();
         lastLandmarks = null;
         started = false;
-        shadowTrail.length = 0;
-        circuitLines.length = 0;
-    }
-
-    function updateGesturePill() {
-        const gesture = lastLandmarks
-            ? classifyGesture(lastLandmarks)
-            : (cameraActive ? 'waiting for motion' : (demoMode ? 'canvas idle' : 'raise a hand'));
-        gPill.textContent = gesture;
-        gPill.classList.toggle('is-live', Boolean(lastLandmarks));
+        branches.length = 0;
+        landmarkHistory.length = 0;
     }
 
     function startTrackingLoop() {
@@ -1357,24 +1493,22 @@ function initArtTechFiveModes() {
         if (started) return;
         if (typeof window.Hands === 'undefined') {
             cameraButton.textContent = 'mediapipe unavailable';
+            cameraButton.classList.add('is-error');
             return;
         }
-
         intro.style.display = 'none';
+        cameraButton.classList.remove('is-error');
         try {
             stream = await navigator.mediaDevices.getUserMedia({
                 video: { facingMode: 'user', width: 640, height: 480 }
             });
             video.srcObject = stream;
-            await new Promise((resolve) => {
-                video.onloadedmetadata = resolve;
-            });
+            await new Promise((resolve) => { video.onloadedmetadata = resolve; });
             await video.play();
             cameraActive = true;
             demoMode = false;
             updateDemoToggleUI();
             refreshPreviewVisibility();
-
             resize();
             handsTracker = new window.Hands({
                 locateFile: (file) => `https://cdn.jsdelivr.net/npm/@mediapipe/hands/${file}`
@@ -1389,11 +1523,13 @@ function initArtTechFiveModes() {
                 lastLandmarks = results.multiHandLandmarks?.length ? results.multiHandLandmarks[0] : null;
                 updateGesturePill();
             });
-
             started = true;
             updateGesturePill();
             startTrackingLoop();
-            if (animationFrameId === null) drawFrame();
+            if (animationFrameId === null) {
+                lastFrameTime = performance.now();
+                drawFrame(lastFrameTime);
+            }
         } catch (error) {
             console.warn('[art-tech] camera start failed:', error);
             cameraActive = false;
@@ -1402,6 +1538,7 @@ function initArtTechFiveModes() {
             refreshPreviewVisibility();
             intro.style.display = 'flex';
             cameraButton.textContent = 'retry (allow camera)';
+            cameraButton.classList.add('is-error');
         }
     }
 
@@ -1413,7 +1550,10 @@ function initArtTechFiveModes() {
         updateDemoToggleUI();
         refreshPreviewVisibility();
         updateGesturePill();
-        if (animationFrameId === null) drawFrame();
+        if (animationFrameId === null) {
+            lastFrameTime = performance.now();
+            drawFrame(lastFrameTime);
+        }
     }
 
     async function toggleFullscreen() {
@@ -1434,32 +1574,30 @@ function initArtTechFiveModes() {
     }
 
     modeButtons.forEach((button) => {
-        button.addEventListener('click', () => {
-            setMode(button.dataset.artMode || 'wave');
-        });
+        button.addEventListener('click', () => setMode(button.dataset.artMode || 'constellation'));
     });
     cameraButton.addEventListener('click', boot);
     introDemoButton.addEventListener('click', startDemoExperience);
     saveButton.addEventListener('click', saveFrame);
+    if (exportSvgButton) exportSvgButton.addEventListener('click', exportConstellationSvg);
     demoToggleButton.addEventListener('click', () => {
-        if (demoMode) {
-            boot();
-        } else {
-            startDemoExperience();
-        }
+        if (demoMode) boot();
+        else startDemoExperience();
     });
     previewToggleButton.addEventListener('click', () => {
         previewEnabled = !previewEnabled;
         updatePreviewToggleUI();
         refreshPreviewVisibility();
     });
-    fullscreenButton.addEventListener('click', () => {
-        toggleFullscreen().catch(() => {});
-    });
+    fullscreenButton.addEventListener('click', () => { toggleFullscreen().catch(() => {}); });
     window.addEventListener('resize', resize);
     window.addEventListener('pagehide', stopSession);
     window.addEventListener('beforeunload', stopSession);
     document.addEventListener('fullscreenchange', updateFullscreenUI);
+    document.addEventListener('themechange', () => {
+        fractureGlowCanvas = null;
+    });
+
     initNavSoftening();
 
     resize();
@@ -1470,5 +1608,8 @@ function initArtTechFiveModes() {
     updatePreviewToggleUI();
     updateFullscreenUI();
     updateGesturePill();
-    if (animationFrameId === null) drawFrame();
+    if (animationFrameId === null) {
+        lastFrameTime = performance.now();
+        drawFrame(lastFrameTime);
+    }
 }
