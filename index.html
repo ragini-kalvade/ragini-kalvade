@@ -2612,23 +2612,68 @@
 
         const namespace = "ragini-kalvade-portfolio";
         const key = "home";
+        const apiBase = `https://api.counterapi.dev/v1/${encodeURIComponent(namespace)}/${encodeURIComponent(key)}`;
+        const sessionKey = `rk.visit-counted:${namespace}:${key}`;
+        const cacheKey = `rk.visit-count:${namespace}:${key}`;
 
-        fetch(`https://api.counterapi.dev/v1/${namespace}/${key}/up`)
-            .then((response) => {
-                if (!response.ok) {
-                    throw new Error("CounterAPI request failed");
+        const formatCount = (count) =>
+            Number.isFinite(count) && count >= 0
+                ? `Visits ${count.toLocaleString()}`
+                : "Visits --";
+
+        const cached = Number(localStorage.getItem(cacheKey));
+        if (Number.isFinite(cached)) {
+            visitorCountElement.textContent = formatCount(cached);
+        }
+
+        async function fetchCount(endpoint) {
+            const response = await fetch(endpoint, { cache: "no-store" });
+            if (!response.ok) {
+                throw new Error(`CounterAPI ${response.status}`);
+            }
+            const data = await response.json();
+            return Number(data.count);
+        }
+
+        function saveCount(count) {
+            if (!Number.isFinite(count)) return;
+            localStorage.setItem(cacheKey, String(count));
+            visitorCountElement.textContent = formatCount(count);
+        }
+
+        async function updateVisitorCount() {
+            const alreadyCounted = sessionStorage.getItem(sessionKey);
+
+            try {
+                const endpoint = alreadyCounted ? `${apiBase}/` : `${apiBase}/up`;
+                const count = await fetchCount(endpoint);
+                if (!alreadyCounted) {
+                    sessionStorage.setItem(sessionKey, "1");
                 }
-                return response.json();
-            })
-            .then((data) => {
-                const count = Number(data.count);
-                visitorCountElement.textContent = Number.isFinite(count)
-                    ? `Visits ${count.toLocaleString()}`
-                    : "Visits --";
-            })
-            .catch(() => {
-                visitorCountElement.textContent = "Visits --";
-            });
+                saveCount(count);
+                return;
+            } catch {
+                // /up is rate-limited quickly; read-only still works.
+            }
+
+            try {
+                const count = await fetchCount(`${apiBase}/`);
+                if (!alreadyCounted) {
+                    sessionStorage.setItem(sessionKey, "1");
+                }
+                saveCount(count);
+            } catch {
+                if (!Number.isFinite(cached)) {
+                    visitorCountElement.textContent = "Visits --";
+                }
+            }
+        }
+
+        if (document.readyState === "loading") {
+            document.addEventListener("DOMContentLoaded", updateVisitorCount, { once: true });
+        } else {
+            updateVisitorCount();
+        }
     })();
 </script>
 <script>
